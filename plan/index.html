@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#130d0a">
 <meta name="robots" content="noindex, nofollow">
 <title>Menzïli — Plan de visibilité</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +24,81 @@ a{color:var(--saffron)}
 /* layout */
 aside{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--bg2);border-right:1px solid var(--line);padding:28px 22px;overflow-y:auto}
 main{margin-left:280px;padding:0 56px 120px;max-width:1180px}
-@media(max-width:960px){aside{position:static;width:auto;border-right:0;border-bottom:1px solid var(--line)}main{margin-left:0;padding:0 20px 80px}}
+
+:root{--c-notes:#a98bf5}
+.mtop,.fab,.dscrim{display:none}
+/* ---------- NOTES ---------- */
+.note-form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:6px}
+.note-form textarea{width:100%;min-height:92px;background:#00000030;border:1px solid var(--line);border-radius:12px;color:var(--ink);font:400 15.5px/1.5 Inter,sans-serif;padding:12px 14px;resize:vertical;outline:none}
+.note-form textarea:focus{border-color:var(--c-notes);box-shadow:0 0 0 3px #a98bf522}
+.nf-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.nchip{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.8px;text-transform:uppercase;padding:7px 11px;border-radius:20px;border:1px solid var(--line);color:var(--mute);background:transparent;cursor:pointer}
+.nchip[aria-pressed=true]{color:var(--bg);background:var(--c);border-color:var(--c)}
+.nbtn{font:600 14px Inter,sans-serif;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.nbtn.pri{background:var(--c-notes);border-color:var(--c-notes);color:#120d1f;margin-left:auto}
+.nbtn:disabled{opacity:.4;cursor:default}
+.ntools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:22px 0 12px}
+.ntools .sp{flex:1}
+.nlist{display:grid;gap:10px}
+.nitem{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:14px;padding:14px 16px}
+.nitem.done{opacity:.5}
+.nitem.done .ntext{text-decoration:line-through}
+.nhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.ntag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--c)}
+.ndate{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--dim)}
+.nact{margin-left:auto;display:flex;gap:4px}
+.nact button{white-space:nowrap;background:transparent;border:0;color:var(--dim);font-size:13px;padding:6px 8px;border-radius:8px;cursor:pointer;font-family:Inter,sans-serif}
+.nact button:hover{background:#ffffff0d;color:var(--ink)}
+.nact button.warn{color:var(--harissa)}
+.ntext{white-space:pre-wrap;word-break:break-word;font-size:15px;color:var(--ink)}
+.nitem textarea{width:100%;min-height:80px;background:#00000030;border:1px solid var(--line);border-radius:10px;color:var(--ink);font:400 15px/1.5 Inter,sans-serif;padding:10px 12px;outline:none}
+.nempty{text-align:center;color:var(--dim);padding:30px 10px;border:1px dashed var(--line);border-radius:14px;font-size:14px}
+.ntoast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);font:600 14px Inter,sans-serif;padding:10px 16px;border-radius:30px;opacity:0;transition:.25s;pointer-events:none;z-index:90}
+.ntoast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:960px){
+  body{font-size:15px}
+  .mtop{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50;height:56px;padding:0 16px;padding-top:env(safe-area-inset-top);background:rgba(19,13,10,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .mtop .brand{font-size:21px}
+  .mtop .mp{flex:1;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--mute)}
+  .mtop .mp .bar{flex:1;margin:0;height:5px}
+  .burger{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;flex:none}
+  .burger i,.burger i::before,.burger i::after{display:block;width:16px;height:2px;background:var(--ink);border-radius:2px;position:relative}
+  .burger i::before,.burger i::after{content:"";position:absolute;left:0}
+  .burger i::before{top:-5px}.burger i::after{top:5px}
+  aside{position:fixed;top:0;left:0;bottom:0;width:86%;max-width:320px;z-index:70;transform:translateX(-102%);transition:transform .3s cubic-bezier(.2,.8,.2,1);border-right:1px solid var(--line);padding-top:calc(28px + env(safe-area-inset-top));box-shadow:20px 0 60px #0008}
+  aside.open{transform:none}
+  .dscrim{display:block;position:fixed;inset:0;background:#0009;z-index:60;opacity:0;pointer-events:none;transition:opacity .3s}
+  .dscrim.open{opacity:1;pointer-events:auto}
+  nav a{padding:11px 10px;font-size:15px}
+  main{margin-left:0;padding:0 16px 120px}
+  .hero{padding:34px 0 30px}
+  h1{font-size:36px;letter-spacing:-1px}
+  .lede{font-size:16px}
+  .stats{grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+  .stat{padding:13px 14px}.stat b{font-size:24px}
+  section{padding:44px 0 4px;scroll-margin-top:64px}
+  h2{font-size:28px}
+  .subtitle{font-size:15px}
+  h3{font-size:19px;margin-top:24px}
+  .grid{grid-template-columns:1fr;gap:12px}
+  .card{padding:16px 18px}
+  .card .tag{position:static;display:inline-block;margin-bottom:8px}
+  .callout{padding:14px 16px 14px 44px;font-size:14.3px}
+  .callout::before{left:16px;top:13px}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13.5px}
+  th,td{padding:10px 12px;min-width:120px}
+  td:first-child,th:first-child{min-width:130px}
+  .quote{font-size:17px}
+  .mega-bar{top:56px}
+  .check li{padding:12px 6px}
+  .nhead{flex-wrap:wrap;row-gap:2px}.ndate{white-space:nowrap}.nact{order:3;width:100%;margin:4px 0 2px -8px}.nact button{white-space:nowrap;padding:8px 10px}
+  .nf-row .nbtn.pri{width:100%;margin-left:0;padding:13px}
+  .fab{display:grid;place-items:center;position:fixed;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:18px;background:var(--c-notes);color:#120d1f;font-size:28px;font-weight:400;border:0;box-shadow:0 10px 30px #0008;z-index:40;cursor:pointer}
+  .ntoast{bottom:calc(90px + env(safe-area-inset-bottom))}
+}
+
 .brand{font-family:Fraunces,serif;font-size:26px;font-weight:800;letter-spacing:-.5px}
 .brand em{color:var(--harissa);font-style:italic}
 .brand-sub{font-size:11px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin:4px 0 22px}
@@ -106,7 +181,14 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
 </head>
 <body>
 
-<aside>
+<div class="mtop">
+  <div class="brand">Menzï<em>li</em></div>
+  <div class="mp"><div class="bar"><i id="bar-top"></i></div><span id="pct-top" class="mono">0%</span></div>
+  <button class="burger" id="burger" aria-label="Ouvrir le sommaire"><i></i></button>
+</div>
+<div class="dscrim" id="dscrim"></div>
+
+<aside id="aside">
   <div class="brand">Menzï<em>li</em></div>
   <div class="brand-sub mono">Plan de visibilité · Nov 2026</div>
   <div class="legend">
@@ -116,6 +198,7 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     <span><i class="dot" style="background:var(--c-site)"></i>Site web</span>
     <span><i class="dot" style="background:var(--c-local)"></i>Local & livraison</span>
     <span><i class="dot" style="background:var(--c-plan)"></i>Exécution</span>
+    <span><i class="dot" style="background:var(--c-notes)"></i>Notes</span>
   </div>
   <nav>
     <a href="#diagnostic" style="border-color:var(--c-diag)"><span class="n">01</span>Diagnostic</a>
@@ -130,6 +213,7 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     <a href="#patron" style="border-color:var(--c-plan)"><span class="n">10</span>À demander au patron</a>
     <a href="#roadmap" style="border-color:var(--c-plan)"><span class="n">11</span>Roadmap 90 jours</a>
     <a href="#kpi" style="border-color:var(--c-plan)"><span class="n">12</span>Mesurer</a>
+    <a href="#notes" style="border-color:var(--c-notes)"><span class="n">13</span>Idées & notes <span class="mono" id="ncount-nav" style="margin-left:auto;font-size:11px;color:var(--dim)"></span></a>
   </nav>
   <div class="progress-side">
     <div style="display:flex;justify-content:space-between"><span>Avancement</span><span id="pct-side" class="mono">0%</span></div>
@@ -141,7 +225,7 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
 
 <header class="hero">
   <div class="eyebrow">Dossier stratégique · Communication & visibilité</div>
-  <h1>Faire de Menzili <em>le</em> snack<br>qu'on trouve en premier.</h1>
+  <h1>Faire de Menzïli <em>le</em> snack<br>qu'on trouve en premier.</h1>
   <p class="lede">Un snack sandwichs de la Rue Haute, à deux pas de l'hôpital Saint-Pierre, que ses clients adorent — mais que presque personne d'autre ne peut trouver en ligne. Ce plan liste tous les canaux utiles, dans l'ordre où ils rapportent le plus.</p>
   <div class="stats">
     <div class="stat good"><b>4,8★</b><span>sur 58 avis Google</span></div>
@@ -186,8 +270,8 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     <h2>Une phrase, <em>partout</em>.</h2>
     <p class="subtitle">Avant de créer les comptes, fixer l'identité pour que tout soit cohérent.</p>
   </div>
-  <div class="quote">« Menzili — les sandwichs les plus garnis des Marolles. Fait maison, servi avec le sourire. »</div>
-  <p>Proposition de base à valider avec le patron. Le nom « Menzili » semble venir de l'arabe dialectal (« chez moi ») — si c'est bien ça, c'est un angle de storytelling parfait : <i>« Mange comme à la maison »</i>.</p>
+  <div class="quote">« Menzïli — les sandwichs les plus garnis des Marolles. Fait maison, servi avec le sourire. »</div>
+  <p>Proposition de base à valider avec le patron. Le nom « Menzïli » semble venir de l'arabe dialectal (« chez moi ») — si c'est bien ça, c'est un angle de storytelling parfait : <i>« Mange comme à la maison »</i>.</p>
   <table>
     <tr><th>Cible</th><th>Où la trouver</th><th>Message</th></tr>
     <tr><td>Personnel de Saint-Pierre</td><td>Bouche-à-oreille, Facebook, WhatsApp, flyers salle de pause</td><td>Rapide, copieux, commande à l'avance</td></tr>
@@ -290,7 +374,7 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     <div class="card"><h4>« Ce que tu as pour X € »</h4><p>Format très viral : montrer tout ce que contient un menu à prix fixe.</p></div>
     <div class="card"><h4>Coulisses & fraîcheur</h4><p>Livraison du matin, préparation de la marinade, découpe. Prouve le « produits frais » des avis.</p></div>
     <div class="card"><h4>Réponse aux avis</h4><p>Lire un avis Google à voix haute et y réagir. Prouve la note 4,8 et encourage les autres à en laisser.</p></div>
-    <div class="card"><h4>Le quartier</h4><p>Marché aux puces du Jeu de Balle, Rue Haute… Menzili comme pause du flâneur des Marolles.</p></div>
+    <div class="card"><h4>Le quartier</h4><p>Marché aux puces du Jeu de Balle, Rue Haute… Menzïli comme pause du flâneur des Marolles.</p></div>
   </div>
   <div class="callout warn"><b class="t">Droits à l'image</b>Toujours demander l'accord avant de filmer un client ou un membre du personnel reconnaissable. Pour les soignants, éviter de montrer badges et uniformes de l'hôpital sans autorisation.</div>
 </section>
@@ -370,7 +454,7 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     <li><input type="checkbox" id="q3"><span>Halal ? Options végétariennes ? (catégories et annuaires)</span></li>
     <li><input type="checkbox" id="q4"><span>Horaires exacts + jours de fermeture + congés prévus</span></li>
     <li><input type="checkbox" id="q5"><span>Déjà sur Uber Eats / Deliveroo / Takeaway ? Que fait le bouton « Commander » ?</span></li>
-    <li><input type="checkbox" id="q6"><span>Origine et sens du nom « Menzili » (storytelling)</span></li>
+    <li><input type="checkbox" id="q6"><span>Origine et sens du nom « Menzïli » (storytelling)</span></li>
     <li><input type="checkbox" id="q7"><span>Accepte-t-il d'apparaître en vidéo ? Le personnel ?</span></li>
     <li><input type="checkbox" id="q8"><span>Budget mensuel (impression, domaine, éventuelle pub, repas offerts aux influenceurs)</span></li>
     <li><input type="checkbox" id="q9"><span>Qui répond aux messages / commandes WhatsApp au quotidien ?</span></li>
@@ -454,10 +538,38 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
   </table>
   <div class="callout info"><b class="t">Le seul vrai juge</b>Les abonnés, c'est bien ; le chiffre qui compte pour le patron, c'est le nombre de sandwichs vendus. Demande-lui de comparer son chiffre d'affaires mois par mois.</div>
 
-  <div class="foot mono">Menzili · Rue Haute 326, 1000 Bruxelles · Plan établi le 18/11/2026 à partir de la fiche Google Maps publique.</div>
+</section>
+
+<!-- 13 -->
+<section id="notes">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-notes)"></i>13 · Idées & notes</div>
+    <h2>Tout ce qui <em style="color:var(--c-notes)">passe par la tête</em>.</h2>
+    <p class="subtitle">Idées de contenu, questions pour le patron, trucs à faire… Note-les ici avant de les oublier.</p>
+  </div>
+
+  <div class="note-form">
+    <textarea id="nText" placeholder="Ex. filmer la préparation de la marinade jeudi matin…" aria-label="Nouvelle note"></textarea>
+    <div class="nf-row" id="nTypes"></div>
+    <div class="nf-row"><span class="mono" style="font-size:11px;color:var(--dim)" id="nHint">Ctrl + Entrée pour ajouter</span><button class="nbtn pri" id="nAdd" disabled>Ajouter la note</button></div>
+  </div>
+
+  <div class="ntools">
+    <div id="nFilters" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    <div class="sp"></div>
+    <button class="nbtn" id="nCopy">Copier</button>
+    <a class="nbtn" id="nShare" href="#" target="_blank" rel="noopener" style="text-decoration:none">Envoyer sur WhatsApp</a>
+  </div>
+  <div class="nlist" id="nList"></div>
+  <p class="mono" style="font-size:11px;color:var(--dim);margin-top:14px">Les notes sont enregistrées sur cet appareil (dans ce navigateur). Utilise « Envoyer sur WhatsApp » pour les partager.</p>
+
+  <div class="foot mono">Menzïli · Rue Haute 326, 1000 Bruxelles · Plan établi le 18/11/2026 à partir de la fiche Google Maps publique.</div>
 </section>
 
 </main>
+
+<button class="fab" id="fab" aria-label="Ajouter une note">+</button>
+<div class="ntoast" id="ntoast"></div>
 
 <script>
 (function(){
@@ -473,6 +585,8 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     document.getElementById('bar-side').style.width=pct+'%';
     document.getElementById('pct-main').textContent=done+' / '+boxes.length+' · '+pct+'%';
     document.getElementById('pct-side').textContent=pct+'%';
+    document.getElementById('bar-top').style.width=pct+'%';
+    document.getElementById('pct-top').textContent=pct+'%';
     document.querySelectorAll('[data-count]').forEach(function(el){
       var g=document.querySelectorAll('[data-group="'+el.dataset.count+'"] input');
       var d=[].filter.call(g,function(x){return x.checked}).length;
@@ -484,6 +598,79 @@ code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;
     b.closest('li').addEventListener('click',function(e){if(e.target!==b){b.checked=!b.checked;b.dispatchEvent(new Event('change'));}});
   });
   render();
+})();
+
+/* ---- drawer (mobile) ---- */
+(function(){
+  var a=document.getElementById('aside'),sc=document.getElementById('dscrim');
+  function close(){a.classList.remove('open');sc.classList.remove('open')}
+  document.getElementById('burger').onclick=function(){a.classList.add('open');sc.classList.add('open')};
+  sc.onclick=close;
+  a.querySelectorAll('nav a').forEach(function(l){l.addEventListener('click',close)});
+})();
+
+/* ---- notes ---- */
+(function(){
+  var KEY='menzili-notes-v1';
+  var TYPES=[{id:'idee',label:'Idée',c:'#a98bf5'},{id:'todo',label:'À faire',c:'#f2a33a'},{id:'patron',label:'Question patron',c:'#e0492f'},{id:'contenu',label:'Contenu',c:'#e06a9a'},{id:'autre',label:'Autre',c:'#b9a796'}];
+  var T={};TYPES.forEach(function(t){T[t.id]=t});
+  var notes=[];try{notes=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){notes=[]}
+  var cur='idee',filter='all',editing=null,confirmDel=null;
+  var $=function(id){return document.getElementById(id)};
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(notes))}catch(e){}}
+  function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function when(ts){var d=new Date(ts);return d.toLocaleDateString('fr-BE',{day:'2-digit',month:'short'})+' · '+d.toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}
+  function toast(m){var t=$('ntoast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show')},1600)}
+  function drawTypes(){
+    $('nTypes').innerHTML=TYPES.map(function(t){return '<button class="nchip" style="--c:'+t.c+'" data-t="'+t.id+'" aria-pressed="'+(t.id===cur)+'">'+t.label+'</button>'}).join('');
+    $('nTypes').querySelectorAll('[data-t]').forEach(function(b){b.onclick=function(){cur=b.dataset.t;drawTypes()}});
+  }
+  function drawFilters(){
+    var opts=[{id:'all',label:'Toutes',c:'#f3e9df'}].concat(TYPES);
+    $('nFilters').innerHTML=opts.map(function(t){var n=t.id==='all'?notes.length:notes.filter(function(x){return x.type===t.id}).length;if(t.id!=='all'&&!n)return'';
+      return '<button class="nchip" style="--c:'+t.c+'" data-f="'+t.id+'" aria-pressed="'+(t.id===filter)+'">'+t.label+' '+n+'</button>'}).join('');
+    $('nFilters').querySelectorAll('[data-f]').forEach(function(b){b.onclick=function(){filter=b.dataset.f;draw()}});
+  }
+  function draw(){
+    drawFilters();
+    var list=notes.filter(function(n){return filter==='all'||n.type===filter}).sort(function(a,b){return (a.done-b.done)||(b.ts-a.ts)});
+    $('ncount-nav').textContent=notes.length?notes.length:'';
+    if(!list.length){$('nList').innerHTML='<div class="nempty">'+(notes.length?'Aucune note dans cette catégorie.':'Pas encore de note. Écris ta première idée au-dessus ✍️')+'</div>';return}
+    $('nList').innerHTML=list.map(function(n){var t=T[n.type]||T.autre;
+      return '<div class="nitem '+(n.done?'done':'')+'" style="--c:'+t.c+'"><div class="nhead"><span class="ntag">'+t.label+'</span><span class="ndate">'+when(n.ts)+'</span><div class="nact">'+
+        '<button data-a="done" data-id="'+n.id+'">'+(n.done?'Rouvrir':'Fait ✓')+'</button>'+
+        '<button data-a="edit" data-id="'+n.id+'">Modifier</button>'+
+        '<button data-a="del" data-id="'+n.id+'" class="'+(confirmDel===n.id?'warn':'')+'">'+(confirmDel===n.id?'Confirmer ?':'Suppr.')+'</button></div></div>'+
+        (editing===n.id?'<textarea data-edit="'+n.id+'">'+esc(n.text)+'</textarea><div class="nf-row"><button class="nbtn" data-a="cancel" data-id="'+n.id+'">Annuler</button><button class="nbtn pri" data-a="save" data-id="'+n.id+'">Enregistrer</button></div>'
+          :'<div class="ntext">'+esc(n.text)+'</div>')+'</div>'}).join('');
+    $('nList').querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){act(b.dataset.a,b.dataset.id)}});
+    var ed=$('nList').querySelector('[data-edit]');if(ed){ed.focus();ed.setSelectionRange(ed.value.length,ed.value.length)}
+  }
+  function find(id){return notes.find(function(n){return n.id===id})}
+  function act(a,id){var n=find(id);if(!n)return;
+    if(a!=='del')confirmDel=null;
+    if(a==='done'){n.done=!n.done}
+    else if(a==='edit'){editing=id}
+    else if(a==='cancel'){editing=null}
+    else if(a==='save'){var v=$('nList').querySelector('[data-edit]').value.trim();if(v)n.text=v;editing=null;toast('Note modifiée')}
+    else if(a==='del'){if(confirmDel===id){notes=notes.filter(function(x){return x.id!==id});confirmDel=null;toast('Note supprimée')}else{confirmDel=id;setTimeout(function(){if(confirmDel===id){confirmDel=null;draw()}},3000)}}
+    save();draw();
+  }
+  function add(){var v=$('nText').value.trim();if(!v)return;
+    notes.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),text:v,type:cur,ts:Date.now(),done:false});
+    $('nText').value='';$('nAdd').disabled=true;save();filter='all';draw();toast('Note ajoutée')}
+  function asText(){var open=notes.filter(function(n){return !n.done});if(!open.length)return'';
+    var out='📝 Notes — Plan Menzïli\n';TYPES.forEach(function(t){var g=open.filter(function(n){return n.type===t.id});if(!g.length)return;
+      out+='\n*'+t.label+'*\n'+g.map(function(n){return '• '+n.text.replace(/\n/g,' ')}).join('\n')+'\n'});return out}
+  $('nText').addEventListener('input',function(){$('nAdd').disabled=!this.value.trim()});
+  $('nText').addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();add()}});
+  $('nAdd').onclick=add;
+  $('nCopy').onclick=function(){var t=asText();if(!t){toast('Aucune note à copier');return}
+    try{navigator.clipboard.writeText(t).then(function(){toast('Notes copiées')},function(){toast('Copie impossible ici')})}catch(e){toast('Copie impossible ici')}};
+  $('nShare').onclick=function(e){var t=asText();if(!t){e.preventDefault();toast('Aucune note à envoyer');return}this.href='https://wa.me/?text='+encodeURIComponent(t)};
+  $('fab').onclick=function(){document.getElementById('notes').scrollIntoView({behavior:'smooth'});setTimeout(function(){$('nText').focus()},450)};
+  if(window.matchMedia('(pointer:coarse)').matches)$('nHint').textContent='';
+  drawTypes();draw();
 })();
 </script>
 </body>

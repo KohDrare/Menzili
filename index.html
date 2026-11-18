@@ -28,7 +28,7 @@ svg{display:block}
 @media(min-width:700px){body{background:#e4e4e8}.app{box-shadow:0 0 0 1px #0000000a,0 30px 80px #0000001a}}
 
 /* ---------- HERO ---------- */
-.hero{background:var(--dark);color:#fff;padding:calc(18px + var(--safe-t)) 20px 92px;position:relative;overflow:hidden}
+.hero{background:var(--dark);color:#fff;padding:calc(18px + var(--safe-t)) 20px 30px;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,#f2652233 0%,transparent 70%)}
 .hero-top{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
 .status{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#e8e8ea;background:#ffffff14;padding:6px 11px;border-radius:30px}
@@ -42,6 +42,8 @@ svg{display:block}
 .facts svg{width:14px;height:14px}
 
 /* mode card overlapping hero */
+.mc-title{font-size:16.5px;font-weight:700;letter-spacing:-.01em;margin:22px 0 10px}
+.modecard.in{margin:0;box-shadow:none;border:1px solid var(--line)}
 .modecard{margin:-70px 14px 0;background:var(--surface);border-radius:22px;padding:6px;box-shadow:0 1px 2px #0000000d,0 12px 30px #00000014;position:relative;z-index:2}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:#f0f0f3;border-radius:16px;padding:4px;gap:4px}
 .seg button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:12px;font-size:14px;font-weight:650;color:var(--ink2);transition:background .2s,box-shadow .2s}
@@ -232,21 +234,10 @@ footer img{height:26px;margin:0 auto 10px;opacity:.9}
       <span><svg viewBox="0 0 24 24" fill="#f2a33a"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.2 1.3-6.6L2.5 9.3l6.6-.8z"/></svg><b>4,8</b> (58 avis)</span>
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Prêt en ~15 min</span>
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Rue Haute 326</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>Livraison à Saint-Pierre</span>
     </div>
   </header>
 
-  <section class="modecard" aria-label="Mode de commande">
-    <div class="seg">
-      <button data-mode="emporter" aria-pressed="true">À emporter<small>Retrait au comptoir</small></button>
-      <button data-mode="livraison" aria-pressed="false">Livraison<small>Hôpital Saint-Pierre</small></button>
-    </div>
-    <label class="hosp">
-      <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg></span>
-      <span class="t"><b>Je travaille à Saint-Pierre</b><span id="hospLine">−10 % sur toute la commande · badge à présenter</span></span>
-      <span class="sw"><input type="checkbox" id="staffChk" aria-label="Je travaille à Saint-Pierre"><i></i></span>
-    </label>
-    <p class="modeline" id="modeLine"></p>
-  </section>
 
   <nav class="bar" id="bar" aria-label="Catégories">
     <div class="bar-in">
@@ -403,12 +394,27 @@ const canCheckout=()=>S.cart.length&&!(S.mode==="livraison"&&totals().sub<CONFIG
    RENDER
    ===================================================================== */
 function renderStatus(){const s=openState();$("#status").classList.toggle("closed",!s.open);$("#status span").textContent=s.text}
-function renderMode(){
-  document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mode===S.mode));
-  $("#staffChk").checked=S.staff;
-  $("#modeLine").innerHTML=S.mode==="emporter"
-    ?`Choisis ton heure, passe au comptoir : c'est prêt. Paiement sur place.`
-    :`Livré à ton service entre <b>${CONFIG.delivery.slots[0]}</b> et <b>${CONFIG.delivery.slots.at(-1)}</b> · commande avant <b>${CONFIG.delivery.cutoff}</b> · dès ${fmt(CONFIG.delivery.minOrder)}.`;
+function modeCardHTML(){
+  const pct=Math.round(CONFIG.staffDiscount*100);
+  return `<div class="mc-title">Comment tu récupères ta commande ?</div>
+  <section class="modecard in" aria-label="Mode de commande">
+    <div class="seg">
+      <button data-mode="emporter" aria-pressed="${S.mode==="emporter"}">À emporter<small>Retrait au comptoir</small></button>
+      <button data-mode="livraison" aria-pressed="${S.mode==="livraison"}">Livraison<small>Hôpital Saint-Pierre</small></button>
+    </div>
+    <label class="hosp">
+      <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg></span>
+      <span class="t"><b>Je travaille à Saint-Pierre</b><span>−${pct} % sur toute la commande · badge à présenter</span></span>
+      <span class="sw"><input type="checkbox" id="staffChk" ${S.staff?"checked":""} aria-label="Je travaille à Saint-Pierre"><i></i></span>
+    </label>
+    <p class="modeline">${S.mode==="emporter"
+      ?`Choisis ton heure à l'étape suivante, passe au comptoir : c'est prêt. Paiement sur place.`
+      :`Livré à ton service entre <b>${CONFIG.delivery.slots[0]}</b> et <b>${CONFIG.delivery.slots.at(-1)}</b> · commande avant <b>${CONFIG.delivery.cutoff}</b> · dès ${fmt(CONFIG.delivery.minOrder)}.`}</p>
+  </section>`;
+}
+function bindModeCard(){
+  sheet.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;if(S.mode==="livraison"&&!S.staff){S.staff=true;toast("Réduction Saint-Pierre activée")}update()});
+  const c=sheet.querySelector("#staffChk");if(c)c.onchange=()=>{S.staff=c.checked;update()};
 }
 function renderMenu(){
   $("#cats").innerHTML=MENU.map((c,i)=>`<a href="#c-${c.id}" data-c="${c.id}" class="${i?"":"on"}">${c.title}</a>`).join("");
@@ -430,7 +436,7 @@ function update(){
   save();const t=totals();
   $("#cbar").classList.toggle("show",t.count>0);
   $("#cbN").textContent=t.count;$("#cbT").textContent=fmt(t.total);
-  renderMode();renderRows();
+  renderRows();
   if(view==="cart") drawCart();
 }
 
@@ -488,22 +494,24 @@ function openItem(id){
 
 /* ---- cart ---- */
 function drawCart(){
+  const sc=sheet.querySelector(".sb")?.scrollTop||0;
   const t=totals();const liv=S.mode==="livraison";const min=liv&&t.sub<CONFIG.delivery.minOrder&&S.cart.length;
   sheet.innerHTML=head("Ton panier",liv?"Livraison · Hôpital Saint-Pierre":"À emporter · Rue Haute 326")+`<div class="sb">
     ${S.cart.length?S.cart.map((l,i)=>`<div class="cl"><div class="d"><b>${esc(l.name)}</b>${l.opts?`<small>${esc(l.opts)}</small>`:""}${l.note?`<small>« ${esc(l.note)} »</small>`:""}<div class="p" style="margin-top:6px">${fmt(l.unit*l.qty)}</div></div>
       <div class="qs"><button data-dec="${i}" aria-label="Retirer">${l.qty===1?I.x:I.minus}</button><span>${l.qty}</span><button data-inc="${i}" aria-label="Ajouter">${I.plus}</button></div></div>`).join("")
       :`<div class="empty">${I.bag}Ton panier est vide.</div>`}
-    ${S.cart.length?`<div class="sum"><div><span>Sous-total</span><span>${fmt(t.sub)}</span></div>
+    ${S.cart.length?modeCardHTML():""}
+    ${S.cart.length?`<div class="sum" style="margin-top:8px"><div><span>Sous-total</span><span>${fmt(t.sub)}</span></div>
       ${t.disc?`<div class="g"><span>Réduction Saint-Pierre −${Math.round(CONFIG.staffDiscount*100)} %</span><span>−${fmt(t.disc)}</span></div>`:""}
       ${liv?`<div><span>Livraison</span><span>${t.fee?fmt(t.fee):"Offerte"}</span></div>`:""}
       <div class="t"><span>Total</span><span>${fmt(t.total)}</span></div></div>`:""}
-    ${S.cart.length&&!S.staff?`<p class="note">Tu travailles à Saint-Pierre ? Active l'option sur la page d'accueil pour −${Math.round(CONFIG.staffDiscount*100)} %.</p>`:""}
     ${min?`<div class="alert">Livraison dès ${fmt(CONFIG.delivery.minOrder)} — encore ${fmt(CONFIG.delivery.minOrder-t.sub)}. Astuce : commande avec tes collègues.</div>`:""}
   </div><div class="sf"><button class="btn btn-or ${canCheckout()?"":"dis"}" id="goCo">Continuer · ${fmt(t.total)}</button></div>`;
-  bindClose();
+  bindClose();bindModeCard();
   sheet.querySelectorAll("[data-inc]").forEach(b=>b.onclick=()=>{S.cart[b.dataset.inc].qty++;update()});
   sheet.querySelectorAll("[data-dec]").forEach(b=>b.onclick=()=>{const l=S.cart[b.dataset.dec];l.qty--;if(l.qty<=0)S.cart.splice(b.dataset.dec,1);update();if(!S.cart.length)setTimeout(closeSheet,250)});
   $("#goCo").onclick=openCheckout;
+  sheet.querySelector(".sb").scrollTop=sc;
 }
 $("#openCart").onclick=()=>{view="cart";drawCart();openSheet()};
 
@@ -578,9 +586,6 @@ let tt;function toast(m,warn){const el=$("#toast");el.innerHTML=(warn?"":I.check
 /* =====================================================================
    INIT
    ===================================================================== */
-document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;if(S.mode==="livraison"&&!S.staff){S.staff=true;toast("Réduction Saint-Pierre activée")}update()});
-$("#staffChk").onchange=e=>{S.staff=e.target.checked;update()};
-$("#hospLine").textContent=`−${Math.round(CONFIG.staffDiscount*100)} % sur toute la commande · badge à présenter`;
 $("#infoAddr").textContent=CONFIG.address;$("#mapsLink").href=CONFIG.mapsUrl;
 $("#infoPhone").textContent=CONFIG.phoneDisplay;$("#waLink").href=`https://wa.me/${CONFIG.whatsapp}`;$("#infoPay").textContent=CONFIG.payment;
 $("#hours").innerHTML=[1,2,3,4,5,6,0].map(d=>`<li class="${d===new Date().getDay()?"today":""}"><span>${DAYS[d]}</span><span>${CONFIG.hours[d]?CONFIG.hours[d].join(" – "):"Fermé"}</span></li>`).join("");

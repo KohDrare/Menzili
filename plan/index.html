@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Menzïli — Plan de visibilité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,500;1,9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#130d0a; --bg2:#1b1310; --card:#221814; --line:#3a2a22;
+  --ink:#f3e9df; --mute:#b9a796; --dim:#7f6d5f;
+  --harissa:#e0492f; --saffron:#f2a33a; --mint:#5fbf8f; --sky:#5aa7e0; --rose:#e06a9a; --sand:#d9b98c;
+  --c-diag:#d9b98c; --c-google:#5fbf8f; --c-social:#e06a9a; --c-site:#5aa7e0; --c-local:#f2a33a; --c-plan:#e0492f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 15.5px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--saffron)}
+.mono{font-family:"JetBrains Mono",monospace}
+/* layout */
+aside{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--bg2);border-right:1px solid var(--line);padding:28px 22px;overflow-y:auto}
+main{margin-left:280px;padding:0 56px 120px;max-width:1180px}
+@media(max-width:960px){aside{position:static;width:auto;border-right:0;border-bottom:1px solid var(--line)}main{margin-left:0;padding:0 20px 80px}}
+.brand{font-family:Fraunces,serif;font-size:26px;font-weight:800;letter-spacing:-.5px}
+.brand em{color:var(--harissa);font-style:italic}
+.brand-sub{font-size:11px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin:4px 0 22px}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.legend span{font-size:11px;color:var(--mute);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+nav a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--mute);text-decoration:none;font-size:13.5px;border-left:3px solid transparent}
+nav a:hover{background:#ffffff08;color:var(--ink)}
+nav a .n{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);width:18px}
+.progress-side{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--mute)}
+.bar{height:6px;background:#ffffff10;border-radius:6px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--harissa),var(--saffron));transition:width .4s}
+/* hero */
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--saffron)}
+h1{font-family:Fraunces,serif;font-weight:800;font-size:clamp(40px,6vw,68px);line-height:1.02;letter-spacing:-1.5px;margin:14px 0 18px}
+h1 em,h2 em{font-style:italic;font-weight:500;color:var(--harissa)}
+.lede{font-size:18px;color:var(--mute);max-width:720px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:36px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat b{display:block;font-family:Fraunces,serif;font-size:30px;font-weight:600;line-height:1.1}
+.stat span{font-size:12px;color:var(--mute)}
+.stat.bad b{color:var(--harissa)} .stat.good b{color:var(--mint)}
+/* sections */
+section{padding:64px 0 8px;scroll-margin-top:10px}
+.sec-head{margin-bottom:26px}
+.sec-head .eyebrow{display:flex;gap:10px;align-items:center}
+h2{font-family:Fraunces,serif;font-size:clamp(30px,4vw,42px);font-weight:700;letter-spacing:-.8px;line-height:1.1;margin:10px 0 8px}
+.subtitle{color:var(--mute);font-size:16.5px;max-width:760px}
+h3{font-family:Fraunces,serif;font-size:21px;font-weight:600;margin:30px 0 10px}
+p{margin:10px 0} ul.clean{list-style:none} ul.list{padding-left:20px;margin:8px 0} ul.list li{margin:5px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;position:relative}
+.card h4{font-family:Fraunces,serif;font-size:18px;font-weight:600;margin-bottom:6px}
+.card p,.card li{font-size:14.5px;color:var(--mute)}
+.card .tag{position:absolute;top:16px;right:16px}
+.tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:20px;border:1px solid currentColor}
+.t-must{color:var(--harissa)} .t-high{color:var(--saffron)} .t-bonus{color:var(--sky)} .t-free{color:var(--mint)}
+/* callouts */
+.callout{border-radius:14px;padding:16px 20px 16px 52px;margin:18px 0;position:relative;font-size:14.8px;border:1px solid}
+.callout::before{position:absolute;left:18px;top:15px;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:15px}
+.callout b.t{display:block;font-family:Fraunces,serif;font-size:16px;margin-bottom:2px;color:var(--ink)}
+.info{background:#5aa7e012;border-color:#5aa7e040}.info::before{content:"i";color:var(--sky)}
+.warn{background:#f2a33a12;border-color:#f2a33a45}.warn::before{content:"!";color:var(--saffron)}
+.danger{background:#e0492f14;border-color:#e0492f50}.danger::before{content:"✕";color:var(--harissa)}
+.tip{background:#5fbf8f12;border-color:#5fbf8f45}.tip::before{content:"→";color:var(--mint)}
+/* tables */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.2px;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+th{text-align:left;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);padding:12px 14px;background:#00000025;border-bottom:1px solid var(--line)}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--mute)}
+td:first-child{color:var(--ink);font-weight:600}
+tr:last-child td{border-bottom:0}
+/* timeline */
+.timeline{position:relative;margin:20px 0 10px;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--harissa),var(--saffron),var(--mint))}
+.tl{position:relative;margin-bottom:22px}
+.tl::before{content:"";position:absolute;left:-26px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--saffron)}
+.tl .when{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--saffron);letter-spacing:1px;text-transform:uppercase}
+.tl h4{font-family:Fraunces,serif;font-size:19px;margin:2px 0 4px}
+.tl p{color:var(--mute);font-size:14.5px;margin:0}
+/* checklist */
+.check{list-style:none;margin:10px 0}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .15s}
+.check li:hover{background:#ffffff07}
+.check input{appearance:none;width:19px;height:19px;border:2px solid var(--dim);border-radius:5px;flex:none;margin-top:3px;cursor:pointer;display:grid;place-content:center}
+.check input:checked{background:var(--mint);border-color:var(--mint)}
+.check input:checked::after{content:"✓";color:#0f0f0f;font-size:12px;font-weight:800}
+.check li.done span{color:var(--dim);text-decoration:line-through}
+.check .who{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--dim);margin-left:6px}
+.phase{display:flex;justify-content:space-between;align-items:baseline;margin-top:26px}
+.phase h3{margin:0}
+.phase .count{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--mute)}
+.mega-bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0;border-bottom:1px solid var(--line)}
+.mega-bar .row{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.mega-bar .bar{height:8px}
+.quote{font-family:Fraunces,serif;font-style:italic;font-size:19px;color:var(--sand);border-left:3px solid var(--harissa);padding:4px 0 4px 18px;margin:18px 0}
+code{font-family:"JetBrains Mono",monospace;font-size:13px;background:#ffffff0d;padding:1px 6px;border-radius:5px;color:var(--sand)}
+.foot{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<aside>
+  <div class="brand">Menzï<em>li</em></div>
+  <div class="brand-sub mono">Plan de visibilité · Nov 2026</div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--c-diag)"></i>Diagnostic</span>
+    <span><i class="dot" style="background:var(--c-google)"></i>Google & annuaires</span>
+    <span><i class="dot" style="background:var(--c-social)"></i>Réseaux</span>
+    <span><i class="dot" style="background:var(--c-site)"></i>Site web</span>
+    <span><i class="dot" style="background:var(--c-local)"></i>Local & livraison</span>
+    <span><i class="dot" style="background:var(--c-plan)"></i>Exécution</span>
+  </div>
+  <nav>
+    <a href="#diagnostic" style="border-color:var(--c-diag)"><span class="n">01</span>Diagnostic</a>
+    <a href="#strategie" style="border-color:var(--c-diag)"><span class="n">02</span>Positionnement</a>
+    <a href="#google" style="border-color:var(--c-google)"><span class="n">03</span>Google Maps</a>
+    <a href="#annuaires" style="border-color:var(--c-google)"><span class="n">04</span>Autres annuaires</a>
+    <a href="#reseaux" style="border-color:var(--c-social)"><span class="n">05</span>Réseaux sociaux</a>
+    <a href="#contenu" style="border-color:var(--c-social)"><span class="n">06</span>Idées de contenu</a>
+    <a href="#site" style="border-color:var(--c-site)"><span class="n">07</span>Site web</a>
+    <a href="#livraison" style="border-color:var(--c-local)"><span class="n">08</span>Livraison</a>
+    <a href="#local" style="border-color:var(--c-local)"><span class="n">09</span>Marketing local</a>
+    <a href="#patron" style="border-color:var(--c-plan)"><span class="n">10</span>À demander au patron</a>
+    <a href="#roadmap" style="border-color:var(--c-plan)"><span class="n">11</span>Roadmap 90 jours</a>
+    <a href="#kpi" style="border-color:var(--c-plan)"><span class="n">12</span>Mesurer</a>
+  </nav>
+  <div class="progress-side">
+    <div style="display:flex;justify-content:space-between"><span>Avancement</span><span id="pct-side" class="mono">0%</span></div>
+    <div class="bar"><i id="bar-side"></i></div>
+  </div>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="eyebrow">Dossier stratégique · Communication & visibilité</div>
+  <h1>Faire de Menzili <em>le</em> snack<br>qu'on trouve en premier.</h1>
+  <p class="lede">Un snack sandwichs de la Rue Haute, à deux pas de l'hôpital Saint-Pierre, que ses clients adorent — mais que presque personne d'autre ne peut trouver en ligne. Ce plan liste tous les canaux utiles, dans l'ordre où ils rapportent le plus.</p>
+  <div class="stats">
+    <div class="stat good"><b>4,8★</b><span>sur 58 avis Google</span></div>
+    <div class="stat bad"><b>Non</b><span>fiche Google revendiquée</span></div>
+    <div class="stat bad"><b>0</b><span>site web</span></div>
+    <div class="stat bad"><b>19</b><span>photos sur la fiche</span></div>
+    <div class="stat bad"><b>?</b><span>réseaux sociaux trouvés</span></div>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="diagnostic">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-diag)"></i>01 · Diagnostic</div>
+    <h2>Un très bon produit, <em>invisible</em>.</h2>
+    <p class="subtitle">État des lieux à partir de la fiche Google Maps (relevé le 18 novembre 2026).</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>Ce qui marche déjà</h4>
+      <ul class="list">
+        <li>Note de 4,8 — excellente pour un snack.</li>
+        <li>Les avis répètent les mêmes mots : <b>sandwich bien garni</b>, poulet mariné, poulet pané + patates, durum, produits frais, service rapide, patron souriant.</li>
+        <li>Des habitués (« j'y mange tous les jours depuis plus d'un an »).</li>
+        <li>Emplacement : clientèle captive de <b>Saint-Pierre</b> (personnel, visiteurs) et passage des Marolles.</li>
+      </ul></div>
+    <div class="card"><h4>Ce qui bloque</h4>
+      <ul class="list">
+        <li><b>Fiche non revendiquée</b> : personne ne peut la modifier, répondre aux avis ni ajouter photos et menu.</li>
+        <li>Catégorie « Restaurant » trop vague → n'apparaît pas sur « sandwich », « snack », « durum ».</li>
+        <li>Pas de site, pas de description, peu de photos.</li>
+        <li>Aucun compte Instagram / TikTok / Facebook trouvé en ligne.</li>
+        <li>Ferme à 18h → tout se joue sur le <b>midi</b> et l'après-midi.</li>
+      </ul></div>
+  </div>
+  <div class="callout info"><b class="t">Ce que ça veut dire</b>Pas besoin d'inventer une marque : les clients ont déjà écrit le message (« LE snack du coin », « bien rempli », « frais »). Le travail, c'est de le rendre visible partout où quelqu'un cherche à manger dans le quartier.</div>
+</section>
+
+<!-- 02 -->
+<section id="strategie">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-diag)"></i>02 · Positionnement</div>
+    <h2>Une phrase, <em>partout</em>.</h2>
+    <p class="subtitle">Avant de créer les comptes, fixer l'identité pour que tout soit cohérent.</p>
+  </div>
+  <div class="quote">« Menzili — les sandwichs les plus garnis des Marolles. Fait maison, servi avec le sourire. »</div>
+  <p>Proposition de base à valider avec le patron. Le nom « Menzili » semble venir de l'arabe dialectal (« chez moi ») — si c'est bien ça, c'est un angle de storytelling parfait : <i>« Mange comme à la maison »</i>.</p>
+  <table>
+    <tr><th>Cible</th><th>Où la trouver</th><th>Message</th></tr>
+    <tr><td>Personnel de Saint-Pierre</td><td>Bouche-à-oreille, Facebook, WhatsApp, flyers salle de pause</td><td>Rapide, copieux, commande à l'avance</td></tr>
+    <tr><td>Travailleurs & étudiants du quartier</td><td>Google Maps, Instagram, TikTok</td><td>Le meilleur rapport quantité/prix</td></tr>
+    <tr><td>Visiteurs des Marolles / Jeu de Balle</td><td>Google Maps, Apple Plans, TikTok</td><td>Le spot local authentique</td></tr>
+    <tr><td>Livraison à domicile</td><td>Uber Eats, Deliveroo, Takeaway</td><td>Les sandwichs stars en livraison</td></tr>
+  </table>
+  <div class="callout tip"><b class="t">Kit d'identité minimal</b>Un logo simple (même texte seul), 2 couleurs, une police, un style photo (lumière naturelle, plan serré sur le sandwich coupé). Un modèle Canva pour les posts et le menu suffit au départ.</div>
+</section>
+
+<!-- 03 -->
+<section id="google">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-google)"></i>03 · Google Maps</div>
+    <h2>La priorité <em>numéro un</em>.</h2>
+    <p class="subtitle">Pour un snack, c'est ce canal qui ramène le plus de nouveaux clients : les gens tapent « sandwich près de moi » et vont au premier résultat bien noté.</p>
+  </div>
+
+  <h3>Étape 1 — Revendiquer la fiche</h3>
+  <p>Sur la fiche, cliquer sur <b>« Revendiquer cet établissement »</b> avec un compte Google <b>au nom du commerce</b> (pas ton compte perso). Google demande ensuite une vérification (souvent par vidéo du lieu, appel ou code). Ensuite, ajoute-toi comme <b>gestionnaire</b> plutôt que d'être propriétaire.</p>
+  <div class="callout warn"><b class="t">Important</b>Le patron doit rester propriétaire de la fiche et du compte Google. Toi, tu es gestionnaire. Même logique pour tous les réseaux : les comptes appartiennent au commerce.</div>
+
+  <h3>Étape 2 — Optimiser la fiche</h3>
+  <table>
+    <tr><th>Élément</th><th>Quoi mettre</th><th>Pourquoi</th></tr>
+    <tr><td>Catégorie principale</td><td>« Sandwicherie » (ou « Snack » selon ce que Google propose)</td><td>C'est le critère n°1 pour apparaître sur les bonnes recherches</td></tr>
+    <tr><td>Catégories secondaires</td><td>Restaurant de plats à emporter, Restaurant halal (si c'est le cas), Restaurant tunisien/maghrébin (si pertinent)</td><td>Plus de requêtes couvertes</td></tr>
+    <tr><td>Description</td><td>750 caractères avec les mots réels : sandwich poulet mariné, poulet pané, durum, frais, Marolles, Saint-Pierre</td><td>Pertinence + rassure</td></tr>
+    <tr><td>Horaires</td><td>Horaires exacts + horaires spéciaux (fériés, vacances)</td><td>Rien de pire qu'un client devant une porte fermée</td></tr>
+    <tr><td>Menu</td><td>Menu complet avec prix et photo de chaque produit</td><td>Les gens choisissent sur la photo</td></tr>
+    <tr><td>Photos</td><td>Objectif <b>50+</b> : façade (pour reconnaître le lieu), intérieur, chaque sandwich coupé, équipe, cuisine propre</td><td>Les fiches avec beaucoup de photos reçoivent plus de clics</td></tr>
+    <tr><td>Attributs</td><td>À emporter, livraison, paiement carte/Bancontact, Wi-Fi, accessibilité…</td><td>Filtres de recherche</td></tr>
+    <tr><td>Liens</td><td>Site web, lien de commande, Instagram</td><td>Convertit la vue en commande</td></tr>
+  </table>
+
+  <h3>Étape 3 — Faire vivre la fiche</h3>
+  <div class="grid">
+    <div class="card"><span class="tag t-must">Must</span><h4>Répondre à tous les avis</h4><p>Les 58 existants d'abord, puis chaque nouveau sous 48h. Merci personnalisé pour les positifs, réponse calme et concrète pour les négatifs.</p></div>
+    <div class="card"><span class="tag t-must">Must</span><h4>Machine à avis</h4><p>Un QR code « Laissez-nous un avis » au comptoir et sur les sacs. Objectif : passer de 58 à <b>150 avis</b> en 3 mois. Le nombre d'avis récents pèse dans le classement.</p></div>
+    <div class="card"><span class="tag t-high">Haute</span><h4>Posts Google</h4><p>1 post par semaine : sandwich du moment, nouveauté, fermeture exceptionnelle. Réutilise les photos d'Instagram.</p></div>
+    <div class="card"><span class="tag t-high">Haute</span><h4>Questions / réponses</h4><p>Ajouter soi-même les questions fréquentes (halal ? végétarien ? carte ? livraison ?) et y répondre.</p></div>
+  </div>
+  <div class="callout danger"><b class="t">À ne jamais faire</b>Acheter des avis, faire écrire de faux avis par des proches, ou offrir une réduction <i>en échange d'un avis 5 étoiles</i>. Google peut supprimer les avis ou pénaliser la fiche. Demander un avis honnête, c'est OK.</div>
+</section>
+
+<!-- 04 -->
+<section id="annuaires">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-google)"></i>04 · Autres annuaires</div>
+    <h2>Être trouvé <em>sur tous les téléphones</em>.</h2>
+    <p class="subtitle">Une après-midi de travail, et c'est fait pour des années.</p>
+  </div>
+  <table>
+    <tr><th>Canal</th><th>Pourquoi</th><th>Priorité</th></tr>
+    <tr><td>Apple Business Connect</td><td>Contrôle la fiche dans Apple Plans — tous les iPhones qui cherchent « sandwich » autour</td><td><span class="tag t-must">Must</span></td></tr>
+    <tr><td>Page Facebook</td><td>Sert aussi d'annuaire, et beaucoup de clients plus âgés y cherchent les horaires</td><td><span class="tag t-high">Haute</span></td></tr>
+    <tr><td>Bing Places</td><td>Alimente plusieurs assistants et moteurs ; importable depuis Google</td><td><span class="tag t-bonus">Bonus</span></td></tr>
+    <tr><td>Tripadvisor</td><td>Les touristes des Marolles l'utilisent</td><td><span class="tag t-bonus">Bonus</span></td></tr>
+    <tr><td>Zabihah / HappyCow</td><td>Seulement si halal / options végé — clientèle très fidèle à ces apps</td><td><span class="tag t-bonus">Bonus</span></td></tr>
+  </table>
+  <div class="callout tip"><b class="t">Règle d'or : cohérence</b>Nom, adresse, téléphone et horaires <b>strictement identiques</b> partout (même orthographe, même format). Garde un fichier de référence et copie-colle depuis celui-là.</div>
+</section>
+
+<!-- 05 -->
+<section id="reseaux">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-social)"></i>05 · Réseaux sociaux</div>
+    <h2>Peu de canaux, <em>bien tenus</em>.</h2>
+    <p class="subtitle">Mieux vaut 2 comptes actifs que 5 comptes morts. Tous avec le même pseudo, par ex. <code>@menzili.bxl</code>.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><span class="tag t-must">Must</span><h4>Instagram</h4><p>La vitrine. Bio claire (adresse, horaires, « Sandwichs maison · Marolles »), lien vers le site, Highlights : Menu · Avis · Coulisses · Infos. Toujours géolocaliser les posts.</p></div>
+    <div class="card"><span class="tag t-must">Must</span><h4>TikTok</h4><p>Le canal de la <b>portée</b> : une vidéo de sandwich généreux peut toucher des milliers de Bruxellois sans abonnés. Mêmes vidéos qu'en Reels.</p></div>
+    <div class="card"><span class="tag t-high">Haute</span><h4>WhatsApp Business</h4><p>Catalogue avec le menu, message d'accueil automatique, commandes à l'avance pour les groupes (un service entier de l'hôpital qui commande pour midi).</p></div>
+    <div class="card"><span class="tag t-high">Haute</span><h4>Facebook</h4><p>Peu d'efforts : publication auto depuis Instagram. Utile pour les groupes de quartier (Marolles, Bruxelles-centre) et une clientèle plus âgée.</p></div>
+    <div class="card"><span class="tag t-bonus">Bonus</span><h4>Snapchat</h4><p>Seulement si la clientèle est très jeune. Créer au minimum un profil public pour apparaître sur la Snap Map.</p></div>
+  </div>
+  <h3>Rythme réaliste</h3>
+  <table>
+    <tr><th>Format</th><th>Fréquence</th><th>Temps</th></tr>
+    <tr><td>Vidéo courte (Reel + TikTok)</td><td>3 / semaine</td><td>Tourner 6-8 vidéos en une session de 1h, le matin avant le rush</td></tr>
+    <tr><td>Stories</td><td>Chaque jour d'ouverture</td><td>2 min : « c'est prêt », plat du jour, file d'attente, ambiance</td></tr>
+    <tr><td>Post photo / carrousel</td><td>1 / semaine</td><td>Menu, avis client mis en avant, nouveauté</td></tr>
+  </table>
+  <div class="callout info"><b class="t">Publier quand les gens ont faim</b>Pour un snack ouvert le midi : publier vers 11h-11h30 (la faim arrive) et repartager en story vers 15h-16h pour l'après-midi.</div>
+</section>
+
+<!-- 06 -->
+<section id="contenu">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-social)"></i>06 · Idées de contenu</div>
+    <h2>Le sandwich est <em>la star</em>.</h2>
+    <p class="subtitle">Des formats qui marchent pour la street food, adaptés à ce que les clients disent déjà.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>La coupe</h4><p>Gros plan sur le sandwich qu'on coupe en deux et qu'on ouvre. Montre le « bien garni ». Le format le plus partagé en food.</p></div>
+    <div class="card"><h4>Assemblage ASMR</h4><p>De la marinade au papier d'emballage, son de la plancha, sans musique. 15-20 secondes.</p></div>
+    <div class="card"><h4>Le patron face caméra</h4><p>Les avis parlent de son sourire : c'est un atout. « Je m'appelle X, voici pourquoi mon poulet mariné… »</p></div>
+    <div class="card"><h4>Le client du jour</h4><p>Micro-trottoir rapide : « Pourquoi tu viens ici ? » Les infirmiers, les habitués, les touristes.</p></div>
+    <div class="card"><h4>« Ce que tu as pour X € »</h4><p>Format très viral : montrer tout ce que contient un menu à prix fixe.</p></div>
+    <div class="card"><h4>Coulisses & fraîcheur</h4><p>Livraison du matin, préparation de la marinade, découpe. Prouve le « produits frais » des avis.</p></div>
+    <div class="card"><h4>Réponse aux avis</h4><p>Lire un avis Google à voix haute et y réagir. Prouve la note 4,8 et encourage les autres à en laisser.</p></div>
+    <div class="card"><h4>Le quartier</h4><p>Marché aux puces du Jeu de Balle, Rue Haute… Menzili comme pause du flâneur des Marolles.</p></div>
+  </div>
+  <div class="callout warn"><b class="t">Droits à l'image</b>Toujours demander l'accord avant de filmer un client ou un membre du personnel reconnaissable. Pour les soignants, éviter de montrer badges et uniformes de l'hôpital sans autorisation.</div>
+</section>
+
+<!-- 07 -->
+<section id="site">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-site)"></i>07 · Site web</div>
+    <h2>Une page, <em>pas plus</em>.</h2>
+    <p class="subtitle">Un snack n'a pas besoin d'un gros site : il a besoin d'une page rapide qui répond à 4 questions — quoi, combien, où, quand.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>Contenu de la page</h4>
+      <ul class="list">
+        <li>Hero : grosse photo du sandwich star + phrase de positionnement</li>
+        <li>Boutons : Appeler · Itinéraire · Commander (WhatsApp / livraison)</li>
+        <li>Menu avec prix (version texte, pas une image : Google la lit)</li>
+        <li>Horaires + carte</li>
+        <li>3-4 avis Google mis en avant</li>
+        <li>Galerie Instagram / photos</li>
+      </ul></div>
+    <div class="card"><h4>Côté technique (pour toi)</h4>
+      <ul class="list">
+        <li>Domaine <code>menzili.be</code> (vérifier qu'il est libre) — quelques euros/an</li>
+        <li>Page statique HTML hébergée gratuitement (GitHub Pages, Netlify, Cloudflare Pages)</li>
+        <li>Données structurées <code>schema.org/Restaurant</code> (adresse, horaires, menu) pour Google</li>
+        <li>Mobile d'abord, chargement en moins de 2 s</li>
+        <li>Lien du site dans Google, Instagram, TikTok, Facebook</li>
+      </ul></div>
+  </div>
+  <div class="callout tip"><b class="t">Bonus : le QR menu</b>La même page sert de menu digital : QR code sur la vitrine et le chevalet → les passants voient le menu même quand c'est fermé.</div>
+</section>
+
+<!-- 08 -->
+<section id="livraison">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-local)"></i>08 · Plateformes de livraison</div>
+    <h2>Aussi <em>des vitrines</em>.</h2>
+    <p class="subtitle">La fiche Google affiche déjà un bouton « Commander » : vérifie avec le patron sur quelle plateforme il est.</p>
+  </div>
+  <table>
+    <tr><th>Plateforme</th><th>Intérêt</th><th>Attention</th></tr>
+    <tr><td>Uber Eats</td><td>Très utilisée à Bruxelles, découverte par des gens qui ne passent jamais Rue Haute</td><td>Commission élevée → prix un peu plus hauts sur l'app</td></tr>
+    <tr><td>Deliveroo</td><td>Même logique, autre clientèle</td><td>Pareil</td></tr>
+    <tr><td>Takeaway (Just Eat)</td><td>Bonne présence en Belgique</td><td>Pareil</td></tr>
+  </table>
+  <div class="callout info"><b class="t">Optimiser les fiches livraison</b>Mêmes belles photos que sur Google, noms de produits accrocheurs, 2-3 « best-sellers » en haut du menu. Glisser un petit flyer dans chaque sac (« -10 % en direct au comptoir / sur WhatsApp ») pour transformer les clients de l'app en clients directs.</div>
+</section>
+
+<!-- 09 -->
+<section id="local">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-local)"></i>09 · Marketing local</div>
+    <h2>La rue, <em>c'est aussi un canal</em>.</h2>
+    <p class="subtitle">Le hors-ligne qui nourrit le en-ligne.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><span class="tag t-must">Must</span><h4>Offre Saint-Pierre</h4><p>Petite réduction ou boisson offerte sur présentation du badge hôpital. Proposer des commandes groupées pour les services. Demander à l'hôpital si on peut déposer des flyers en salle de pause.</p></div>
+    <div class="card"><span class="tag t-must">Must</span><h4>Carte de fidélité</h4><p>Version papier à tampons (10e sandwich offert) ou digitale. Les habitués existent déjà : il faut juste les récompenser.</p></div>
+    <div class="card"><span class="tag t-high">Haute</span><h4>Vitrine & chevalet</h4><p>Chevalet sur le trottoir avec le sandwich du jour, QR menu, QR avis Google, logos Instagram/TikTok sur la vitrine.</p></div>
+    <div class="card"><span class="tag t-high">Haute</span><h4>Micro-influenceurs food</h4><p>Inviter 3-5 comptes food bruxellois (5k-50k abonnés) à manger gratuitement. Plus authentique et bien moins cher que les gros comptes.</p></div>
+    <div class="card"><span class="tag t-bonus">Bonus</span><h4>Commerces voisins</h4><p>Échange de flyers avec les boutiques des Marolles, présence dans les groupes Facebook du quartier.</p></div>
+    <div class="card"><span class="tag t-free">Gratuit</span><h4>Packaging</h4><p>Tampon ou autocollant avec le logo + @instagram sur les sacs et papiers. Chaque sandwich emporté devient une pub.</p></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="patron">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-plan)"></i>10 · Avant de commencer</div>
+    <h2>Les questions <em>au patron</em>.</h2>
+    <p class="subtitle">À régler lors du premier rendez-vous.</p>
+  </div>
+  <ul class="check" data-group="patron">
+    <li><input type="checkbox" id="q1"><span>Qui a accès au compte Google du commerce ? Peut-on revendiquer la fiche à son nom ?</span></li>
+    <li><input type="checkbox" id="q2"><span>Menu complet avec prix actuels, et les 3 best-sellers</span></li>
+    <li><input type="checkbox" id="q3"><span>Halal ? Options végétariennes ? (catégories et annuaires)</span></li>
+    <li><input type="checkbox" id="q4"><span>Horaires exacts + jours de fermeture + congés prévus</span></li>
+    <li><input type="checkbox" id="q5"><span>Déjà sur Uber Eats / Deliveroo / Takeaway ? Que fait le bouton « Commander » ?</span></li>
+    <li><input type="checkbox" id="q6"><span>Origine et sens du nom « Menzili » (storytelling)</span></li>
+    <li><input type="checkbox" id="q7"><span>Accepte-t-il d'apparaître en vidéo ? Le personnel ?</span></li>
+    <li><input type="checkbox" id="q8"><span>Budget mensuel (impression, domaine, éventuelle pub, repas offerts aux influenceurs)</span></li>
+    <li><input type="checkbox" id="q9"><span>Qui répond aux messages / commandes WhatsApp au quotidien ?</span></li>
+    <li><input type="checkbox" id="q10"><span>Logo existant ? Couleurs ? Photos déjà faites ?</span></li>
+  </ul>
+</section>
+
+<!-- 11 -->
+<section id="roadmap">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-plan)"></i>11 · Roadmap 90 jours</div>
+    <h2>Dans le bon <em>ordre</em>.</h2>
+    <p class="subtitle">Coche au fur et à mesure — l'avancement est enregistré dans ce navigateur.</p>
+  </div>
+
+  <div class="mega-bar">
+    <div class="row"><span>Progression globale</span><span id="pct-main" class="mono">0 / 0</span></div>
+    <div class="bar"><i id="bar-main"></i></div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl"><div class="when">Semaine 1-2</div><h4>Les fondations</h4><p>Identité, Google Maps, annuaires, création des comptes.</p></div>
+    <div class="tl"><div class="when">Semaine 3-6</div><h4>Le contenu & le site</h4><p>Première session photo/vidéo, site en ligne, rythme de publication lancé.</p></div>
+    <div class="tl"><div class="when">Mois 2-3</div><h4>L'accélération</h4><p>Influenceurs, offre Saint-Pierre, fidélité, analyse des chiffres.</p></div>
+  </div>
+
+  <div class="phase"><h3>Phase 1 — Fondations</h3><span class="count mono" data-count="p1"></span></div>
+  <ul class="check" data-group="p1">
+    <li><input type="checkbox" id="a1"><span>Rendez-vous patron : questions de la section 10</span></li>
+    <li><input type="checkbox" id="a2"><span>Créer un compte Google / e-mail au nom du commerce</span></li>
+    <li><input type="checkbox" id="a3"><span>Revendiquer et vérifier la fiche Google</span></li>
+    <li><input type="checkbox" id="a4"><span>Catégories, description, horaires, attributs, liens</span></li>
+    <li><input type="checkbox" id="a5"><span>Répondre aux 58 avis existants</span></li>
+    <li><input type="checkbox" id="a6"><span>Phrase de positionnement + logo + couleurs validés</span></li>
+    <li><input type="checkbox" id="a7"><span>Réserver les pseudos Instagram, TikTok, Facebook (identiques)</span></li>
+    <li><input type="checkbox" id="a8"><span>Apple Business Connect + Bing Places</span></li>
+    <li><input type="checkbox" id="a9"><span>WhatsApp Business configuré (catalogue, message d'accueil)</span></li>
+  </ul>
+
+  <div class="phase"><h3>Phase 2 — Contenu & site</h3><span class="count mono" data-count="p2"></span></div>
+  <ul class="check" data-group="p2">
+    <li><input type="checkbox" id="b1"><span>Session photo : façade, intérieur, chaque produit, équipe</span></li>
+    <li><input type="checkbox" id="b2"><span>30+ photos et menu complet ajoutés sur Google</span></li>
+    <li><input type="checkbox" id="b3"><span>Session vidéo : 6-8 vidéos courtes d'avance</span></li>
+    <li><input type="checkbox" id="b4"><span>9 premiers posts Instagram (grille qui donne envie) + Highlights</span></li>
+    <li><input type="checkbox" id="b5"><span>Achat du domaine + site one-page en ligne</span></li>
+    <li><input type="checkbox" id="b6"><span>Données structurées schema.org + test Google</span></li>
+    <li><input type="checkbox" id="b7"><span>QR codes imprimés : avis Google, menu, Instagram</span></li>
+    <li><input type="checkbox" id="b8"><span>Rythme lancé : 3 vidéos + stories quotidiennes</span></li>
+    <li><input type="checkbox" id="b9"><span>Fiches livraison mises à jour (photos, best-sellers)</span></li>
+  </ul>
+
+  <div class="phase"><h3>Phase 3 — Accélération</h3><span class="count mono" data-count="p3"></span></div>
+  <ul class="check" data-group="p3">
+    <li><input type="checkbox" id="c1"><span>Carte de fidélité lancée</span></li>
+    <li><input type="checkbox" id="c2"><span>Offre personnel Saint-Pierre + flyers</span></li>
+    <li><input type="checkbox" id="c3"><span>Contacter 5 micro-influenceurs food bruxellois</span></li>
+    <li><input type="checkbox" id="c4"><span>Chevalet trottoir + stickers vitrine</span></li>
+    <li><input type="checkbox" id="c5"><span>Posts Google hebdo en routine</span></li>
+    <li><input type="checkbox" id="c6"><span>Présence dans les groupes Facebook du quartier</span></li>
+    <li><input type="checkbox" id="c7"><span>Bilan chiffré à 90 jours (section 12) et ajustements</span></li>
+  </ul>
+</section>
+
+<!-- 12 -->
+<section id="kpi">
+  <div class="sec-head">
+    <div class="eyebrow"><i class="dot" style="background:var(--c-plan)"></i>12 · Mesurer</div>
+    <h2>Savoir ce qui <em>marche</em>.</h2>
+    <p class="subtitle">Note les chiffres de départ maintenant, puis chaque mois.</p>
+  </div>
+  <table>
+    <tr><th>Indicateur</th><th>Où le trouver</th><th>Départ</th><th>Objectif 90 j</th></tr>
+    <tr><td>Nombre d'avis Google</td><td>Fiche Google</td><td class="mono">58</td><td class="mono">150</td></tr>
+    <tr><td>Note moyenne</td><td>Fiche Google</td><td class="mono">4,8</td><td class="mono">≥ 4,7</td></tr>
+    <tr><td>Appels + itinéraires demandés</td><td>Statistiques Google Business Profile</td><td class="mono">—</td><td class="mono">× 2</td></tr>
+    <tr><td>Photos sur la fiche</td><td>Fiche Google</td><td class="mono">19</td><td class="mono">50+</td></tr>
+    <tr><td>Abonnés Instagram / TikTok</td><td>Apps</td><td class="mono">0</td><td class="mono">500 / 1 000</td></tr>
+    <tr><td>Commandes WhatsApp / semaine</td><td>WhatsApp Business</td><td class="mono">0</td><td class="mono">à définir</td></tr>
+    <tr><td>« Comment nous avez-vous connus ? »</td><td>Demander au comptoir (1 semaine/mois)</td><td class="mono">—</td><td class="mono">suivi</td></tr>
+  </table>
+  <div class="callout info"><b class="t">Le seul vrai juge</b>Les abonnés, c'est bien ; le chiffre qui compte pour le patron, c'est le nombre de sandwichs vendus. Demande-lui de comparer son chiffre d'affaires mois par mois.</div>
+
+  <div class="foot mono">Menzili · Rue Haute 326, 1000 Bruxelles · Plan établi le 18/11/2026 à partir de la fiche Google Maps publique.</div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var KEY='menzili-plan-v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){state={}}
+  var boxes=[].slice.call(document.querySelectorAll('.check input'));
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  function render(){
+    var done=0;
+    boxes.forEach(function(b){b.checked=!!state[b.id];b.closest('li').classList.toggle('done',b.checked);if(b.checked)done++;});
+    var pct=boxes.length?Math.round(done/boxes.length*100):0;
+    document.getElementById('bar-main').style.width=pct+'%';
+    document.getElementById('bar-side').style.width=pct+'%';
+    document.getElementById('pct-main').textContent=done+' / '+boxes.length+' · '+pct+'%';
+    document.getElementById('pct-side').textContent=pct+'%';
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var g=document.querySelectorAll('[data-group="'+el.dataset.count+'"] input');
+      var d=[].filter.call(g,function(x){return x.checked}).length;
+      el.textContent=d+' / '+g.length;
+    });
+  }
+  boxes.forEach(function(b){
+    b.addEventListener('change',function(){state[b.id]=b.checked;save();render();});
+    b.closest('li').addEventListener('click',function(e){if(e.target!==b){b.checked=!b.checked;b.dispatchEvent(new Event('change'));}});
+  });
+  render();
+})();
+</script>
+</body>
+</html>

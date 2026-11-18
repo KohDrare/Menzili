@@ -17,4 +17,6 @@ Tout se trouve dans `index.html` (page unique, sans dépendances) :
 
 GitHub Pages, branche `main`, dossier racine.
 
+Plan de communication et visibilité : `plan/` (en ligne sur `/plan/`).
+
 `assets/` contient le logo détouré (fond clair / fond foncé).

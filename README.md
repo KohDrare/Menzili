@@ -20,3 +20,7 @@ GitHub Pages, branche `main`, dossier racine.
 Plan de communication et visibilité : `plan/` (en ligne sur `/plan/`).
 
 `assets/` contient le logo détouré (fond clair / fond foncé).
+
+## Photos
+
+`assets/menu/` : photos d'illustration provisoires (Pexels, licence gratuite usage commercial). Chaque produit a `ID-t.jpg` (vignette 240×240) et `ID.jpg` (900×600), où ID est l'identifiant du produit dans `MENU` (s1, s2…). Pour mettre une vraie photo, remplace simplement les deux fichiers en gardant le même nom.

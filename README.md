@@ -12,6 +12,8 @@ Tout se trouve dans `index.html` (page unique, sans dépendances) :
 
 - `CONFIG` : numéro WhatsApp qui reçoit les commandes, horaires, réduction, créneaux de livraison, minimum de commande
 - `MENU` : catégories, produits, prix, options (sauces, crudités, suppléments…)
+- `OFFERS` : les grandes offres de l'accueil (à valider avec le patron)
+- `ATL` : ingrédients et prix de l'Atelier (sandwich sur mesure, ingrédients dessinés en SVG)
 
 ## Hébergement
 

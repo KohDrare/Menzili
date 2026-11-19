@@ -201,6 +201,14 @@ img{display:block}
 .acc.in p{color:var(--mute)}
 .acc.in .out{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--ink);background:#fff;padding:10px 13px;border-radius:30px;white-space:nowrap}
 .pf.logged{background:var(--ink);color:#fff}
+.ssos{display:grid;gap:8px;margin-top:14px}
+.sso{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:14px;font-size:15px;font-weight:700;background:#2a2724;color:#fff;width:100%}
+.sso svg{width:19px;height:19px}
+.sso .pl{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px}
+.sso.ap{background:#fff;color:#111}
+.sso.ap .pl{background:#111;color:#fff;font-size:11px}
+.sso.go{background:#fff;color:#111}
+.sso.go .pl{background:#f1f1f1;color:#4285f4}
 .fwrap{perspective:900px;margin-top:10px;padding:6px 0}
 .fcard{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px #3b241024,0 0 0 1px #00000008;transform:rotateX(0) rotateY(0);transition:transform .6s cubic-bezier(.3,1.5,.5,1),box-shadow .6s;will-change:transform;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 .fcard.drag{transition:transform .06s linear,box-shadow .2s;cursor:grabbing}
@@ -1166,7 +1174,7 @@ function openLegal(k){const [t,body]=legalHTML(k);view="legal";
 /* =====================================================================
    COMPTES (Supabase) — connexion par code reçu par e-mail
    ===================================================================== */
-const ACC={sb:null,user:null,profile:null,step:"email",email:"",busy:false,orders:null};
+const ACC={sb:null,user:null,profile:null,step:"choose",channel:"email",ident:"",busy:false,orders:null,prov:{email:true,phone:false,google:false,apple:false}};
 const accOn=()=>!!ACC.sb;
 async function accInit(){
   const c=CONFIG.account;
@@ -1174,16 +1182,21 @@ async function accInit(){
   try{
     const sb=window.__SUPA_MOCK||(await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm")).createClient(c.supabaseUrl,c.supabaseAnonKey,{auth:{persistSession:true,storageKey:"menzili-auth",detectSessionInUrl:true}});
     ACC.sb=sb;
+    try{const st=window.__SUPA_MOCK?window.__SUPA_MOCK.settings:await (await fetch(c.supabaseUrl+"/auth/v1/settings",{headers:{apikey:c.supabaseAnonKey}})).json();
+      const x=(st&&st.external)||{};ACC.prov={email:x.email!==false,phone:!!x.phone,google:!!x.google,apple:!!x.apple}}catch(e){}
     const {data}=await sb.auth.getSession();await accSetUser(data&&data.session?data.session.user:null);
     sb.auth.onAuthStateChange((_e,session)=>{const u=session?session.user:null;if((u&&u.id)!==(ACC.user&&ACC.user.id))accSetUser(u)});
   }catch(e){console.warn("Comptes indisponibles",e);ACC.sb=null}
   if(view==="profile")drawProfile();
+  try{if(sessionStorage.getItem("menzili-oauth")){sessionStorage.removeItem("menzili-oauth");if(ACC.user){drawProfile();openSheet();toast("Connecté")}}}catch(e){}
 }
 async function accSetUser(u){
   ACC.user=u;ACC.orders=null;ACC.profile=null;
   if(u){
     try{const {data}=await ACC.sb.from("profiles").select("*").eq("id",u.id).maybeSingle();ACC.profile=data||null}catch(e){}
-    const c=getClient();
+    const c=getClient(),md=u.user_metadata||{};
+    if(!c.name&&(md.full_name||md.name||md.given_name)){c.name=(md.given_name||md.full_name||md.name).split(" ")[0];try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
+    if(!c.tel&&u.phone){c.tel="+"+u.phone.replace(/^\+/,"");try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
     if(ACC.profile){const p=ACC.profile;try{localStorage.setItem("menzili-client",JSON.stringify({name:p.name||c.name||"",tel:p.phone||c.tel||"",svc:p.service||c.svc||"",loc:p.location||c.loc||""}))}catch(e){}if(typeof p.staff==="boolean"){S.staff=p.staff}}
     else if(c.name||c.tel){accSaveProfile()}
     await accSyncLocal();await accLoadOrders();
@@ -1209,20 +1222,27 @@ async function accSaveProfile(){
   if(!ACC.user)return;const c=getClient();
   try{await ACC.sb.from("profiles").upsert({id:ACC.user.id,name:c.name||null,phone:c.tel||null,service:c.svc||null,location:c.loc||null,staff:!!S.staff,updated_at:new Date().toISOString()})}catch(e){console.warn(e)}
 }
-async function accSendCode(email){
+const toE164=v=>{let d=v.replace(/[^\d+]/g,"");if(d.startsWith("00"))d="+"+d.slice(2);if(d.startsWith("+"))return d;if(d.startsWith("0"))return"+32"+d.slice(1);return"+32"+d};
+const prettyPhone=p=>{const d=String(p||"").replace(/^\+?/,"+");return d.startsWith("+32")?"0"+d.slice(3).replace(/(\d{3})(\d{2})(\d{2})(\d{2})/,"$1 $2 $3 $4"):d};
+async function accSendCode(channel,ident){
   ACC.busy=true;drawProfile();
-  const {error}=await ACC.sb.auth.signInWithOtp({email,options:{shouldCreateUser:true}});
+  const {error}=await ACC.sb.auth.signInWithOtp(channel==="phone"?{phone:ident,options:{shouldCreateUser:true}}:{email:ident,options:{shouldCreateUser:true}});
   ACC.busy=false;
-  if(error){toast("Envoi impossible, réessaie",false);drawProfile();return}
-  ACC.email=email;ACC.step="code";drawProfile();toast("Code envoyé par e-mail");
+  if(error){toast(channel==="phone"?"SMS impossible, vérifie le numéro":"Envoi impossible, réessaie",false);drawProfile();return}
+  ACC.channel=channel;ACC.ident=ident;ACC.step="code";drawProfile();toast(channel==="phone"?"Code envoyé par SMS":"Code envoyé par e-mail");
   setTimeout(()=>{const i=$("#accCode");i&&i.focus()},350);
 }
 async function accVerify(code){
   ACC.busy=true;drawProfile();
-  const {data,error}=await ACC.sb.auth.verifyOtp({email:ACC.email,token:code,type:"email"});
+  const {data,error}=await ACC.sb.auth.verifyOtp(ACC.channel==="phone"?{phone:ACC.ident,token:code,type:"sms"}:{email:ACC.ident,token:code,type:"email"});
   ACC.busy=false;
   if(error||!data||!data.user){toast("Code incorrect ou expiré",false);drawProfile();return}
-  ACC.step="email";toast("Connecté");await accSetUser(data.user);
+  ACC.step="choose";toast("Connecté");await accSetUser(data.user);
+}
+async function accOAuth(provider){
+  try{sessionStorage.setItem("menzili-oauth","1")}catch(e){}
+  const {error}=await ACC.sb.auth.signInWithOAuth({provider,options:{redirectTo:location.href.split("#")[0]}});
+  if(error){try{sessionStorage.removeItem("menzili-oauth")}catch(e){}toast("Connexion impossible pour le moment",false)}
 }
 async function accLogout(){try{await ACC.sb.auth.signOut()}catch(e){}ACC.user=null;ACC.orders=null;ACC.profile=null;update();drawProfile();toast("Déconnecté")}
 async function accDeleteData(){
@@ -1253,15 +1273,33 @@ function loyaltyHTML(){
    :`<div class="fstat"><b>${L.filled} / ${L.need} tampons</b><span>${L.filled?`Encore ${left} sandwich${left>1?"s":""} avant le cadeau`:"1 sandwich commandé = 1 tampon"}</span></div><div class="fbar"><i style="width:${L.filled/L.need*100}%"></i></div>`}
   <p class="note">Les tampons se remplissent avec tes sandwichs commandés sur le site${ACC.user?"":" depuis ce téléphone. Crée ton compte pour garder ta carte sur tous tes appareils"}.</p>`;
 }
+const AI={
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>',
+  email:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg>',
+  google:'', apple:'',
+};
 function accCardHTML(){
   if(!accOn())return `<div class="acc"><h4>Compte ${CONFIG.name}</h4><p>Bientôt : connecte-toi pour retrouver ton historique sur tous tes appareils. En attendant, tes commandes sont gardées sur ce téléphone.</p></div>`;
-  if(ACC.user)return `<div class="acc in"><span><h4 style="font-size:15px">Connecté</h4><p style="margin-top:2px">${esc(ACC.user.email||"")}</p><span class="sync"><i></i>Historique synchronisé</span></span><button class="out" id="accOut">Se déconnecter</button></div>`;
-  if(ACC.step==="code")return `<div class="acc"><h4>Entre ton code</h4><p>On vient d'envoyer un code à <b style="color:#fff">${esc(ACC.email)}</b>. Il peut mettre une minute à arriver.</p>
+  if(ACC.user){const u=ACC.user,via=(u.app_metadata&&u.app_metadata.provider)||"email";
+    const viaL={google:"Google",apple:"Apple",phone:"numéro",email:"e-mail"}[via]||via;
+    return `<div class="acc in"><span><h4 style="font-size:15px">Connecté${viaL?` via ${viaL}`:""}</h4><p style="margin-top:2px">${esc(u.email||prettyPhone(u.phone)||"")}</p><span class="sync"><i></i>Historique synchronisé</span></span><button class="out" id="accOut">Se déconnecter</button></div>`}
+  const back=`<button class="lk" id="accBack">← Autres options</button>`;
+  if(ACC.step==="code")return `<div class="acc"><h4>Entre ton code</h4><p>On vient d'envoyer un code ${ACC.channel==="phone"?"par SMS au":"à"} <b style="color:#fff">${esc(ACC.channel==="phone"?prettyPhone(ACC.ident):ACC.ident)}</b>. Il peut mettre une minute à arriver.</p>
     <div class="af"><input class="code" id="accCode" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="••••••"><button class="ab ${ACC.busy?"dis":""}" id="accVerify">${ACC.busy?"…":"Valider"}</button></div>
-    <button class="lk" id="accBack">Changer d'adresse</button> · <button class="lk" id="accResend">Renvoyer le code</button></div>`;
-  return `<div class="acc"><h4>Crée ton compte en 10 secondes</h4><p>Pas de mot de passe : on t'envoie un code par e-mail.</p>
-    <div class="perksA"><span>Historique partout</span><span>Recommander en 1 tap</span><span>Avantage Saint-Pierre gardé</span></div>
-    <div class="af"><input id="accEmail" type="email" inputmode="email" autocomplete="email" placeholder="ton@email.com" value="${esc(ACC.email)}"><button class="ab ${ACC.busy?"dis":""}" id="accSend">${ACC.busy?"…":"Recevoir"}</button></div></div>`;
+    ${back} · <button class="lk" id="accResend">Renvoyer le code</button></div>`;
+  if(ACC.step==="email")return `<div class="acc"><h4>Avec ton e-mail</h4><p>On t'envoie un code, pas besoin de mot de passe.</p>
+    <div class="af"><input id="accEmail" type="email" inputmode="email" autocomplete="email" placeholder="ton@email.com" value="${ACC.channel==="email"?esc(ACC.ident):""}"><button class="ab ${ACC.busy?"dis":""}" id="accSend">${ACC.busy?"…":"Recevoir"}</button></div>${back}</div>`;
+  if(ACC.step==="phone")return `<div class="acc"><h4>Avec ton numéro</h4><p>On t'envoie un code par SMS.</p>
+    <div class="af"><input id="accPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0470 12 34 56" value="${esc(getClient().tel||"")}"><button class="ab ${ACC.busy?"dis":""}" id="accSendP">${ACC.busy?"…":"Recevoir"}</button></div>${back}</div>`;
+  const P=ACC.prov,btns=[
+    P.apple?`<button class="sso ap" data-sso="apple">${AI.apple}Continuer avec Apple</button>`:"",
+    P.google?`<button class="sso go" data-sso="google">${AI.google}Continuer avec Google</button>`:"",
+    P.phone?`<button class="sso" data-step="phone">${AI.phone}Continuer avec mon numéro</button>`:"",
+    P.email?`<button class="sso" data-step="email">${AI.email}Continuer avec mon e-mail</button>`:"",
+  ].join("");
+  return `<div class="acc"><h4>Connecte-toi en 10 secondes</h4><p>Pas de mot de passe à retenir.</p>
+    <div class="perksA"><span>Historique partout</span><span>Carte fidélité gardée</span><span>Recommander en 1 tap</span></div>
+    <div class="ssos">${btns}</div></div>`;
 }
 function drawProfile(){
   view="profile";const c=getClient(),H=histList(),pct=Math.round(CONFIG.staffDiscount*100);
@@ -1304,14 +1342,19 @@ function drawProfile(){
   sheet.querySelectorAll("[data-lg]").forEach(b=>b.onclick=()=>openLegal(b.dataset.lg));
   const cl=$("#pfClear");if(cl)cl.onclick=async()=>{if(cl.dataset.c){await accDeleteData();toast("Données effacées");drawProfile()}else{cl.dataset.c=1;cl.firstChild.textContent=ACC.user?"Confirmer : effacer compte et historique":"Confirmer l'effacement"}};
   // compte
+  sheet.querySelectorAll("[data-sso]").forEach(b=>b.onclick=()=>accOAuth(b.dataset.sso));
+  sheet.querySelectorAll("[data-step]").forEach(b=>b.onclick=()=>{ACC.step=b.dataset.step;drawProfile();setTimeout(()=>{const i=$(ACC.step==="phone"?"#accPhone":"#accEmail");i&&i.focus()},200)});
   const em=$("#accEmail"),sd=$("#accSend");
-  if(sd)sd.onclick=()=>{const v=em.value.trim();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){toast("Adresse e-mail invalide",false);return}accSendCode(v)};
+  if(sd)sd.onclick=()=>{const v=em.value.trim();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){toast("Adresse e-mail invalide",false);return}accSendCode("email",v)};
   if(em)em.onkeydown=e=>{if(e.key==="Enter")sd.click()};
+  const ph=$("#accPhone"),sp=$("#accSendP");
+  if(sp)sp.onclick=()=>{const v=toE164(ph.value);if(v.replace(/\D/g,"").length<10){toast("Numéro invalide",false);return}accSendCode("phone",v)};
+  if(ph)ph.onkeydown=e=>{if(e.key==="Enter")sp.click()};
   const cd=$("#accCode"),vf=$("#accVerify");
-  if(vf)vf.onclick=()=>{const v=cd.value.replace(/\D/g,"");if(v.length<6){toast("Entre le code reçu par e-mail",false);return}accVerify(v)};
+  if(vf)vf.onclick=()=>{const v=cd.value.replace(/\D/g,"");if(v.length<6){toast("Entre le code reçu",false);return}accVerify(v)};
   if(cd){cd.oninput=()=>{cd.value=cd.value.replace(/\D/g,"")};cd.onkeydown=e=>{if(e.key==="Enter")vf.click()}}
-  const bk=$("#accBack");if(bk)bk.onclick=()=>{ACC.step="email";drawProfile()};
-  const rs=$("#accResend");if(rs)rs.onclick=()=>accSendCode(ACC.email);
+  const bk=$("#accBack");if(bk)bk.onclick=()=>{ACC.step="choose";drawProfile()};
+  const rs=$("#accResend");if(rs)rs.onclick=()=>accSendCode(ACC.channel,ACC.ident);
   const out=$("#accOut");if(out)out.onclick=accLogout;
 }
 function bindTilt(el){

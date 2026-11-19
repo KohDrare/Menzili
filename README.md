@@ -56,3 +56,14 @@ Pour des envois d'e-mails fiables en production, configure un SMTP personnalisé
 Règle modifiable dans `CONFIG.loyalty.every`.
 
 ⚠️ Clés Supabase : seule la clé **publishable** (`sb_publishable_…`) va dans le site. La clé **secret** (`sb_secret_…`) ne doit jamais être publiée ni partagée.
+
+## Méthodes de connexion (numéro, Google, Apple)
+
+Le site lit automatiquement les méthodes activées dans Supabase (Authentication → Sign In / Providers) : un bouton apparaît pour chaque méthode activée, sans toucher au code.
+
+Pour toutes les méthodes, ajoute l'adresse du site dans **Authentication → URL Configuration → Redirect URLs** : `https://kohdrare.github.io/Menzili/**`
+
+- **E-mail** : déjà actif (code à 6 chiffres, voir plus haut pour le modèle d'e-mail).
+- **Numéro de téléphone (SMS)** : Providers → Phone → activer, puis brancher un fournisseur SMS (Twilio, MessageBird, Vonage ou Textlocal). Les SMS sont payants (quelques centimes par code).
+- **Google** (gratuit) : dans Google Cloud Console → APIs & Services → Credentials → *Create OAuth client ID* (type « Web application »). Dans *Authorized redirect URIs*, colle l'URL de callback affichée par Supabase (`https://awrvyfeagqicwjcswutw.supabase.co/auth/v1/callback`). Copie ensuite le Client ID et le Client Secret dans Supabase → Providers → Google.
+- **Apple** : nécessite un compte Apple Developer (payant, abonnement annuel). Crée un *Services ID* et une clé *Sign in with Apple*, puis renseigne-les dans Supabase → Providers → Apple (même URL de callback).

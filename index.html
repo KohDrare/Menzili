@@ -201,6 +201,22 @@ img{display:block}
 .acc.in p{color:var(--mute)}
 .acc.in .out{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--ink);background:#fff;padding:10px 13px;border-radius:30px;white-space:nowrap}
 .pf.logged{background:var(--ink);color:#fff}
+.fcard{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px #3b241024,0 0 0 1px #00000008;margin-top:10px}
+.fcard img{width:100%;display:block}
+.stp{position:absolute;width:6.3%;aspect-ratio:1;border-radius:50%;background:#f26522;display:grid;place-items:center;transform:translate(-50%,-50%) rotate(var(--r));box-shadow:0 1px 3px #6b2a0a55;animation:stampIn .45s var(--ease) both}
+.stp svg{width:58%;height:58%;color:#fff}
+@keyframes stampIn{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--r)) scale(1.8)}70%{opacity:1;transform:translate(-50%,-50%) rotate(var(--r)) scale(.92)}100%{transform:translate(-50%,-50%) rotate(var(--r)) scale(1)}}
+.fready{position:absolute;width:10.4%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 0 #f26522aa;animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 14px #f2652200}100%{box-shadow:0 0 0 0 #f2652200}}
+.fstat{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.fstat b{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.fstat span{font-size:13px;color:var(--mute)}
+.fbar{height:6px;border-radius:6px;background:#ece5db;overflow:hidden;margin-top:8px}
+.fbar i{display:block;height:100%;background:var(--or);border-radius:6px;transition:width .6s var(--ease)}
+.fgift{margin-top:12px;background:var(--or);color:#fff;border-radius:16px;padding:13px 15px;font-size:14px;font-weight:650;line-height:1.35}
+.fgift b{display:block;font-size:16px;font-weight:800}
+.stamps-line{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--or-d);font-weight:650;margin-top:10px}
+.stamps-line i{width:18px;height:18px;border-radius:50%;background:var(--or);display:inline-grid;place-items:center;color:#fff;font-style:normal;font-size:10px}
 .sync{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:6px;margin-top:6px}
 .sync i{width:7px;height:7px;border-radius:50%;background:#34c759}
 .credit img{height:24px;margin:0 auto 10px}
@@ -648,6 +664,7 @@ const CONFIG = {
   staffDiscount: 0.10,
   delivery: { cutoff:"10:30", slots:["11:30","12:00","12:30","13:00","13:30","14:00"], minOrder: 15, fee: 0 },
   payment: "Bancontact, carte ou espèces, au retrait ou à la livraison",
+  loyalty: { every: 10 },     // carte fidélité : le 10e sandwich est offert (9 tampons)
   /* Réseaux & liens — laisser "" tant que le compte n'existe pas (l'icône s'affiche grisée « bientôt ») */
   links: {
     instagram: "",            // ex. "https://instagram.com/menzili.bxl"
@@ -664,8 +681,8 @@ const CONFIG = {
   },
   /* Comptes clients (Supabase) — voir README. Vide = comptes désactivés, historique gardé sur l'appareil */
   account: {
-    supabaseUrl: "",          // ex. "https://xxxx.supabase.co"
-    supabaseAnonKey: "",      // clé publique « anon » (protégée par les règles RLS)
+    supabaseUrl: "https://awrvyfeagqicwjcswutw.supabase.co",
+    supabaseAnonKey: "sb_publishable_7LdanorbRHJt67k6A0GLKg_2CVV-MG4", // clé PUBLIQUE (publishable) — ne jamais mettre la clé secrète ici
   },
 };
 
@@ -1006,6 +1023,7 @@ function drawCart(){
       ${t.disc?`<div class="g"><span>Réduction Saint-Pierre −${Math.round(CONFIG.staffDiscount*100)} %</span><span>−${fmt(t.disc)}</span></div>`:""}
       ${liv?`<div><span>Livraison</span><span>${t.fee?fmt(t.fee):"Offerte"}</span></div>`:""}
       <div class="t"><span>Total</span><span>${fmt(t.total)}</span></div></div>`:""}
+    ${S.cart.length&&countSandwiches(S.cart)?`<div class="stamps-line"><i>${I.check}</i>+${countSandwiches(S.cart)} tampon${countSandwiches(S.cart)>1?"s":""} sur ta carte fidélité${loyalty().ready?" · ton sandwich offert sera déduit par le snack":""}</div>`:""}
     ${min?`<div class="alert">Livraison dès ${fmt(CONFIG.delivery.minOrder)} — encore ${fmt(CONFIG.delivery.minOrder-t.sub)}. Astuce : commande avec tes collègues.</div>`:""}
   </div><div class="sf">${S.cart.length?`<button class="btn btn-or ${canCheckout()?"":"dis"}" id="goCo">Continuer · ${fmt(t.total)}</button>`:`<button class="btn btn-dark" id="goMenu">Voir la carte</button>`}</div>`;
   bindClose();
@@ -1059,7 +1077,7 @@ function send(e,D){
   if(!ok||!co.s){e.preventDefault();toast("Complète les champs en rouge",false);return}
   try{localStorage.setItem("menzili-client",JSON.stringify({name,tel,svc,loc}))}catch(err){}
   const t=totals(),day=D[co.d],num="M"+(100+Math.floor(Math.random()*900)),when=`${day.label} · ${co.s==="ASAP"?"dès que possible":co.s}`;
-  const msg=[`🧾 *Commande ${CONFIG.name} #${num}*`,`${liv?"🏥 Livraison Saint-Pierre":"🛍 À emporter"} — ${when}`,liv?`📍 ${svc}${loc?" · "+loc:""}`:null,`👤 ${name} · ${tel}`,S.staff?`🎫 Personnel Saint-Pierre (−${Math.round(CONFIG.staffDiscount*100)} %)`:null,``,
+  const msg=[`🧾 *Commande ${CONFIG.name} #${num}*`,`${liv?"🏥 Livraison Saint-Pierre":"🛍 À emporter"} — ${when}`,liv?`📍 ${svc}${loc?" · "+loc:""}`:null,`👤 ${name} · ${tel}`,S.staff?`🎫 Personnel Saint-Pierre (−${Math.round(CONFIG.staffDiscount*100)} %)`:null,loyalty().ready&&countSandwiches(S.cart)?`🎁 Carte fidélité complète : 1 sandwich offert à déduire`:null,``,
     ...S.cart.map(l=>`• ${l.qty}× ${l.name}${l.opts?` (${l.opts})`:""}${l.note?` — « ${l.note} »`:""} : ${fmt(l.unit*l.qty)}`),``,
     t.disc?`Sous-total : ${fmt(t.sub)}\nRéduction : −${fmt(t.disc)}`:null,`*Total : ${fmt(t.total)}*`,`Paiement ${liv?"à la livraison":"au retrait"}`,note?`📝 ${note}`:null].filter(x=>x!==null).join("\n");
   const url=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;e.currentTarget.href=url;
@@ -1213,6 +1231,21 @@ async function accDeleteData(){
 const getClient=()=>{try{return JSON.parse(localStorage.getItem("menzili-client")||"{}")}catch(e){return{}}};
 const getOrders=()=>{try{return JSON.parse(localStorage.getItem("menzili-orders")||"[]")}catch(e){return[]}};
 const histList=()=>ACC.user&&ACC.orders?ACC.orders:getOrders();
+/* ---- Carte fidélité ---- */
+const SANDWICH_IDS=new Set(["atelier","m1",...MENU.filter(c=>c.id==="chauds"||c.id==="froids").flatMap(c=>c.items.map(i=>i.id))]);
+const countSandwiches=items=>(items||[]).reduce((n,l)=>n+(SANDWICH_IDS.has(l.id)?l.qty:0),0);
+function loyalty(){const n=histList().reduce((t,h)=>t+countSandwiches(h.items),0),per=CONFIG.loyalty.every;const filled=n%per;return{n,filled,need:per-1,ready:filled===per-1}}
+const STAMP_POS=[276,388,500,611,720,829,937,1045,1153].map(x=>[(x-4)/1547*100,(678-4)/1004*100]);
+function loyaltyHTML(){
+  const L=loyalty(),left=L.need-L.filled;
+  return `<div class="mc-title" style="margin-top:22px">Ma carte fidélité</div>
+  <div class="fcard"><img src="assets/fidelite.jpg" alt="Carte fidélité Menzïli : ${L.filled} tampon${L.filled>1?"s":""} sur ${L.need}">
+    ${STAMP_POS.slice(0,L.filled).map(([x,y],i)=>`<span class="stp" style="left:${x}%;top:${y}%;--r:${[-12,8,-5,14,-9,6,-14,10,-3][i]}deg;animation-delay:${.15+i*.07}s">${I.check}</span>`).join("")}
+    ${L.ready?`<span class="fready" style="left:${(1283-4)/1547*100}%;top:${(680-4)/1004*100}%"></span>`:""}</div>
+  ${L.ready?`<div class="fgift"><b>🎁 Ton prochain sandwich est offert !</b>Il sera déduit par le snack sur ta prochaine commande. Montre cet écran au comptoir.</div>`
+   :`<div class="fstat"><b>${L.filled} / ${L.need} tampons</b><span>${L.filled?`Encore ${left} sandwich${left>1?"s":""} avant le cadeau`:"1 sandwich commandé = 1 tampon"}</span></div><div class="fbar"><i style="width:${L.filled/L.need*100}%"></i></div>`}
+  <p class="note">Les tampons se remplissent avec tes sandwichs commandés sur le site${ACC.user?"":" depuis ce téléphone. Crée ton compte pour garder ta carte sur tous tes appareils"}.</p>`;
+}
 function accCardHTML(){
   if(!accOn())return `<div class="acc"><h4>Compte ${CONFIG.name}</h4><p>Bientôt : connecte-toi pour retrouver ton historique sur tous tes appareils. En attendant, tes commandes sont gardées sur ce téléphone.</p></div>`;
   if(ACC.user)return `<div class="acc in"><span><h4 style="font-size:15px">Connecté</h4><p style="margin-top:2px">${esc(ACC.user.email||"")}</p><span class="sync"><i></i>Historique synchronisé</span></span><button class="out" id="accOut">Se déconnecter</button></div>`;
@@ -1232,7 +1265,8 @@ function drawProfile(){
     <div class="pfh"><span class="av">${ini?esc(ini):`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg>`}</span>
       <span><b>${c.name?`Salut ${esc(c.name)} 👋`:"Bienvenue"}</b><span>${H.length?`${H.length} commande${H.length>1?"s":""}`:"Pas encore de commande"}</span></span></div>
     ${accCardHTML()}
-    <div class="pcard"><h4><span style="color:var(--or)">${I.hosp}</span>Avantage Saint-Pierre</h4>
+    ${loyaltyHTML()}
+    <div class="pcard" style="margin-top:22px"><h4><span style="color:var(--or)">${I.hosp}</span>Avantage Saint-Pierre</h4>
       <p>Pour le personnel de l'hôpital, sur présentation du badge.</p>
       <div class="perks"><div class="perk"><i>%</i><span><b>−${pct} %</b> sur toute la commande</span></div>
         <div class="perk"><i>✓</i><span>Livraison <b>offerte</b> à ton service (dès ${fmt(CONFIG.delivery.minOrder)})</span></div>

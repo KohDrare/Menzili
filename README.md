@@ -49,3 +49,10 @@ Pour activer les vrais comptes (historique sur tous les appareils), il faut un p
 
 La clé `anon` est publique par conception : la sécurité est assurée par les règles RLS du fichier SQL (chaque client ne voit que ses propres données).
 Pour des envois d'e-mails fiables en production, configure un SMTP personnalisé dans Supabase (l'envoi intégré est limité).
+
+## Carte fidélité
+
+`assets/fidelite.jpg` est affichée dans « Mon profil ». Les tampons (positions calées sur les 9 cercles de la carte) se remplissent avec les sandwichs commandés sur le site : sandwichs chauds et froids, créations de l'Atelier, Menu Pause. Au 9e tampon, le 10e sandwich est offert. Le message WhatsApp le signale au snack, qui le déduit au retrait ou à la livraison.
+Règle modifiable dans `CONFIG.loyalty.every`.
+
+⚠️ Clés Supabase : seule la clé **publishable** (`sb_publishable_…`) va dans le site. La clé **secret** (`sb_secret_…`) ne doit jamais être publiée ni partagée.

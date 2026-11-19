@@ -1282,7 +1282,7 @@ function accCardHTML(){
   if(!accOn())return `<div class="acc"><h4>Compte ${CONFIG.name}</h4><p>Bientôt : connecte-toi pour retrouver ton historique sur tous tes appareils. En attendant, tes commandes sont gardées sur ce téléphone.</p></div>`;
   if(ACC.user){const u=ACC.user,via=(u.app_metadata&&u.app_metadata.provider)||"email";
     const viaL={google:"Google",apple:"Apple",phone:"numéro",email:"e-mail"}[via]||via;
-    return `<div class="acc in"><span><h4 style="font-size:15px">Connecté${viaL?` via ${viaL}`:""}</h4><p style="margin-top:2px">${esc(u.email||prettyPhone(u.phone)||"")}</p><span class="sync"><i></i>Historique synchronisé</span></span><button class="out" id="accOut">Se déconnecter</button></div>`}
+    return `<div class="acc in"><span><h4 style="font-size:15px">Connecté${viaL?` via ${viaL}`:""}</h4><p style="margin-top:2px">${esc(u.email||prettyPhone(u.phone)||"")}</p><span class="sync"><i></i>Historique et carte fidélité synchronisés</span></span></div>`}
   const back=`<button class="lk" id="accBack">← Autres options</button>`;
   if(ACC.step==="code")return `<div class="acc"><h4>Entre ton code</h4><p>On vient d'envoyer un code ${ACC.channel==="phone"?"par SMS au":"à"} <b style="color:#fff">${esc(ACC.channel==="phone"?prettyPhone(ACC.ident):ACC.ident)}</b>. Il peut mettre une minute à arriver.</p>
     <div class="af"><input class="code" id="accCode" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="••••••"><button class="ab ${ACC.busy?"dis":""}" id="accVerify">${ACC.busy?"…":"Valider"}</button></div>
@@ -1331,6 +1331,7 @@ function drawProfile(){
     <div style="margin-top:14px">
       <a class="plink" href="#infos" id="pfInfos">Horaires, adresse & contact <span>›</span></a>
       <button class="plink" data-lg="privacy">Confidentialité <span>›</span></button>
+      ${ACC.user?`<button class="plink" id="accOut"><span style="color:inherit;font-weight:600;font-size:15px">Se déconnecter</span> <span>›</span></button>`:""}
       ${H.length||c.name||ACC.user?`<button class="plink" id="pfClear" style="color:#c4302b"><span style="color:inherit;font-weight:600;font-size:15px">Effacer mes données</span> <span>›</span></button>`:""}
     </div>
   </div><div class="sf"><button class="btn btn-dark" id="pfSave">Enregistrer</button></div>`;

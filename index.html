@@ -201,6 +201,14 @@ img{display:block}
 .acc.in p{color:var(--mute)}
 .acc.in .out{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--ink);background:#fff;padding:10px 13px;border-radius:30px;white-space:nowrap}
 .pf.logged{background:var(--ink);color:#fff}
+.badge-soon{display:flex;align-items:center;gap:12px;margin-top:14px;padding:13px;border:1.5px dashed #d8cfc3;border-radius:16px;opacity:.55;filter:grayscale(1);pointer-events:none}
+.badge-soon .bi{width:40px;height:40px;border-radius:12px;background:#ece5db;display:grid;place-items:center;flex:none;color:var(--ink2)}
+.badge-soon .bi svg{width:22px;height:22px}
+.badge-soon .bt{flex:1;min-width:0}
+.badge-soon b{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--ink)}
+.badge-soon em{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--ink);color:#fff;padding:2px 7px;border-radius:20px}
+.badge-soon .bt>span{font-size:12.5px;color:var(--mute);display:block;line-height:1.35;margin-top:2px}
+.badge-soon .bb{font-size:13px;font-weight:700;background:#ece5db;color:var(--ink2);padding:9px 12px;border-radius:30px;flex:none}
 .ssos{display:grid;gap:8px;margin-top:14px}
 .sso{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:14px;font-size:15px;font-weight:700;background:#2a2724;color:#fff;width:100%}
 .sso svg{width:19px;height:19px}
@@ -1316,29 +1324,27 @@ function drawProfile(){
       <div class="perks"><div class="perk"><i>%</i><span><b>−${pct} %</b> sur toute la commande</span></div>
         <div class="perk"><i>✓</i><span>Livraison <b>offerte</b> à ton service (dès ${fmt(CONFIG.delivery.minOrder)})</span></div>
         <div class="perk"><i>✓</i><span>Commande avant <b>${CONFIG.delivery.cutoff}</b>, livré entre ${CONFIG.delivery.slots[0]} et ${CONFIG.delivery.slots.at(-1)}</span></div></div>
-      <label class="hosp" style="padding:14px 0 0"><span class="t"><b>Je travaille à Saint-Pierre</b><span>Activé par défaut sur mes commandes</span></span><span class="sw"><input type="checkbox" id="pfStaff" ${S.staff?"checked":""}><i></i></span></label></div>
+      <label class="hosp" style="padding:14px 0 0"><span class="t"><b>Je travaille à Saint-Pierre</b><span>Activé par défaut sur mes commandes</span></span><span class="sw"><input type="checkbox" id="pfStaff" ${S.staff?"checked":""}><i></i></span></label>
+      <div class="badge-soon" aria-disabled="true">
+        <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="10" r="2.6"/><path d="M8 16.5c.8-1.6 2.2-2.4 4-2.4s3.2.8 4 2.4M10 3v2h4V3"/></svg></span>
+        <span class="bt"><b>Mon badge Saint-Pierre <em>Bientôt</em></b><span>${ACC.user?"Ajoute ton badge une fois : la réduction s'appliquera automatiquement, sans le montrer à chaque fois.":"Connecte-toi pour ajouter ton badge : la réduction s'appliquera automatiquement."}</span></span>
+        <button class="bb" disabled>Ajouter</button>
+      </div></div>
     <div class="mc-title" style="margin-top:22px">Mes commandes</div>
     ${H.length?H.slice(0,10).map((h,i)=>`<div class="ord"><div class="oh"><b>#${esc(h.num)}</b><span>${dt(h.ts)} · ${h.mode==="livraison"?"Livraison":"À emporter"}</span></div>
       <div class="oi">${(h.items||[]).map(l=>`${l.qty}× ${esc(l.name)}`).join(" · ")}</div>
       <div class="of"><b>${fmt(h.total)}</b><button data-re="${i}">Recommander</button></div></div>`).join("")
       :`<div class="pempty">Tes commandes apparaîtront ici. Tu pourras les recommander en un tap.</div>`}
-    <div class="mc-title" style="margin-top:22px">Mes infos</div>
-    <div class="fld"><div class="in"><label for="pName">Prénom</label><input id="pName" autocomplete="given-name" value="${esc(c.name||"")}"></div>
-      <div class="in"><label for="pTel">Téléphone</label><input id="pTel" type="tel" inputmode="tel" autocomplete="tel" placeholder="04xx xx xx xx" value="${esc(c.tel||"")}"></div>
-      <div class="in"><label for="pSvc">Service à Saint-Pierre (optionnel)</label><input id="pSvc" placeholder="Ex. Urgences" value="${esc(c.svc||"")}"></div>
-      <div class="in"><label for="pLoc">Étage / local (optionnel)</label><input id="pLoc" placeholder="Ex. 3e étage" value="${esc(c.loc||"")}"></div></div>
-    <p class="note">${ACC.user?"Enregistré dans ton compte.":"Enregistré sur cet appareil, pour remplir tes commandes plus vite."}</p>
     <div style="margin-top:14px">
       <a class="plink" href="#infos" id="pfInfos">Horaires, adresse & contact <span>›</span></a>
       <button class="plink" data-lg="privacy">Confidentialité <span>›</span></button>
       ${ACC.user?`<button class="plink" id="accOut"><span style="color:inherit;font-weight:600;font-size:15px">Se déconnecter</span> <span>›</span></button>`:""}
       ${H.length||c.name||ACC.user?`<button class="plink" id="pfClear" style="color:#c4302b"><span style="color:inherit;font-weight:600;font-size:15px">Effacer mes données</span> <span>›</span></button>`:""}
     </div>
-  </div><div class="sf"><button class="btn btn-dark" id="pfSave">Enregistrer</button></div>`;
+  <div style="height:calc(20px + var(--sb))"></div></div>`;
   sheet.querySelector(".sb").scrollTop=sc;bindClose();bindTilt($("#fcard"));
   $("#pfStaff").onchange=e=>{S.staff=e.target.checked;update();accSaveProfile()};
   sheet.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>{const h=histList()[+b.dataset.re];if(!h)return;h.items.forEach(l=>{const same=S.cart.find(x=>x.id===l.id&&x.opts===l.opts&&x.note===l.note&&x.name===l.name);if(same)same.qty+=l.qty;else S.cart.push({...l})});update();toast("Ajouté au panier");view="cart";drawCart()});
-  $("#pfSave").onclick=()=>{const v=id=>$(id).value.trim();try{localStorage.setItem("menzili-client",JSON.stringify({name:v("#pName"),tel:v("#pTel"),svc:v("#pSvc"),loc:v("#pLoc")}))}catch(e){}accSaveProfile();update();toast("Profil enregistré");closeSheet()};
   $("#pfInfos").onclick=()=>closeSheet();
   sheet.querySelectorAll("[data-lg]").forEach(b=>b.onclick=()=>openLegal(b.dataset.lg));
   const cl=$("#pfClear");if(cl)cl.onclick=async()=>{if(cl.dataset.c){await accDeleteData();toast("Données effacées");drawProfile()}else{cl.dataset.c=1;cl.firstChild.textContent=ACC.user?"Confirmer : effacer compte et historique":"Confirmer l'effacement"}};

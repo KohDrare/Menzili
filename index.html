@@ -254,7 +254,7 @@ img{display:block}
 .atl-top .t span{font-size:12.5px;color:var(--mute)}
 .atl-top .rs{width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--mute);box-shadow:0 1px 3px #0000000f}
 .stage{flex:1;min-height:0;display:grid;place-items:center;position:relative;padding:4px 0}
-.stage svg{width:min(88vw,46vh,380px);height:min(88vw,46vh,380px);overflow:visible}
+.stage svg{width:min(96vw,60vh,520px);height:auto;aspect-ratio:400/280;overflow:visible}
 .stage .ly.drop{animation:drop .55s var(--ease) both;transform-origin:200px 200px}
 .stage .ly.out{animation:out .25s ease both;transform-origin:200px 200px}
 @keyframes drop{0%{opacity:0;transform:translateY(-26px) scale(1.12)}60%{opacity:1;transform:translateY(3px) scale(.99)}100%{transform:none}}
@@ -430,6 +430,22 @@ img{display:block}
 .modeline{font-size:12.5px;color:var(--mute);padding:0 12px 10px;line-height:1.4}
 .modeline b{color:var(--ink2);font-weight:650}
 .lbl{font-size:13px;font-weight:650;color:var(--ink2);margin:18px 0 8px;display:block}
+.drink-up{margin:18px 0 0;background:var(--or-soft);border-radius:20px;padding:14px 0 12px}
+.du-h{display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.du-h b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.du-h span{font-size:12.5px;color:#93360d}
+.du-h .ok{width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center}.du-h .ok svg{width:14px;height:14px}
+.du-l{display:flex;gap:10px;overflow-x:auto;padding:12px 16px 2px;scrollbar-width:none}.du-l::-webkit-scrollbar{display:none}
+.du{flex:none;width:68px;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
+.du-b{width:62px;height:72px;border-radius:16px;background:#fff;display:grid;place-items:center;position:relative;box-shadow:0 1px 3px #3b24101a;transition:transform .15s var(--ease),box-shadow .2s}
+.du-b:active{transform:scale(.93)}
+.du-b svg{width:30px;height:46px}
+.du.on .du-b{box-shadow:0 0 0 2.5px var(--or),0 6px 14px #f2652233}
+.du-b .p,.du-b .q{position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:2px solid #fff;font-size:11.5px;font-weight:800}
+.du-b .p{background:var(--ink);color:#fff}.du-b .p svg{width:10px;height:10px}
+.du-b .q{background:var(--or);color:#fff}
+.du-n{font-size:11.5px;font-weight:650;text-align:center;line-height:1.15;color:var(--ink2)}
+.du-m{position:absolute;left:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;box-shadow:0 1px 4px #0003}.du-m svg{width:10px;height:10px}
 .chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:none;padding:10px 15px;border-radius:12px;background:#f4efe8;font-size:14.5px;font-weight:650;color:var(--ink2)}
@@ -454,6 +470,43 @@ img{display:block}
 .toast{position:fixed;left:50%;top:calc(14px + var(--st));transform:translate(-50%,-30px);background:var(--dark);color:#fff;padding:11px 16px;border-radius:30px;font-size:14px;font-weight:650;z-index:95;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;display:flex;gap:8px;align-items:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast svg{width:16px;height:16px;color:#34c759}
+
+/* ---------- TÉLÉPHONE : tout plus compact, une offre visible en entier ---------- */
+@media(max-width:520px){
+  .hdr{padding:calc(8px + var(--st)) 12px 8px 14px}
+  .hdr .lg img{height:22px}
+  .hello{padding:8px 18px 2px}
+  .hello h1{font-size:31px;margin-top:6px}
+  .hello p{font-size:14px;margin-top:6px;max-width:320px}
+  .status{font-size:11.5px;padding:5px 10px}
+  .offers{padding:14px 18px 4px;gap:10px}
+  .offer{width:78%;height:min(300px,40vh);border-radius:24px}
+  .offer .in{padding:16px}
+  .offer .kick{font-size:10px;padding:5px 9px}
+  .offer h2{font-size:26px;margin:9px 0 4px}
+  .offer p{font-size:13px;max-width:240px}
+  .offer .foot{margin-top:11px}
+  .offer .price b{font-size:22px}
+  .offer .price s{font-size:13px}
+  .offer .go{font-size:13px;padding:9px 13px}
+  .offer.atelier .art{width:210px;height:210px;top:12px}
+  .sec-h{padding:20px 18px 10px}
+  .sec-h h2{font-size:20px}
+  .cats{gap:10px;padding:0 18px 2px}
+  .cat{width:62px;font-size:11.5px}
+  .cat .c{width:58px;height:58px}
+  .picks{padding:0 18px 4px;gap:10px}
+  .pick{width:142px;border-radius:18px}
+  .pick .im{height:100px}
+  .pick .tx{padding:9px 11px 11px}
+  .pick b{font-size:14px}
+  .atl-card{margin:20px 18px 0;min-height:150px;grid-template-columns:1fr 92px;width:calc(100% - 36px);border-radius:24px}
+  .atl-card .tx{padding:18px 0 18px 18px}
+  .atl-card h3{font-size:22px}
+  .atl-card p{font-size:13px}
+  .atl-card>svg{width:190px;height:190px}
+  .sp-card{margin:12px 18px 0;padding:18px;width:calc(100% - 36px);border-radius:24px}
+}
 </style>
 </head>
 <body>
@@ -535,7 +588,7 @@ img{display:block}
     <div class="t"><b>L'Atelier</b><span>Ton sandwich sur mesure</span></div>
     <button class="rs" id="atlReset" aria-label="Recommencer"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8a5 5 0 1 0 1.5-3.6M3 3v2.5h2.5"/></svg></button>
   </div>
-  <div class="stage" id="stage"><div class="livep" id="livep"></div><svg viewBox="0 0 400 400" id="stageSvg"></svg></div>
+  <div class="stage" id="stage"><div class="livep" id="livep"></div><svg viewBox="0 40 400 280" id="stageSvg"></svg></div>
   <div class="panel" id="atlPanel"></div>
 </section>
 
@@ -550,7 +603,7 @@ img{display:block}
 /* =====================================================================
    ART — ingrédients dessinés en SVG (vue de dessus), façon assiette
    ===================================================================== */
-const ART = (() => {
+const ART_OLD = (() => {
   const rngOf = seed => { let a = 0; for (const c of seed) a = (a * 31 + c.charCodeAt(0)) | 0;
     return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
 
@@ -668,6 +721,58 @@ const ART = (() => {
     return o;
   }
   return { scene, icon, SAUCE };
+})();
+
+/* =====================================================================
+   ART v2 — calques dessinés (assets/atelier/*.webp, 900×360, vue de dessus)
+   Chaque calque a le même cadre que le pain : on les empile tels quels.
+   ===================================================================== */
+const ART = (() => {
+  const SRC = id => `assets/atelier/${id}.webp`;
+  const K = 380 / 900, W = 380, H = 360 * K, X = 10;      // calque posé sur 380 px de large
+  const TOP = 62 * K;                                     // bord haut du pain dans le calque (charnière)
+  const ORDER = ["salade", "marine", "pane", "viande", "poisson", "merguez", "boulette", "tomate", "oignon", "carotte",
+                 "fromage", "feta", "oeuf", "poivron", "patate", "olive", "croquette", "oignonfrit"];
+  const layersOf = k => k === "mixte" ? ["marine", "viande"] : [k];
+  let UID = 0;
+  const img = (id, y) => `<image href="${SRC(id)}" x="${X}" y="${y.toFixed(1)}" width="${W}" height="${H.toFixed(1)}"/>`;
+  /* sel = {base, items, sauces} ; opts.y = position verticale ; opts.lid = couvercle (pain) */
+  function scene(sel, fresh, opts = {}) {
+    const y = opts.y ?? 124, base = sel.base || "pain";
+    let o = `<ellipse cx="200" cy="${(y + H - 14).toFixed(0)}" rx="178" ry="16" fill="#3b2410" opacity=".13"/>`;
+    o += `<g class="ly" data-k="base">${img(base, y)}</g>`;
+    const items = sel.items.flatMap(k => layersOf(k).map(l => [k, l]));
+    ORDER.forEach(l => items.filter(([, x]) => x === l).forEach(([k]) =>
+      o += `<g class="ly${k === fresh ? " drop" : ""}" data-k="${k}">${img(l, y)}</g>`));
+    sel.sauces.forEach(s => o += `<g class="ly${s === fresh ? " drop" : ""}" data-k="${s}">${img(s, y)}</g>`);
+    if (opts.lid && base === "pain") {
+      const hinge = y + TOP;
+      o += `<g id="lid" data-h="${hinge.toFixed(1)}" style="pointer-events:none"><image id="lidImg" x="${X}" y="${y}" width="${W}" height="${H.toFixed(1)}"/></g>`;
+    }
+    return o;
+  }
+  /* couvercle : s = -0.72 (ouvert, on voit la mie, debout derrière) → 1 (fermé, côté croûte) */
+  function setLid(s) {
+    const g = document.getElementById("lid"), im = document.getElementById("lidImg");
+    if (!g || !im) return;
+    const h = +g.dataset.h, lift = s > 0 ? -7 * s : 0;
+    g.setAttribute("transform", `translate(0 ${h + lift}) scale(1 ${s.toFixed(3)}) translate(0 ${-h})`);
+    const want = SRC(s > 0 ? "pain-dessus" : "pain");
+    if (im.getAttribute("href") !== want) im.setAttribute("href", want);
+    g.style.filter = s > 0 ? "drop-shadow(0 6px 5px rgba(59,36,16,.28))" : "";
+  }
+  function icon(id) {
+    if (ART_OLD.SAUCE[id]) return ART_OLD.icon(id);
+    if (id === "pain" || id === "tortilla")
+      return `<g transform="rotate(-18)"><image href="${SRC(id === "pain" ? "pain-dessus" : id)}" x="-40" y="-16" width="80" height="32"/></g>`;
+    const ic = (l, x = -36, y = -36, w = 72) => `<image href="${SRC("ic/" + l)}" x="${x}" y="${y}" width="${w}" height="${w}"/>`;
+    if (id === "mixte") return ic("viande", -34, -30, 56) + ic("marine", -20, -24, 60);
+    return ic(id);
+  }
+  const ALL = ["pain", "pain-dessus", "tortilla", ...ORDER, ...Object.keys(ART_OLD.SAUCE), ...ORDER.map(x => "ic/" + x)];
+  let pre = false;
+  function preload() { if (pre) return; pre = true; ALL.forEach(id => { const i = new Image(); i.src = SRC(id) }) }
+  return { scene, icon, setLid, preload, SAUCE: ART_OLD.SAUCE };
 })();
 
 </script>
@@ -812,7 +917,7 @@ const I={
   arrow:'<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
   hosp:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>',
 };
-const miniArt=(sel,vb="40 40 320 320")=>`<svg class="mini" viewBox="${vb}">${ART.scene(sel)}</svg>`;
+const miniArt=(sel,vb="0 100 400 200")=>`<svg class="mini" viewBox="${vb}">${ART.scene(sel)}</svg>`;
 let S={mode:"emporter",staff:false,cart:[]};
 try{const s=JSON.parse(localStorage.getItem("menzili-v3")||"null");if(s&&Array.isArray(s.cart))S={...S,...s};}catch(e){}
 const save=()=>{try{localStorage.setItem("menzili-v3",JSON.stringify(S))}catch(e){}};
@@ -910,14 +1015,27 @@ function renderStatus(){const s=openState();$("#status").classList.toggle("close
    ATELIER
    ===================================================================== */
 let A;
-const atlReset=()=>{A={step:0,base:"pain",viande:null,crud:[],sauces:[],extras:[],qty:1}};atlReset();
+const LID_OPEN=-.72;
+const atlReset=()=>{A={step:0,base:"pain",viande:null,crud:[],sauces:[],extras:[],qty:1,lid:LID_OPEN}};atlReset();
+let lidRaf;
+function syncLid(){
+  const to=ATL.steps[A.step].k==="recap"&&A.base==="pain"?1:LID_OPEN;if(A.lid===to)return;
+  const from=A.lid,t0=performance.now(),dur=to>0?720:520;cancelAnimationFrame(lidRaf);
+  const ease=t=>1-Math.pow(1-t,3);
+  const tick=now=>{const t=Math.min(1,(now-t0)/dur);let v=from+(to-from)*ease(t);
+    if(to>0&&t>.82)v=to*(1+.035*Math.sin((t-.82)/.18*Math.PI));  // petit rebond à la fermeture
+    A.lid=t<1?v:to;ART.setLid(A.lid);
+    if(t<1)lidRaf=requestAnimationFrame(tick);
+    else if(to>0){$("#stage").classList.remove("bump");void $("#stage").offsetWidth;$("#stage").classList.add("bump");if(navigator.vibrate)try{navigator.vibrate(12)}catch(e){}}};
+  lidRaf=requestAnimationFrame(tick);
+}
 const fid=(k,id)=>ATL[k].find(x=>x.id===id);
 function atlPrice(){let p=A.viande?fid("viande",A.viande).price:0;p+=fid("base",A.base).price;A.extras.forEach(e=>p+=fid("extras",e).price);return p}
 function atlSel(){return{base:A.base,items:[A.viande,...A.crud,...A.extras].filter(Boolean),sauces:A.sauces}}
-function drawStage(fresh){$("#stageSvg").innerHTML=ART.scene(atlSel(),fresh);$("#livep").innerHTML=A.viande?fmt(atlPrice()*1):`<small>dès</small>${fmt(6.5)}`}
+function drawStage(fresh){$("#stageSvg").innerHTML=ART.scene(atlSel(),fresh,{y:150,lid:true});ART.setLid(A.lid);$("#livep").innerHTML=A.viande?fmt(atlPrice()*1):`<small>dès</small>${fmt(6.5)}`}
 function openAtelier(){
   $("#atl").classList.add("on");document.documentElement.style.overflow="hidden";
-  drawStage();drawPanel();
+  ART.preload();drawStage();drawPanel();
 }
 function closeAtelier(silent){if(!$("#atl").classList.contains("on"))return;$("#atl").classList.remove("on");document.documentElement.style.overflow=""}
 $("#atlBack").onclick=()=>{if(A.step>0){A.step--;drawPanel()}else go("accueil")};
@@ -948,6 +1066,7 @@ function drawPanel(){
   $("#atlPanel").innerHTML=`<div class="ph-h"><h2>${st.title}</h2><small>${st.sub||`Étape ${A.step+1}/${n}`}</small></div>${prog}${body}${foot}`;
   $("#atlPanel").querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const i=+b.dataset.st;if(i<=A.step||ATL.steps.slice(0,i).every(stepValid)){A.step=i;drawPanel()}});
   $("#atlPanel").querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>pick(st,b.dataset.o,b));
+  syncLid();
   const nx=$("#atlNext");if(nx)nx.onclick=()=>{A.step++;drawPanel()};
   const pv=$("#atlPrev");if(pv)pv.onclick=()=>{A.step--;drawPanel()};
   if(st.k==="recap"){
@@ -1037,7 +1156,7 @@ function drawCart(){
   const sc=sheet.querySelector(".sb")?.scrollTop||0;
   const t=totals(),liv=S.mode==="livraison",min=liv&&t.sub<CONFIG.delivery.minOrder&&S.cart.length;
   sheet.innerHTML=head("Ton panier",S.cart.length?`${t.count} article${t.count>1?"s":""}`:"")+`<div class="sb">
-    ${S.cart.length?S.cart.map((l,i)=>`<div class="cl"><span class="th">${l.art?`<svg viewBox="40 40 320 320">${ART.scene(l.art)}</svg>`:`<img src="${imgT(l.id)}" alt="">`}</span><div class="d"><b>${esc(l.name)}</b>${l.opts?`<small>${esc(l.opts)}</small>`:""}${l.note?`<small>« ${esc(l.note)} »</small>`:""}<div class="p">${fmt(l.unit*l.qty)}</div></div>
+    ${S.cart.length?S.cart.map((l,i)=>`<div class="cl"><span class="th">${l.art?`<svg viewBox="0 100 400 200">${ART.scene(l.art)}</svg>`:`<img src="${imgT(l.id)}" alt="">`}</span><div class="d"><b>${esc(l.name)}</b>${l.opts?`<small>${esc(l.opts)}</small>`:""}${l.note?`<small>« ${esc(l.note)} »</small>`:""}<div class="p">${fmt(l.unit*l.qty)}</div></div>
       <div class="qs"><button data-dec="${i}" aria-label="Retirer">${l.qty===1?I.x:I.minus}</button><span>${l.qty}</span><button data-inc="${i}" aria-label="Ajouter">${I.plus}</button></div></div>`).join("")
       :`<div class="empty"><svg viewBox="0 0 400 400">${ART.scene({base:"pain",items:[],sauces:[]})}</svg>Ton panier est vide.<br><span style="font-size:13.5px">Un petit sandwich ?</span></div>`}
     ${S.cart.length?modeCardHTML():""}
@@ -1064,8 +1183,24 @@ function slots(day){const n=nowMin();
   const op=toMin(day.h[0]),cl=toMin(day.h[1]);let st=op+15;if(day.off===0)st=Math.max(st,Math.ceil((n+CONFIG.prepMinutes+5)/15)*15);
   const out=[];for(let m=st;m<=cl-15;m+=15)out.push(toHM(m));if(day.off===0&&openState().open&&out.length)out.unshift("ASAP");return out}
 let co={};
+/* Proposition de boisson au moment de finaliser */
+const DRINKS=[
+  {id:"b1",opt:"Coca-Cola",c:"#e41e2b",l:"#fff"},{id:"b1",opt:"Coca-Cola Zero",c:"#1b1b1b",l:"#e41e2b"},
+  {id:"b1",opt:"Fanta",c:"#ff8a00",l:"#1f5fbf"},{id:"b1",opt:"Sprite",c:"#11a04a",l:"#ffd400"},
+  {id:"b1",opt:"Ice Tea",c:"#d98a1c",l:"#fff3d0"},{id:"b2",opt:"Plate",c:"#4aa8e8",l:"#fff",w:1},{id:"b2",opt:"Pétillante",c:"#2b7fc4",l:"#fff",w:1}];
+const can=d=>d.w?`<svg viewBox="0 0 40 60"><path d="M15 4h10v6l4 6v38a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V16l4-6z" fill="${d.c}" opacity=".9"/><rect x="11" y="26" width="18" height="14" fill="${d.l}"/><path d="M14 18v32" stroke="#fff" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round"/><rect x="14" y="1" width="12" height="5" rx="1.5" fill="#1d4f7a"/></svg>`
+  :`<svg viewBox="0 0 40 60"><rect x="8" y="6" width="24" height="50" rx="5" fill="${d.c}"/><rect x="10" y="3" width="20" height="6" rx="3" fill="#cfd3d6"/><path d="M8 24q12 8 24 0v10q-12 8-24 0z" fill="${d.l}" opacity=".9"/><path d="M13 12v38" stroke="#fff" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/></svg>`;
+const drinkLine=d=>S.cart.find(l=>l.id===d.id&&l.opts===d.opt&&!l.note);
+function drinkUpHTML(){
+  const n=DRINKS.reduce((a,d)=>a+(drinkLine(d)?.qty||0),0);
+  return `<div class="drink-up"><div class="du-h"><div><b>${n?"Bien vu, c'est noté":"Une boisson avec ça ?"}</b><span>${n?`${n} boisson${n>1?"s":""} ajoutée${n>1?"s":""}`:"Canette ou eau fraîche · "+fmt(2)}</span></div>${n?`<i class="ok">${I.check}</i>`:""}</div>
+    <div class="du-l">${DRINKS.map((d,i)=>{const q=drinkLine(d)?.qty||0;return `<div class="du${q?" on":""}"><button class="du-b" data-dk="${i}" aria-label="Ajouter ${d.w?"Eau "+d.opt.toLowerCase():d.opt}">${can(d)}${q?`<span class="q">${q}</span>`:`<span class="p">${I.plus}</span>`}</button><span class="du-n">${d.w?"Eau "+d.opt.toLowerCase():d.opt}</span>${q?`<button class="du-m" data-dm="${i}" aria-label="Retirer">${I.minus}</button>`:""}</div>`}).join("")}</div></div>`;
+}
+function addDrink(i,delta){const d=DRINKS[i],it=ITEMS[d.id],l=drinkLine(d);
+  if(l){l.qty+=delta;if(l.qty<=0)S.cart.splice(S.cart.indexOf(l),1)}else if(delta>0)S.cart.push({id:d.id,name:it.name,opts:d.opt,note:"",unit:it.price,qty:1});
+  update()}
 function openCheckout(){
-  if(!canCheckout())return;view="co";const D=days();co.d=Math.max(0,D.findIndex(d=>slots(d).length));co.s=null;
+  if(!canCheckout())return;view="co";co.drink=!S.cart.some(l=>/^b\d/.test(l.id)||l.id==="m1");const D=days();co.d=Math.max(0,D.findIndex(d=>slots(d).length));co.s=null;
   let saved={};try{saved=JSON.parse(localStorage.getItem("menzili-client")||"{}")}catch(e){}
   const vals={cName:saved.name||"",cTel:saved.tel||"",cSvc:saved.svc||"",cLoc:saved.loc||"",cNote:""};
   const draw=()=>{
@@ -1076,6 +1211,7 @@ function openCheckout(){
       ${liv&&D[0]&&D[0].off===0&&!slots(D[0]).length?`<div class="alert">Les livraisons du jour sont clôturées (commande avant ${CONFIG.delivery.cutoff}). Tu peux pré-commander pour un autre jour.</div>`:""}
       <span class="lbl">${liv?"Créneau de livraison":"Heure de retrait"}</span>
       <div class="chips">${SL.map(s=>`<button class="chip" data-s="${s}" aria-pressed="${s===co.s}">${s==="ASAP"?"Dès que possible":s}</button>`).join("")||`<span class="note">Aucun créneau disponible.</span>`}</div>
+      ${co.drink?drinkUpHTML():""}
       <span class="lbl">Tes infos</span>
       <div class="fld"><div class="in" id="w-cName"><label for="cName">Prénom</label><input id="cName" autocomplete="given-name" value="${esc(vals.cName)}"></div>
         <div class="in" id="w-cTel"><label for="cTel">Téléphone</label><input id="cTel" type="tel" inputmode="tel" autocomplete="tel" placeholder="04xx xx xx xx" value="${esc(vals.cTel)}"></div>
@@ -1088,7 +1224,10 @@ function openCheckout(){
     sheet.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{co.d=+b.dataset.d;draw()});
     sheet.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{co.s=b.dataset.s;sheet.querySelectorAll("[data-s]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
     $("#send").onclick=e=>send(e,D);
+    sheet.querySelectorAll("[data-dk]").forEach(b=>b.onclick=()=>{addDrink(+b.dataset.dk,1);redraw()});
+    sheet.querySelectorAll("[data-dm]").forEach(b=>b.onclick=()=>{addDrink(+b.dataset.dm,-1);redraw()});
   };
+  const redraw=()=>{const sb=sheet.querySelector(".sb"),y=sb?sb.scrollTop:0,dl=sheet.querySelector(".du-l"),x=dl?dl.scrollLeft:0;draw();const sb2=sheet.querySelector(".sb");if(sb2)sb2.scrollTop=y;const d2=sheet.querySelector(".du-l");if(d2)d2.scrollLeft=x};
   draw();openSheet();
 }
 function send(e,D){

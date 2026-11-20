@@ -353,7 +353,12 @@ img{display:block}
 .sheet{position:fixed;z-index:70;left:50%;bottom:0;width:100%;max-width:560px;max-height:calc(100% - 36px - var(--st));background:var(--card);border-radius:30px 30px 0 0;display:flex;flex-direction:column;transform:translate(-50%,105%);transition:transform .4s var(--ease);box-shadow:0 -10px 40px #00000030}
 .sheet.open{transform:translate(-50%,0)}
 .grab{width:38px;height:5px;border-radius:3px;background:#d8d1c7;margin:8px auto 0;flex:none}
-.shimg{position:relative;height:230px;flex:none;border-radius:30px 30px 0 0;overflow:hidden;background:#efe9e0}
+.shimg{position:relative;height:230px;flex:none;border-radius:30px 30px 0 0;overflow:hidden;background:#efe9e0;will-change:height}
+@media(max-width:520px){.shimg{height:200px}}
+.shimg.mini .x{top:50%;transform:translateY(-50%)}
+.sh .tt p,.sh .tt h3{transition:font-size .2s,opacity .2s}
+.shimg.mini+.sh .tt>p{display:none}
+.shimg.mini+.sh .tt h3{font-size:21px}
 .shimg img{width:100%;height:100%;object-fit:cover}
 .shimg::after{content:"";position:absolute;inset:0 0 auto 0;height:80px;background:linear-gradient(#00000059,transparent)}
 .shimg .grab{position:absolute;left:50%;top:0;transform:translateX(-50%);background:#ffffffcc;z-index:1}
@@ -386,6 +391,10 @@ img{display:block}
 .opt{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:15.5px}
 .opt:last-child{border-bottom:0}
 .opt .l{flex:1}
+.opt .oi{width:40px;height:40px;flex:none;border-radius:50%;background:#f6f2ec;display:grid;place-items:center;margin:-4px 0}
+.opt .oi svg{width:34px;height:34px}
+.opt .oi-can svg{width:18px;height:28px}
+.opt.off .oi{opacity:.45}
 .opt .pp{color:var(--mute);font-size:14px}
 .opt input{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:1.8px solid var(--line2);flex:none;display:grid;place-items:center;transition:.15s;margin:0}
 .opt input[type=radio]{border-radius:50%}
@@ -1130,6 +1139,14 @@ const bindClose=()=>sheet.querySelectorAll("[data-close]").forEach(b=>b.onclick=
  sheet.addEventListener("touchmove",e=>{if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){sheet.style.transition="none";sheet.style.transform=`translate(-50%,${dy}px)`}},{passive:true});
  sheet.addEventListener("touchend",()=>{if(y0===null)return;sheet.style.transition="";sheet.style.transform="";if(dy>110)closeSheet();y0=null})})();
 
+/* petite image à côté de chaque option (dessins de l'Atelier, canettes pour les softs) */
+const OPT_IC={"Poulet mariné":"marine","Poulet":"marine","Poulet pané":"pane","Viande":"viande","Merguez":"merguez","Boulette":"boulette","Poisson pané":"poisson","Mixte":"mixte",
+  "Salade":"salade","Tomate":"tomate","Oignon":"oignon","Carotte":"carotte","Fromage":"fromage","Feta":"feta","Œuf":"oeuf","Poivron":"poivron","Patate":"patate","Oignon frit":"oignonfrit","Olive":"olive","Croquette fromage":"croquette",
+  "Andalouse":"andalouse","Samouraï":"samourai","Algérienne":"algerienne","Américaine":"americaine","Mayonnaise":"mayo","Ketchup":"ketchup","Cocktail":"cocktail","Harissa":"harissa","Pain":"pain","Tortilla":"tortilla"};
+function optIcon(label){
+  const d=DRINKS.find(x=>x.opt===label);if(d)return `<span class="oi oi-can">${can(d)}</span>`;
+  const k=OPT_IC[label];return k?`<span class="oi"><svg viewBox="-40 -40 80 80">${ART.icon(k)}</svg></span>`:"";
+}
 function openItem(id){
   const it=ITEMS[id];const sel={};let qty=1;(it.groups||[]).forEach(g=>sel[g.id]=g.defaults?[...g.defaults]:[]);view="item";
   const draw=()=>{
@@ -1140,13 +1157,15 @@ function openItem(id){
       <div class="sb">${(it.groups||[]).map(g=>{const v=sel[g.id]||[];const ok=g.required&&v.length;
         return `<div class="grp"><div class="gh"><b>${g.label}</b><span class="${g.required?(ok?"ok":"req"):""}">${g.required?(ok?"✓":"Obligatoire"):"Optionnel"}</span></div>${g.sub?`<div class="gsub">${g.sub}</div>`:""}
         ${g.options.map(op=>{const on=v.includes(op.label);const full=g.type==="multi"&&!on&&v.length>=g.max;
-          return `<label class="opt ${full?"off":""}"><span class="l">${op.label}</span>${op.price?`<span class="pp">+${fmt(op.price)}</span>`:""}<input type="${g.type==="single"?"radio":"checkbox"}" name="g-${g.id}" data-g="${g.id}" value="${esc(op.label)}" ${on?"checked":""}></label>`}).join("")}</div>`}).join("")}
+          return `<label class="opt ${full?"off":""}">${optIcon(op.label)}<span class="l">${op.label}</span>${op.price?`<span class="pp">+${fmt(op.price)}</span>`:""}<input type="${g.type==="single"?"radio":"checkbox"}" name="g-${g.id}" data-g="${g.id}" value="${esc(op.label)}" ${on?"checked":""}></label>`}).join("")}</div>`}).join("")}
         ${it.atl?`<button class="to-atl" id="toAtl">${miniArt({base:"pain",items:[it.atl,"salade","tomate"],sauces:["andalouse"]})}<span><b>Envie de plus de contrôle ?</b><span>Ouvre-le dans l'Atelier</span></span><span class="ar">${I.arrow}</span></button>`:""}
         <div class="grp"><div class="gh"><b>Une précision ?</b><span>Optionnel</span></div><div class="fld" style="margin-top:8px"><div class="in"><label for="iNote">Note pour la cuisine</label><input id="iNote" maxlength="80" placeholder="Ex. bien cuit, peu de sauce…"></div></div></div>
       </div>
       <div class="sf"><div class="stepper"><button id="qm" aria-label="Moins">${I.minus}</button><span id="qv">${qty}</span><button id="qp" aria-label="Plus">${I.plus}</button></div>
         <button class="btn btn-or ${missing.length?"dis":""}" id="addBtn">${missing.length?`Choisis ${missing[0].label.toLowerCase()}`:`Ajouter · ${fmt(unitPrice(it,sel)*qty)}`}</button></div>`;
-    sheet.querySelector(".sb").scrollTop=scroll;sheet.querySelector("#iNote").value=note;bindClose();
+    const sbx=sheet.querySelector(".sb"),shi=sheet.querySelector(".shimg");sbx.scrollTop=scroll;sheet.querySelector("#iNote").value=note;bindClose();
+    const H0=shi.offsetHeight||220,HMIN=84,shrink=()=>{const h=Math.max(HMIN,H0-sbx.scrollTop);shi.style.height=h+"px";shi.classList.toggle("mini",h<=HMIN+20)};
+    sbx.addEventListener("scroll",shrink,{passive:true});shrink();
     sheet.querySelectorAll("input[data-g]").forEach(inp=>inp.onchange=()=>{const g=it.groups.find(x=>x.id===inp.dataset.g);sel[g.id]=g.type==="single"?[inp.value]:(inp.checked?[...sel[g.id],inp.value]:sel[g.id].filter(v=>v!==inp.value));draw()});
     const lbl=()=>{const b=$("#addBtn");if(!b.classList.contains("dis"))b.textContent=`Ajouter · ${fmt(unitPrice(it,sel)*qty)}`;$("#qv").textContent=qty};
     $("#qm").onclick=()=>{if(qty>1){qty--;lbl()}};$("#qp").onclick=()=>{qty++;lbl()};

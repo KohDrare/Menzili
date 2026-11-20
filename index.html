@@ -170,7 +170,7 @@ img{display:block}
 .ft .lg{height:30px}
 .mapc{display:block;position:relative;height:210px;border-radius:22px;overflow:hidden;margin:-12px -10px 24px;background:#e9e4dc;box-shadow:0 8px 24px #0000004d}
 .mapc iframe{position:absolute;left:0;top:-85px;width:100%;height:calc(100% + 120px);border:0;pointer-events:none;filter:saturate(.85)}
-.mapc-pin{position:absolute;left:50%;top:calc(50% - 22px);width:40px;height:40px;transform:translate(-50%,-100%);filter:drop-shadow(0 4px 6px #0006);animation:pinb 2.4s ease-in-out infinite}
+.mapc-pin{display:none;position:absolute;left:50%;top:calc(50% - 22px);width:40px;height:40px;transform:translate(-50%,-100%);filter:drop-shadow(0 4px 6px #0006);animation:pinb 2.4s ease-in-out infinite}
 .mapc-pin::after{content:"";position:absolute;left:50%;bottom:-4px;width:14px;height:5px;border-radius:50%;background:#0004;transform:translateX(-50%)}
 @keyframes pinb{0%,100%{transform:translate(-50%,-100%)}50%{transform:translate(-50%,-112%)}}
 .mapc-b{position:absolute;left:10px;right:10px;bottom:10px;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:10px 10px 10px 14px;box-shadow:0 4px 14px #0003}
@@ -566,6 +566,135 @@ img{display:block}
   .atl-card p{font-size:13px}
   .atl-card>svg{width:190px;height:190px}
   .sp-card{margin:12px 18px 0;padding:18px;width:calc(100% - 36px);border-radius:24px}
+}
+
+/* =====================================================================
+   ORDINATEUR (≥ 1024 px) — même site, mise en page large
+   Le téléphone et la tablette en portrait gardent l'interface mobile.
+   ===================================================================== */
+@media (min-width:1024px){
+  html,body{background:var(--bg)}
+  .app{max-width:none;box-shadow:none;background:var(--bg)}
+  /* en-tête pleine largeur */
+  .hdr{padding:14px max(32px,calc((100vw - 1240px)/2)) 14px;gap:24px}
+  .hdr .lg img{height:34px}
+  .nav{margin:0 auto;padding:4px}
+  .nav a{font-size:15px;padding:10px 20px}
+  .pf{width:44px;height:44px}
+  .view{max-width:1240px;margin:0 auto;padding:0 32px}
+  @media (hover:hover){
+    .pick,.offer,.atl-card,.sp-card,.row,.cat .c,.du-b{transition:transform .25s var(--ease),box-shadow .25s}
+    .pick:hover,.sp-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px #3b241018}
+    .offer:hover,.atl-card:hover{transform:translateY(-4px)}
+    .cat:hover .c{transform:scale(1.06)}
+    .row:hover{background:#fffaf5}
+    .nav a:not(.on):hover{background:#f4efe8}
+  }
+
+  /* ---------- ACCUEIL : grille ---------- */
+  #v-accueil.on{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:start}
+  #v-accueil>*{grid-column:1/-1}
+  .hello{grid-column:1/6!important;padding:56px 0 0;align-self:center}
+  .hello h1{font-size:68px;margin-top:16px}
+  .hello p{font-size:18px;max-width:420px;margin-top:16px}
+  .status{font-size:13px;padding:7px 13px}
+  .offers{grid-column:6/-1!important;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow:visible;padding:48px 0 0;margin:0}
+  .offer{width:auto;height:420px;border-radius:26px}
+  .offer h2{font-size:26px}
+  .offer p{font-size:13.5px}
+  .offer .in{padding:18px}
+  .offer .foot{flex-wrap:wrap;gap:10px}
+  .offer .price b{font-size:24px}
+  .offer .go{font-size:13.5px;padding:10px 14px}
+  .offer.atelier .art{width:240px;height:240px;top:30px}
+  .pager{display:none}
+  .sec-h{padding:56px 0 18px}
+  .sec-h h2{font-size:30px}
+  .sec-h a{font-size:15px}
+  .cats{padding:0;gap:18px;justify-content:space-between;overflow:visible}
+  .cat{width:auto;flex:1;font-size:14.5px}
+  .cat .c{width:110px;height:110px;border-width:4px}
+  .picks{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;padding:0;overflow:visible}
+  .pick{width:auto}
+  .pick .im{height:150px}
+  .atl-card{grid-column:1/8!important;margin:56px 0 0;width:auto;min-height:280px;grid-template-columns:1fr 300px;border-radius:30px}
+  .atl-card .tx{padding:36px 0 36px 40px}
+  .atl-card h3{font-size:40px}
+  .atl-card p{font-size:16px;max-width:360px}
+  .atl-card .go{font-size:15px;padding:12px 18px;margin-top:20px}
+  .atl-card>svg{width:340px;height:340px;margin-left:-40px}
+  .atl-card{grid-template-columns:1fr 280px}
+  .sp-card{grid-column:8/-1!important;margin:56px 0 0;width:auto;min-height:280px;padding:36px;border-radius:30px;flex-direction:column;justify-content:center}
+  .sp-card h3{font-size:24px}
+  .sp-card p{font-size:15px}
+  .proof{grid-column:1/-1!important;margin:24px 0 0;justify-content:center;padding:20px}
+
+  /* ---------- CARTE : catégories à gauche, plats en grille ---------- */
+  #v-menu.on{display:grid;grid-template-columns:230px 1fr;column-gap:40px;align-items:start}
+  #v-menu .mhead{grid-column:1/-1;padding:40px 0 16px}
+  #v-menu .mhead h1{font-size:52px}
+  .pills{position:sticky;top:96px;flex-direction:column;align-items:stretch;gap:4px;padding:10px;background:#fff;border-radius:22px;overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 1px 3px #0000000d}
+  .pills a{padding:11px 16px;font-size:15px;border-radius:14px}
+  .pills a:not(.on):hover{background:#f6f2ec}
+  #menuList{min-width:0}
+  .msec{padding:0 0 36px;scroll-margin-top:100px}
+  .msec h2{font-size:28px;padding:0}
+  .msec .hint{padding:2px 0 0;font-size:14.5px}
+  .list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;background:none;border-radius:0;overflow:visible;margin-top:16px}
+  .row{background:var(--card);border-radius:22px;padding:16px 16px 16px 20px;box-shadow:0 1px 2px #0000000a}
+  .row+.row::before{display:none}
+  .row h3{font-size:17px}
+  .media{width:112px;height:112px}
+  .atl-row{margin:16px 0 0;padding:16px 20px}
+
+  /* ---------- INFOS : deux colonnes ---------- */
+  #v-infos.on{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;align-items:start}
+  #v-infos>.mhead,#v-infos>p{grid-column:1}
+  #v-infos .mhead{padding:40px 0 4px}
+  #v-infos .mhead h1{font-size:52px}
+  #v-infos>p{padding:10px 0 20px!important;font-size:17px!important}
+  .steps3{grid-column:1;margin:0}
+  #v-infos .sec-h{grid-column:2;grid-row:1;padding:52px 0 16px}
+  .ilist{grid-column:2;grid-row:2/5;margin:0}
+
+  /* ---------- PIED DE PAGE ---------- */
+  .ft{max-width:1240px;margin:72px auto 40px;padding:40px;display:grid;grid-template-columns:1fr 1fr;column-gap:48px;align-items:start;border-radius:34px}
+  .ft>*{grid-column:1}
+  .mapc{grid-column:2;grid-row:1/8;height:100%;min-height:340px;margin:0}
+  .mapc iframe{top:-120px;height:calc(100% + 240px)}
+
+  /* ---------- PANIER : bouton flottant en bas à droite ---------- */
+  .cbar{left:auto;right:max(32px,calc((100vw - 1240px)/2));width:380px;transform:translateY(150%)}
+  .cbar.show{transform:none}
+
+  /* ---------- FENÊTRES : centrées au lieu de remonter du bas ---------- */
+  .sheet{top:50%;bottom:auto;max-width:600px;max-height:min(88vh,860px);border-radius:30px;transform:translate(-50%,-46%) scale(.97);opacity:0;pointer-events:none;transition:transform .35s var(--ease),opacity .25s}
+  .sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+  .sheet .grab{display:none}
+  .sheet .sf{border-radius:0 0 30px 30px}
+  .shimg{border-radius:30px 30px 0 0}
+
+  /* ---------- ATELIER : sandwich à gauche, choix à droite ---------- */
+  .atl{max-width:none;display:none;grid-template-columns:1fr 480px;grid-template-rows:auto 1fr;background:radial-gradient(90% 80% at 35% 45%,#fffaf2 0%,var(--bg) 70%)}
+  .atl.on{display:grid}
+  .atl-top{grid-column:1/-1;padding:18px max(32px,calc((100vw - 1240px)/2)) 0}
+  .atl-top .t b{font-size:22px}
+  .atl-top .t span{font-size:14px}
+  .stage{grid-column:1;grid-row:2;padding:20px 20px 40px max(32px,calc((100vw - 1240px)/2))}
+  .stage svg{width:min(100%,820px);max-height:70vh}
+  .livep{top:24px;right:40px;font-size:18px;padding:9px 16px}
+  .panel{grid-column:2;grid-row:2;align-self:center;margin:0 max(32px,calc((100vw - 1240px)/2)) 40px 0;border-radius:30px;padding:24px 0 20px;max-height:calc(100vh - 140px);display:flex;flex-direction:column;box-shadow:0 20px 50px #3b241014}
+  .opts{flex-wrap:wrap;overflow:auto;padding:18px 24px 6px;gap:14px 10px;max-height:46vh}
+  .oc{width:calc(25% - 8px)}
+  .oc .bub{width:80px;height:80px}
+  .ph-h,.prog{padding-left:24px;padding-right:24px}
+  .recap-l{max-height:46vh;padding:12px 24px 0}
+  .atl-f{padding:16px 24px 0}
+}
+@media (min-width:1024px) and (max-width:1180px){
+  .offers{grid-template-columns:repeat(2,1fr)}.offer:nth-child(n+3){display:none}
+  .picks{grid-template-columns:repeat(3,1fr)}
+  .atl{grid-template-columns:1fr 420px}
 }
 </style>
 </head>

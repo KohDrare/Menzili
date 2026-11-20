@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#161514">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Menzïli — Points (personnel)</title>
+<title>Menzïli — Espace personnel</title>
 <style>
 :root{--bg:#161514;--card:#211f1d;--card2:#2a2724;--ink:#fff;--mute:#a39b91;--or:#f26522;--or-d:#d4531a;--green:#2fbf6b;--red:#ff5b4f;
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",Roboto,sans-serif;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--ease:cubic-bezier(.2,.85,.2,1)}
@@ -95,6 +95,65 @@ h1{font-size:28px;font-weight:850;letter-spacing:-.035em;line-height:1.05}
 .toast.bad{background:var(--red);color:#fff}
 .spin{width:28px;height:28px;border-radius:50%;border:3px solid #ffffff30;border-top-color:var(--or);animation:sp .8s linear infinite;margin:40px auto}
 @keyframes sp{to{transform:rotate(1turn)}}
+/* onglets */
+.tabs{display:flex;gap:4px;background:var(--card);border-radius:16px;padding:4px;margin:-4px 0 16px}
+.tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 8px;border-radius:12px;font-weight:700;font-size:14.5px;color:var(--mute);position:relative}
+.tabs button.on{background:#fff;color:#161514}
+.tabs .bd{min-width:20px;height:20px;border-radius:10px;background:var(--or);color:#fff;font-size:11.5px;font-weight:800;display:grid;place-items:center;padding:0 5px}
+.app.wide{max-width:1400px}
+/* commandes */
+.ob{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ob h1{font-size:26px;margin-right:auto}
+.chip{background:var(--card);border-radius:20px;padding:8px 13px;font-size:13.5px;font-weight:700;color:var(--mute)}
+.chip.on{background:var(--or);color:#fff}
+.snd{background:var(--card);border-radius:20px;padding:8px 13px;font-size:13px;font-weight:700}
+.snd.off{background:var(--or);color:#fff;animation:blink 1.2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.6}}
+.cols{display:grid;gap:18px}
+.col h3{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-bottom:10px}
+.col h3 i{width:10px;height:10px;border-radius:50%}
+.col h3 em{font-style:normal;background:var(--card2);color:#fff;border-radius:10px;padding:1px 8px;font-size:12px}
+.col.new h3 i{background:var(--or)}.col.prep h3 i{background:#f2b33a}.col.ready h3 i{background:var(--green)}
+.col .none{color:#5f5952;font-size:13.5px;padding:14px;border:1.5px dashed #ffffff14;border-radius:18px;text-align:center}
+.oc{background:var(--card);border-radius:20px;padding:15px 15px 13px;margin-bottom:10px;border-left:5px solid var(--or);animation:inn .4s var(--ease)}
+@keyframes inn{from{opacity:0;transform:translateY(-8px)}}
+.oc.prep{border-left-color:#f2b33a}.oc.ready{border-left-color:var(--green)}.oc.done,.oc.cancelled{border-left-color:#4a443e;opacity:.75}
+.oc.flash{animation:flash 1.2s ease-in-out 3}
+@keyframes flash{50%{box-shadow:0 0 0 3px var(--or)}}
+.oc-h{display:flex;align-items:flex-start;gap:10px}
+.oc-n{font:800 22px/1 ui-monospace,"SF Mono",Menlo,monospace}
+.oc-t{margin-left:auto;text-align:right}
+.oc-t b{font-size:19px;font-weight:850;display:block;line-height:1.1}
+.oc-t b.asap{color:var(--or)}
+.oc-t small{color:var(--mute);font-size:12px}
+.oc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.oc-tags span{font-size:11.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;background:var(--card2);border-radius:7px;padding:4px 8px}
+.oc-tags .lv{background:#2563eb;color:#fff}.oc-tags .sp{background:#1f9a55;color:#fff}.oc-tags .pts{background:#f2b33a;color:#161514}
+.oc-who{margin-top:9px;font-size:14.5px}
+.oc-who a{color:var(--or);font-weight:700;text-decoration:none;margin-left:6px}
+.oc-it{margin-top:10px;border-top:1px solid #ffffff12;padding-top:9px}
+.oc-it div{display:flex;gap:9px;padding:4px 0;font-size:15px}
+.oc-it .q{font-weight:850;color:var(--or);min-width:26px}
+.oc-it .o{display:block;font-size:12.5px;color:var(--mute);line-height:1.35}
+.oc-it .nt{display:block;font-size:13px;color:#f2b33a;font-weight:700}
+.oc-note{margin-top:8px;background:#f2b33a1f;color:#f2c96a;border-radius:10px;padding:8px 10px;font-size:13.5px}
+.oc-f{display:flex;align-items:center;gap:8px;margin-top:12px}
+.oc-f .tt{font-weight:850;font-size:17px;margin-right:auto}
+.oc-f .tt small{display:block;font-weight:600;font-size:11.5px;color:var(--mute)}
+.oc-f .go{background:var(--or);color:#fff;border-radius:13px;padding:11px 16px;font-weight:800;font-size:14.5px}
+.oc.prep .go{background:#f2b33a;color:#161514}.oc.ready .go{background:var(--green)}
+.oc-f .mo{background:var(--card2);border-radius:13px;width:42px;height:42px;font-weight:800;font-size:18px;color:var(--mute)}
+.oc-menu{display:flex;gap:6px;margin-top:8px}
+.oc-menu button{flex:1;background:var(--card2);border-radius:11px;padding:9px;font-size:13px;font-weight:700}
+.oc-menu .x{color:var(--red)}
+.donel summary{cursor:pointer;color:var(--mute);font-weight:700;font-size:14px;padding:12px 0;list-style:none}
+.donel summary::-webkit-details-marker{display:none}
+.alert-new{position:fixed;left:50%;top:calc(12px + var(--st));transform:translate(-50%,-160%);background:var(--or);color:#fff;font-weight:800;padding:12px 20px;border-radius:30px;z-index:20;transition:transform .35s var(--ease);box-shadow:0 10px 30px #0006}
+.alert-new.show{transform:translate(-50%,0)}
+@media (min-width:900px){
+  .cols{grid-template-columns:repeat(3,1fr);align-items:start}
+  .col{background:#1c1a18;border-radius:22px;padding:14px;min-height:60vh}
+}
 </style>
 </head>
 <body>
@@ -124,11 +183,16 @@ const buzz = p => { try { navigator.vibrate && navigator.vibrate(p) } catch (e) 
 const errMsg = e => { const m = (e && (e.message || e.error_description)) || ""; return /expir|inconnu/i.test(m) ? "QR expiré ou inconnu : demande au client de rouvrir son QR" : /assez/.test(m) ? "Pas assez de points" : /personnel/.test(m) ? "Compte non autorisé" : /tard/.test(m) ? "Trop tard pour annuler (15 min)" : "Erreur, réessaie" };
 
 const sb = window.__SUPA_MOCK || (await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm")).createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, storageKey: "menzili-auth" } });
-const S = { user: null, team: false, login: { step: "email", email: "" }, token: null, client: null, busy: false };
+const S = { user: null, team: false, tab: "orders", login: { step: "email", email: "" }, token: null, client: null, busy: false };
 
 /* ---------------- en-tête ---------------- */
 const top = () => `<div class="top"><a href="../" aria-label="Retour au site"><img src="../assets/logo-white.png" alt="Menzïli"></a>${S.user ? `<div class="who"><b>${esc(S.user.email || "")}</b><button id="out">Se déconnecter</button></div>` : `<div class="who"><b>Espace personnel</b>Points clients</div>`}</div>`;
-function bindTop() { const o = $("#out"); if (o) o.onclick = async () => { stopCam(); await sb.auth.signOut(); S.user = null; S.team = false; render() } }
+const tabs = () => S.team ? `<div class="tabs"><button data-tab="orders" class="${S.tab === "orders" ? "on" : ""}">Commandes${O.list.filter(o => o.status === "new").length ? `<span class="bd">${O.list.filter(o => o.status === "new").length}</span>` : ""}</button><button data-tab="scan" class="${S.tab === "scan" ? "on" : ""}">Scanner un client</button></div>` : "";
+function bindTop() {
+  const o = $("#out"); if (o) o.onclick = async () => { stopCam(); await sb.auth.signOut(); S.user = null; S.team = false; render() };
+  document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { S.tab = b.dataset.tab; stopCam(); render() });
+  app.classList.toggle("wide", S.team && S.tab === "orders");
+}
 
 /* ---------------- connexion ---------------- */
 function viewLogin() {
@@ -167,7 +231,7 @@ let stream = null, raf = 0;
 function stopCam() { cancelAnimationFrame(raf); raf = 0; if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null } }
 async function viewScan() {
   stopCam(); S.token = null; S.client = null;
-  app.innerHTML = top() + `<h1>Scanner un client</h1>
+  app.innerHTML = top() + tabs() + `<h1>Scanner un client</h1>
     <div class="cam" id="cam"><video id="vd" playsinline muted autoplay></video><div class="fr"></div><div class="ln"></div></div>
     <p class="hint">Vise le QR que le client montre dans « Mon profil ».</p>
     <div class="or">ou tape le code sous son QR</div>
@@ -225,7 +289,7 @@ async function lookup(token) {
 }
 function viewClient() {
   const c = S.client, n = c.points, ini = (c.name || "?").trim().charAt(0).toUpperCase();
-  app.innerHTML = top() + `<div class="card cli"><span class="av">${esc(ini)}</span><span class="nm"><b>${esc(c.name)}</b><span>Client fidèle</span></span><span class="bal"><b>${n}</b><span>points</span></span></div>
+  app.innerHTML = top() + tabs() + `<div class="card cli"><span class="av">${esc(ini)}</span><span class="nm"><b>${esc(c.name)}</b><span>Client fidèle</span></span><span class="bal"><b>${n}</b><span>points</span></span></div>
     <div class="lbl">Ajouter des points · montant payé</div>
     <div class="amt"><input id="eu" inputmode="decimal" placeholder="0" autocomplete="off"><i>€</i></div>
     <div class="quick">${[5, 10, 15, 20].map(v => `<button data-q="${v}">+${v} pts</button>`).join("")}</div>
@@ -252,7 +316,7 @@ async function act(delta, reason) {
   if (error) { toast(errMsg(error), 1); buzz([60, 40, 60]); return }
   buzz(delta > 0 ? [20, 50, 20] : 40);
   const nb = +data;
-  app.innerHTML = top() + `<div class="done ${delta < 0 ? "m" : ""}"><span class="ck">${CHECK}</span><h2>${delta > 0 ? "+" : ""}${delta} pts</h2>
+  app.innerHTML = top() + tabs() + `<div class="done ${delta < 0 ? "m" : ""}"><span class="ck">${CHECK}</span><h2>${delta > 0 ? "+" : ""}${delta} pts</h2>
     <p>${esc(reason)} · ${esc(S.client.name)}</p><div class="nb">Nouveau solde : <b>${nb} pts</b></div></div>
     <button class="btn wh" id="nx">Scanner le client suivant</button>
     ${delta > 0 ? `<button class="btn lt" id="more" style="margin-top:10px">Même client : offrir une récompense</button>` : ""}`;
@@ -261,13 +325,112 @@ async function act(delta, reason) {
   $("#nx").onclick = viewScan; const m = $("#more"); if (m) m.onclick = viewClient;
 }
 
+/* ---------------- commandes ---------------- */
+const O = { list: [], filter: "all", sound: false, chan: null, seen: new Set(), open: null, loaded: false };
+const STEP = { new: ["prep", "Commencer"], prep: ["ready", "Prête"], ready: ["done", null] };
+const LBL = { new: "Nouvelles", prep: "En préparation", ready: "Prêtes" };
+const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}` };
+const money = n => new Intl.NumberFormat("fr-BE", { style: "currency", currency: "EUR" }).format(+n || 0);
+const ago = ts => { const m = Math.round((Date.now() - Date.parse(ts)) / 6e4); return m < 1 ? "à l'instant" : m < 60 ? `il y a ${m} min` : `il y a ${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")}` };
+const slotKey = o => (o.day || "") + (o.slot === "ASAP" ? "00:00" : (o.slot || "99"));
+
+let actx = null;
+function beep() {
+  if (!O.sound) return;
+  try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); const t0 = actx.currentTime;
+    [0, .18, .36].forEach((d, i) => { const o = actx.createOscillator(), g = actx.createGain(); o.type = "sine"; o.frequency.value = [880, 1175, 1568][i];
+      g.gain.setValueAtTime(.0001, t0 + d); g.gain.exponentialRampToValueAtTime(.4, t0 + d + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + d + .16);
+      o.connect(g).connect(actx.destination); o.start(t0 + d); o.stop(t0 + d + .18) }) } catch (e) {}
+}
+function alertNew(o) {
+  beep(); buzz([200, 100, 200]);
+  let el = $("#alertNew"); if (!el) { el = document.createElement("div"); el.id = "alertNew"; el.className = "alert-new"; document.body.appendChild(el) }
+  el.textContent = `🔔 Nouvelle commande #${o.num} · ${o.name}`; el.classList.add("show"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 5000);
+}
+function titleBadge() { const n = O.list.filter(o => o.status === "new").length; document.title = (n ? `(${n}) ` : "") + "Menzïli — Espace personnel" }
+
+async function loadOrders(silent) {
+  const { data, error } = await sb.rpc("team_orders");
+  if (error) { if (!silent) toast("Impossible de charger les commandes", 1); return }
+  const before = O.loaded ? new Set(O.list.map(o => o.id)) : null;
+  O.list = data || []; O.loaded = true;
+  if (before) O.list.filter(o => !before.has(o.id) && o.status === "new").forEach(alertNew);
+  titleBadge(); if (S.tab === "orders" && S.team && !O.open) viewOrders();
+}
+function startRealtime() {
+  if (O.chan || !sb.channel) return;
+  try {
+    O.chan = sb.channel("staff-orders").on("postgres_changes", { event: "*", schema: "public", table: "shop_orders" }, pl => {
+      const r = pl.new && pl.new.id ? pl.new : null; if (!r) return;
+      const i = O.list.findIndex(o => o.id === r.id);
+      if (i < 0) { O.list.push(r); if (pl.eventType === "INSERT" && r.status === "new") { alertNew(r); O.flash = r.id } }
+      else O.list[i] = r;
+      titleBadge(); if (S.tab === "orders") viewOrders(); else bindTopTabsOnly();
+    }).subscribe();
+  } catch (e) { console.warn(e) }
+}
+function bindTopTabsOnly() { const t = document.querySelector(".tabs"); if (t) { t.outerHTML = tabs(); bindTop() } }
+
+function cardHTML(o) {
+  const nx = STEP[o.status], liv = o.mode === "livraison", it = Array.isArray(o.items) ? o.items : [];
+  const doneLbl = liv ? "Livrée" : "Remise";
+  return `<div class="oc ${o.status}${O.flash === o.id ? " flash" : ""}" data-id="${o.id}">
+    <div class="oc-h"><span class="oc-n">#${esc(o.num)}</span>
+      <span class="oc-t">${o.slot === "ASAP" ? `<b class="asap">Dès que possible</b>` : `<b>${esc(o.slot || "")}</b>`}<small>${o.day !== todayISO() ? esc(o.when_label || o.day) + " · " : ""}reçue ${ago(o.created_at)}</small></span></div>
+    <div class="oc-tags">${liv ? `<span class="lv">Livraison · ${esc(o.service || "")}${o.location ? " · " + esc(o.location) : ""}</span>` : `<span>À emporter</span>`}${o.staff_disc ? `<span class="sp">Personnel SP −10 %</span>` : ""}${o.user_id ? `<span class="pts">⭐ Compte points</span>` : ""}</div>
+    <div class="oc-who"><b>${esc(o.name)}</b><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></div>
+    <div class="oc-it">${it.map(l => `<div><span class="q">${+l.qty}×</span><span><b>${esc(l.name)}</b>${l.opts ? `<span class="o">${esc(l.opts)}</span>` : ""}${l.note ? `<span class="nt">« ${esc(l.note)} »</span>` : ""}</span></div>`).join("")}</div>
+    ${o.note ? `<div class="oc-note">📝 ${esc(o.note)}</div>` : ""}
+    <div class="oc-f"><span class="tt">${money(o.total)}<small>à payer ${liv ? "à la livraison" : "au retrait"}</small></span>
+      ${nx ? `<button class="go" data-go="${o.id}" data-to="${nx[0]}">${nx[1] || doneLbl}</button>` : ""}
+      ${o.status !== "done" && o.status !== "cancelled" ? `<button class="mo" data-more="${o.id}" aria-label="Plus d'actions">⋯</button>` : `<button class="mo" data-more="${o.id}" aria-label="Plus d'actions">↺</button>`}</div>
+    ${O.open === o.id ? `<div class="oc-menu">${o.status === "done" || o.status === "cancelled" ? `<button data-go="${o.id}" data-to="ready">Remettre en « Prête »</button>` : `${o.status !== "new" ? `<button data-go="${o.id}" data-to="${o.status === "ready" ? "prep" : "new"}">← Étape précédente</button>` : ""}<button class="x" data-cancel="${o.id}">Annuler la commande</button>`}</div>` : ""}
+  </div>`;
+}
+function viewOrders() {
+  const today = todayISO();
+  let L = O.list.filter(o => O.filter === "later" ? o.day > today : o.day <= today || o.status !== "done");
+  if (O.filter === "emporter" || O.filter === "livraison") L = L.filter(o => o.mode === O.filter && o.day <= today);
+  if (O.filter === "all") L = L.filter(o => o.day <= today);
+  L.sort((a, b) => slotKey(a).localeCompare(slotKey(b)) || a.created_at.localeCompare(b.created_at));
+  const act = ["new", "prep", "ready"], fin = L.filter(o => o.status === "done" || o.status === "cancelled").reverse();
+  const later = O.list.filter(o => o.day > today && o.status !== "cancelled").length;
+  const caisse = O.list.filter(o => o.day === today && o.status === "done").reduce((t, o) => t + +o.total, 0);
+  app.innerHTML = top() + tabs() + `<div class="ob"><h1>Commandes</h1>
+      <button class="snd ${O.sound ? "" : "off"}" id="snd">${O.sound ? "🔔 Son activé" : "🔕 Activer le son"}</button></div>
+    <div class="ob">${[["all", "Aujourd'hui"], ["emporter", "À emporter"], ["livraison", "Livraisons"], ["later", `À venir${later ? ` (${later})` : ""}`]].map(([k, l]) => `<button class="chip ${O.filter === k ? "on" : ""}" data-f="${k}">${l}</button>`).join("")}</div>
+    ${!O.loaded ? `<div class="spin"></div>` : `<div class="cols">${act.map(st => { const C = L.filter(o => o.status === st);
+      return `<div class="col ${st}"><h3><i></i>${LBL[st]}<em>${C.length}</em></h3>${C.length ? C.map(cardHTML).join("") : `<div class="none">${st === "new" ? "Aucune nouvelle commande" : "—"}</div>`}</div>` }).join("")}</div>
+    <details class="donel"${O.showDone ? " open" : ""}><summary>Terminées (${fin.length})${caisse ? ` · ${money(caisse)} encaissés aujourd'hui` : ""} ▾</summary>${fin.map(cardHTML).join("")}</details>`}`;
+  bindTop(); O.flash = null;
+  $("#snd").onclick = () => { O.sound = !O.sound; if (O.sound) { beep() } viewOrders() };
+  document.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { O.filter = b.dataset.f; viewOrders() });
+  const dl = document.querySelector(".donel"); if (dl) dl.ontoggle = () => O.showDone = dl.open;
+  document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => setStatus(+b.dataset.go, b.dataset.to));
+  document.querySelectorAll("[data-more]").forEach(b => b.onclick = () => { O.open = O.open === +b.dataset.more ? null : +b.dataset.more; viewOrders() });
+  document.querySelectorAll("[data-cancel]").forEach(b => b.onclick = () => { if (!b.dataset.c) { b.dataset.c = 1; b.textContent = "Sûr ? Toucher pour annuler"; return } setStatus(+b.dataset.cancel, "cancelled") });
+}
+async function setStatus(id, st) {
+  const { data, error } = await sb.rpc("team_set_status", { p_id: id, p_status: st });
+  if (error) return toast("Erreur, réessaie", 1);
+  const i = O.list.findIndex(o => o.id === id); if (i >= 0 && data) O.list[i] = Array.isArray(data) ? data[0] : data;
+  O.open = null; buzz(20);
+  const o = O.list[i];
+  if (st === "done" && o && o.user_id && !o.points_awarded) {
+    const pts = Math.floor(+o.total * CFG.perEuro);
+    if (pts > 0) { const r = await sb.rpc("team_award_order", { p_id: id, p_points: pts }); if (!r.error && r.data) { o.points_awarded = r.data; toast(`+${r.data} points ajoutés à ${o.name}`) } }
+  } else if (st === "ready") toast(o && o.mode === "livraison" ? "Marquée en route" : "Le client voit que c'est prêt");
+  titleBadge(); viewOrders();
+}
+
 /* ---------------- routeur ---------------- */
 function render() {
   if (!S.user) return viewLogin();
   if (!S.team) return viewNotTeam();
-  return viewScan();
+  if (!O.loaded && !O.loading) { O.loading = true; loadOrders(true); startRealtime(); setInterval(() => loadOrders(true), 20000); setInterval(() => { if (S.tab === "orders" && !O.open && !document.querySelector("input:focus")) viewOrders() }, 60000) }
+  return S.tab === "scan" ? viewScan() : viewOrders();
 }
-document.addEventListener("visibilitychange", () => { if (document.hidden) stopCam(); else if (S.team && $("#cam") && !stream) viewScan() });
+document.addEventListener("visibilitychange", () => { if (document.hidden) stopCam(); else { if (S.team) loadOrders(true); if (S.team && $("#cam") && !stream) viewScan() } });
 const { data } = await sb.auth.getSession();
 await setUser(data?.session?.user || null);
 </script>

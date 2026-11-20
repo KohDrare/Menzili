@@ -4,13 +4,13 @@ Site de commande du snack **Menzïli**, Rue Haute 326, 1000 Bruxelles (Marolles)
 
 - À emporter : retrait au comptoir à l'heure choisie
 - Livraison Saint-Pierre : livré au service, commande avant 10:30, réduction personnel −10 %
-- Les commandes sont envoyées au snack via WhatsApp (aucun serveur nécessaire)
+- Les commandes arrivent dans l'**espace personnel** (`/staff/`), en direct ; le client suit l'avancement sur son téléphone (avec ou sans compte)
 
 ## Modifier le site
 
 Tout se trouve dans `index.html` (page unique, sans dépendances) :
 
-- `CONFIG` : numéro WhatsApp qui reçoit les commandes, horaires, réduction, créneaux de livraison, minimum de commande
+- `CONFIG` : numéro de contact du snack (affiché sur le site), horaires, réduction, créneaux de livraison, minimum de commande
 - `MENU` : catégories, produits, prix, options (sauces, crudités, suppléments…)
 - `OFFERS` : les grandes offres de l'accueil (à valider avec le patron)
 - `ATL` : ingrédients et prix de l'Atelier (sandwich sur mesure). Visuels : `assets/atelier/` — un calque 900×360 par ingrédient (même cadre que le pain, on les empile), `pain-dessus.webp` pour le couvercle qui se referme à la fin, et `ic/` pour les pastilles de choix
@@ -49,6 +49,18 @@ Pour activer les vrais comptes (historique sur tous les appareils), il faut un p
 
 La clé `anon` est publique par conception : la sécurité est assurée par les règles RLS du fichier SQL (chaque client ne voit que ses propres données).
 Pour des envois d'e-mails fiables en production, configure un SMTP personnalisé dans Supabase (l'envoi intégré est limité).
+
+## Espace personnel : commandes en direct (`/staff/`)
+
+Réservé aux comptes de la table `team` (voir « Points clients »).
+
+- **Commandes** : nouvelles commandes en direct (son + vibration, activer le son une fois en arrivant), classées par statut : Nouvelles → En préparation → Prêtes → Remises/Livrées. Filtres : aujourd'hui, à emporter, livraisons, à venir (pré-commandes). Bouton ⋯ : revenir en arrière ou annuler.
+- Le client voit chaque changement de statut sur sa page de suivi (et dans un bandeau sur l'accueil).
+- Quand une commande d'un client avec compte est marquée « Remise »/« Livrée », ses points sont ajoutés automatiquement (une seule fois).
+- **Scanner un client** : ajouter/retirer des points avec son QR.
+
+Mise en place (une fois) : Supabase → SQL Editor → exécuter `supabase/commandes.sql` (après `points.sql`).
+Plus de WhatsApp pour les commandes : si la commande ne peut pas être envoyée, le client est invité à appeler le snack.
 
 ## Points clients (QR scanné au comptoir)
 

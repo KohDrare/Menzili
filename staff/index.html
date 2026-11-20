@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#161514">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Menzïli — Points (personnel)</title>
+<style>
+:root{--bg:#161514;--card:#211f1d;--card2:#2a2724;--ink:#fff;--mute:#a39b91;--or:#f26522;--or-d:#d4531a;--green:#2fbf6b;--red:#ff5b4f;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",Roboto,sans-serif;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--ease:cubic-bezier(.2,.85,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--font);-webkit-font-smoothing:antialiased;min-height:100%}
+button,input{font:inherit;color:inherit;border:0;background:none}
+button{cursor:pointer}
+.app{max-width:520px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:calc(14px + var(--st)) 18px calc(18px + var(--sb))}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.top img{height:24px}
+.top .who{font-size:12.5px;color:var(--mute);text-align:right;line-height:1.3}
+.top .who b{color:#fff;font-weight:650;display:block}
+.top .who button{color:var(--or);font-weight:650;font-size:12.5px}
+h1{font-size:28px;font-weight:850;letter-spacing:-.035em;line-height:1.05}
+.sub{color:var(--mute);font-size:14.5px;margin-top:6px}
+.card{background:var(--card);border-radius:22px;padding:18px;margin-top:16px}
+.fld{display:flex;gap:8px;margin-top:12px}
+.fld input{flex:1;min-width:0;background:var(--card2);border-radius:14px;padding:14px 15px;font-size:16px;outline:none}
+.fld input:focus{box-shadow:0 0 0 2px var(--or)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;padding:15px 18px;font-weight:750;font-size:16px;background:var(--or);color:#fff;transition:transform .12s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn.lt{background:var(--card2)}
+.btn.wh{background:#fff;color:#161514}
+.btn[disabled],.btn.dis{opacity:.35;pointer-events:none}
+.lk{color:var(--or);font-weight:650;font-size:14px;margin-top:12px}
+/* scanner */
+.cam{position:relative;width:100%;aspect-ratio:1;border-radius:26px;overflow:hidden;background:#000;margin-top:14px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam .fr{position:absolute;inset:16%;border-radius:22px;box-shadow:0 0 0 999px #0000008c}
+.cam .fr::before,.cam .fr::after{content:"";position:absolute;inset:-3px;border-radius:24px;border:4px solid var(--or);
+  -webkit-mask:linear-gradient(#000 0 0) top/100% 30px no-repeat,linear-gradient(#000 0 0) bottom/100% 30px no-repeat;mask:linear-gradient(#000 0 0) top/100% 30px no-repeat,linear-gradient(#000 0 0) bottom/100% 30px no-repeat;opacity:.9}
+.cam .fr::after{-webkit-mask:linear-gradient(#000 0 0) left/30px 100% no-repeat,linear-gradient(#000 0 0) right/30px 100% no-repeat;mask:linear-gradient(#000 0 0) left/30px 100% no-repeat,linear-gradient(#000 0 0) right/30px 100% no-repeat}
+.cam .ln{position:absolute;left:18%;right:18%;height:2px;background:var(--or);box-shadow:0 0 12px var(--or);top:20%;animation:scan 2.2s ease-in-out infinite alternate}
+@keyframes scan{to{top:80%}}
+.cam .msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;color:#ddd;font-size:14.5px;background:#000c}
+.cam .msg button{margin-top:12px}
+.hint{text-align:center;color:var(--mute);font-size:13.5px;margin-top:10px}
+.or{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:12.5px;margin:18px 0 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:#ffffff1a}
+.tok{text-transform:uppercase;letter-spacing:.14em;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-weight:700}
+/* client */
+.cli{display:flex;align-items:center;gap:14px}
+.av{width:54px;height:54px;border-radius:50%;background:var(--or);display:grid;place-items:center;font-size:22px;font-weight:800;flex:none}
+.cli .nm b{font-size:20px;font-weight:800;letter-spacing:-.02em;display:block;color:#fff}
+.cli .nm span{color:var(--mute);font-size:13px}
+.bal{margin-left:auto;text-align:right}
+.bal b{font-size:34px;font-weight:850;letter-spacing:-.04em;line-height:1}
+.bal span{display:block;color:var(--mute);font-size:13px}
+.lbl{font-size:13px;font-weight:650;color:var(--mute);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.amt{display:flex;align-items:center;background:var(--card2);border-radius:16px;padding:6px 6px 6px 16px}
+.amt input{flex:1;min-width:0;font-size:30px;font-weight:800;letter-spacing:-.02em;outline:none;padding:6px 0}
+.amt i{font-style:normal;font-size:24px;font-weight:700;color:var(--mute);margin-right:10px}
+.quick{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.quick button{background:var(--card2);border-radius:12px;padding:10px 14px;font-weight:700;font-size:15px}
+.quick button:active{background:var(--or)}
+.rw{display:grid;gap:8px}
+.rw button{display:flex;align-items:center;gap:12px;background:var(--card2);border-radius:16px;padding:13px 14px;text-align:left}
+.rw button i{font-style:normal;font-size:24px}
+.rw button b{flex:1;font-weight:700}
+.rw button span{font-weight:800;color:var(--or)}
+.rw button[disabled]{opacity:.35}
+.row{display:flex;gap:10px;margin-top:18px}
+.row .btn{flex:1}
+/* résultat */
+.done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 0}
+.done .ck{width:90px;height:90px;border-radius:50%;background:var(--green);display:grid;place-items:center;animation:pop .5s var(--ease)}
+.done .ck svg{width:44px;height:44px}
+.done.m .ck{background:var(--or)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1)}100%{transform:none}}
+.done h2{font-size:44px;font-weight:850;letter-spacing:-.04em;margin-top:18px;line-height:1}
+.done p{color:var(--mute);margin-top:8px;font-size:15px}
+.done .nb{margin-top:16px;background:var(--card);border-radius:30px;padding:10px 18px;font-size:15px}
+.done .nb b{font-size:20px;font-weight:800}
+/* historique */
+.hist div{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #ffffff12;font-size:14px}
+.hist div:last-child{border-bottom:0}
+.hist .t{flex:1;min-width:0}
+.hist .t small{display:block;color:var(--mute);font-size:12px}
+.hist .d{font-weight:800}
+.hist .d.p{color:var(--green)}.hist .d.m{color:var(--or)}
+.hist button{font-size:12px;font-weight:700;color:var(--red);background:#ff5b4f1f;border-radius:10px;padding:6px 9px}
+.empty{color:var(--mute);font-size:13.5px;padding:6px 0}
+.toast{position:fixed;left:50%;bottom:calc(24px + var(--sb));transform:translate(-50%,140%);opacity:0;visibility:hidden;background:#fff;color:#161514;font-weight:650;font-size:14.5px;padding:12px 18px;border-radius:30px;transition:transform .35s var(--ease);z-index:9;max-width:90%;text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
+.toast.bad{background:var(--red);color:#fff}
+.spin{width:28px;height:28px;border-radius:50%;border:3px solid #ffffff30;border-top-color:var(--or);animation:sp .8s linear infinite;margin:40px auto}
+@keyframes sp{to{transform:rotate(1turn)}}
+</style>
+</head>
+<body>
+<div class="app" id="app"><div class="spin"></div></div>
+<div class="toast" id="toast"></div>
+<canvas id="cv" hidden></canvas>
+<script src="../assets/vendor/jsQR.min.js"></script>
+<script type="module">
+/* =====================================================================
+   RÉGLAGES — à garder identiques à CONFIG.points dans ../index.html
+   ===================================================================== */
+const CFG = {
+  supabaseUrl: "https://awrvyfeagqicwjcswutw.supabase.co",
+  supabaseAnonKey: "sb_publishable_7LdanorbRHJt67k6A0GLKg_2CVV-MG4", // clé publique
+  perEuro: 1,
+  rewards: [
+    { pts: 50,  label: "Un soft offert",     icon: "🥤" },
+    { pts: 100, label: "Un sandwich offert", icon: "🥪" },
+  ],
+};
+
+const $ = s => document.querySelector(s), app = $("#app");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+let tt; function toast(m, bad) { const t = $("#toast"); t.textContent = m; t.classList.toggle("bad", !!bad); t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2400) }
+const buzz = p => { try { navigator.vibrate && navigator.vibrate(p) } catch (e) {} };
+const errMsg = e => { const m = (e && (e.message || e.error_description)) || ""; return /expir|inconnu/i.test(m) ? "QR expiré ou inconnu : demande au client de rouvrir son QR" : /assez/.test(m) ? "Pas assez de points" : /personnel/.test(m) ? "Compte non autorisé" : /tard/.test(m) ? "Trop tard pour annuler (15 min)" : "Erreur, réessaie" };
+
+const sb = window.__SUPA_MOCK || (await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm")).createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, storageKey: "menzili-auth" } });
+const S = { user: null, team: false, login: { step: "email", email: "" }, token: null, client: null, busy: false };
+
+/* ---------------- en-tête ---------------- */
+const top = () => `<div class="top"><img src="../assets/logo-white.png" alt="Menzïli">${S.user ? `<div class="who"><b>${esc(S.user.email || "")}</b><button id="out">Se déconnecter</button></div>` : `<div class="who"><b>Espace personnel</b>Points clients</div>`}</div>`;
+function bindTop() { const o = $("#out"); if (o) o.onclick = async () => { stopCam(); await sb.auth.signOut(); S.user = null; S.team = false; render() } }
+
+/* ---------------- connexion ---------------- */
+function viewLogin() {
+  const L = S.login;
+  app.innerHTML = top() + `<h1>Connexion<br>du personnel</h1><p class="sub">Avec ton e-mail. Le patron doit t'avoir ajouté à la liste du personnel.</p>
+  <div class="card">${L.step === "email"
+    ? `<b>Ton e-mail</b><div class="fld"><input id="em" type="email" inputmode="email" autocomplete="email" placeholder="toi@email.com" value="${esc(L.email)}"></div><button class="btn" id="go" style="width:100%;margin-top:12px">Recevoir un code</button>`
+    : `<b>Code reçu par e-mail</b><p class="sub">Envoyé à ${esc(L.email)}</p><div class="fld"><input id="cd" class="tok" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="••••••"></div><button class="btn" id="vf" style="width:100%;margin-top:12px">Valider</button><button class="lk" id="bk">← Changer d'e-mail</button>`}</div>`;
+  bindTop();
+  const go = $("#go"), em = $("#em");
+  if (go) { go.onclick = async () => { const v = em.value.trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return toast("E-mail invalide", 1); go.classList.add("dis");
+      const { error } = await sb.auth.signInWithOtp({ email: v, options: { shouldCreateUser: true } }); go.classList.remove("dis");
+      if (error) return toast("Envoi impossible, réessaie", 1); L.email = v; L.step = "code"; viewLogin(); setTimeout(() => $("#cd")?.focus(), 200) };
+    em.onkeydown = e => e.key === "Enter" && go.click() }
+  const vf = $("#vf"), cd = $("#cd");
+  if (vf) { vf.onclick = async () => { const v = cd.value.replace(/\D/g, ""); if (v.length < 6) return toast("Entre le code", 1); vf.classList.add("dis");
+      const { data, error } = await sb.auth.verifyOtp({ email: L.email, token: v, type: "email" }); vf.classList.remove("dis");
+      if (error || !data?.user) return toast("Code incorrect ou expiré", 1); await setUser(data.user) };
+    cd.onkeydown = e => e.key === "Enter" && vf.click(); $("#bk").onclick = () => { L.step = "email"; viewLogin() } }
+}
+async function setUser(u) {
+  S.user = u; S.team = false;
+  if (u) { try { const { data } = await sb.rpc("is_team"); S.team = !!data } catch (e) {} }
+  render();
+}
+
+function viewNotTeam() {
+  app.innerHTML = top() + `<h1>Compte pas encore autorisé</h1><p class="sub">Ce compte n'est pas dans la liste du personnel. Envoie cette adresse au patron pour qu'il t'ajoute :</p>
+    <div class="card tok" style="text-transform:none;letter-spacing:0;font-size:17px">${esc(S.user.email || S.user.id)}</div>
+    <button class="btn lt" id="re" style="margin-top:16px">J'ai été ajouté, réessayer</button>`;
+  bindTop(); $("#re").onclick = () => setUser(S.user);
+}
+
+/* ---------------- scanner ---------------- */
+let stream = null, raf = 0;
+function stopCam() { cancelAnimationFrame(raf); raf = 0; if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null } }
+async function viewScan() {
+  stopCam(); S.token = null; S.client = null;
+  app.innerHTML = top() + `<h1>Scanner un client</h1>
+    <div class="cam" id="cam"><video id="vd" playsinline muted autoplay></video><div class="fr"></div><div class="ln"></div></div>
+    <p class="hint">Vise le QR que le client montre dans « Mon profil ».</p>
+    <div class="or">ou tape le code sous son QR</div>
+    <div class="fld"><input id="mt" class="tok" placeholder="ABC-DEF-GHJ" maxlength="11" autocapitalize="characters" autocomplete="off"><button class="btn" id="mg" style="padding:0 20px">OK</button></div>
+    <div class="lbl">Derniers mouvements</div><div class="card hist" id="hist" style="margin-top:0"><div class="empty">Chargement…</div></div>`;
+  bindTop();
+  const mt = $("#mt"); $("#mg").onclick = () => { const v = mt.value.replace(/[^a-z0-9]/gi, "").toUpperCase(); if (v.length !== 9) return toast("Le code fait 9 caractères", 1); lookup(v) };
+  mt.onkeydown = e => e.key === "Enter" && $("#mg").click();
+  loadHist();
+  if (!navigator.mediaDevices?.getUserMedia) { camMsg("Caméra indisponible sur ce navigateur. Utilise le code sous le QR."); return }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } }, audio: false });
+    const vd = $("#vd"); if (!vd) return stopCam(); vd.srcObject = stream; await vd.play().catch(() => {});
+    const cv = $("#cv"), cx = cv.getContext("2d", { willReadFrequently: true });
+    const tick = () => {
+      if (!stream) return;
+      if (vd.readyState >= 2 && vd.videoWidth) {
+        const s = Math.min(vd.videoWidth, vd.videoHeight), w = Math.min(640, s);
+        cv.width = cv.height = w;
+        cx.drawImage(vd, (vd.videoWidth - s) / 2, (vd.videoHeight - s) / 2, s, s, 0, 0, w, w);
+        const r = window.jsQR && jsQR(cx.getImageData(0, 0, w, w).data, w, w, { inversionAttempts: "dontInvert" });
+        const m = r && /^MENZILI:([A-Z0-9]{9})$/.exec(r.data);
+        if (m) { buzz(30); stopCam(); lookup(m[1]); return }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  } catch (e) { camMsg(e && e.name === "NotAllowedError" ? "Accès caméra refusé. Autorise la caméra pour ce site (Réglages › Safari › Caméra), ou tape le code." : "Caméra indisponible. Tape le code sous le QR du client.") }
+}
+function camMsg(t) { const c = $("#cam"); if (c) c.insertAdjacentHTML("beforeend", `<div class="msg"><div>${esc(t)}<br><button class="btn lt" id="retry">Réessayer</button></div></div>`); const r = $("#retry"); if (r) r.onclick = viewScan }
+
+async function loadHist() {
+  const h = $("#hist"); if (!h) return;
+  const { data, error } = await sb.rpc("team_recent");
+  if (!$("#hist")) return;
+  if (error) { h.innerHTML = `<div class="empty">Impossible de charger.</div>`; return }
+  const now = Date.now();
+  h.innerHTML = (data || []).length ? data.map(r => { const ago = (now - Date.parse(r.created_at)) / 6e4;
+    const when = new Date(r.created_at).toLocaleString("fr-BE", { weekday: "short", hour: "2-digit", minute: "2-digit" });
+    return `<div><span class="t">${esc(r.client)} · ${esc(r.reason || "")}<small>${when} · par ${esc(r.by_name)}</small></span><span class="d ${r.delta > 0 ? "p" : "m"}">${r.delta > 0 ? "+" : ""}${r.delta}</span>${ago < 15 ? `<button data-undo="${r.id}">Annuler</button>` : ""}</div>` }).join("")
+    : `<div class="empty">Aucun mouvement ces 2 derniers jours.</div>`;
+  h.querySelectorAll("[data-undo]").forEach(b => b.onclick = async () => {
+    if (!b.dataset.c) { b.dataset.c = 1; b.textContent = "Sûr ?"; return }
+    const { error } = await sb.rpc("team_undo", { p_id: +b.dataset.undo }); if (error) return toast(errMsg(error), 1); toast("Mouvement annulé"); loadHist() });
+}
+
+/* ---------------- fiche client ---------------- */
+async function lookup(token) {
+  S.busy = true; app.innerHTML = top() + `<div class="spin"></div>`; bindTop();
+  const { data, error } = await sb.rpc("team_lookup", { p_token: token });
+  S.busy = false;
+  const row = Array.isArray(data) ? data[0] : data;
+  if (error || !row) { toast(errMsg(error), 1); buzz([60, 40, 60]); return viewScan() }
+  S.token = token; S.client = { name: row.name, points: +row.points || 0 }; viewClient();
+}
+function viewClient() {
+  const c = S.client, n = c.points, ini = (c.name || "?").trim().charAt(0).toUpperCase();
+  app.innerHTML = top() + `<div class="card cli"><span class="av">${esc(ini)}</span><span class="nm"><b>${esc(c.name)}</b><span>Client fidèle</span></span><span class="bal"><b>${n}</b><span>points</span></span></div>
+    <div class="lbl">Ajouter des points · montant payé</div>
+    <div class="amt"><input id="eu" inputmode="decimal" placeholder="0" autocomplete="off"><i>€</i></div>
+    <div class="quick">${[5, 10, 15, 20].map(v => `<button data-q="${v}">+${v} pts</button>`).join("")}</div>
+    <button class="btn" id="add" style="width:100%;margin-top:12px" disabled>Ajouter des points</button>
+    <div class="lbl">Offrir une récompense</div>
+    <div class="rw">${CFG.rewards.map((r, i) => `<button data-rw="${i}" ${n < r.pts ? "disabled" : ""}><i>${r.icon}</i><b>${esc(r.label)}</b><span>−${r.pts}</span></button>`).join("")}</div>
+    <div class="row"><button class="btn lt" id="bk">← Scanner un autre</button></div>`;
+  bindTop();
+  const eu = $("#eu"), add = $("#add");
+  const pts = () => Math.floor((parseFloat(eu.value.replace(",", ".")) || 0) * CFG.perEuro);
+  eu.oninput = () => { const p = pts(); add.disabled = p <= 0; add.textContent = p > 0 ? `Ajouter ${p} point${p > 1 ? "s" : ""}` : "Ajouter des points" };
+  add.onclick = () => { const p = pts(), v = (parseFloat(eu.value.replace(",", ".")) || 0).toFixed(2).replace(".", ","); if (p > 0) act(p, `Commande ${v} €`) };
+  document.querySelectorAll("[data-q]").forEach(b => b.onclick = () => act(+b.dataset.q, "Points ajoutés"));
+  document.querySelectorAll("[data-rw]").forEach(b => b.onclick = () => { const r = CFG.rewards[+b.dataset.rw];
+    if (!b.dataset.c) { b.dataset.c = 1; b.querySelector("b").textContent = `Confirmer : ${r.label.toLowerCase()} ?`; return }
+    act(-r.pts, r.label) });
+  $("#bk").onclick = viewScan;
+  setTimeout(() => eu.focus(), 250);
+}
+async function act(delta, reason) {
+  if (S.busy) return; S.busy = true;
+  const { data, error } = await sb.rpc("team_add_points", { p_token: S.token, p_delta: delta, p_reason: reason });
+  S.busy = false;
+  if (error) { toast(errMsg(error), 1); buzz([60, 40, 60]); return }
+  buzz(delta > 0 ? [20, 50, 20] : 40);
+  const nb = +data;
+  app.innerHTML = top() + `<div class="done ${delta < 0 ? "m" : ""}"><span class="ck">${CHECK}</span><h2>${delta > 0 ? "+" : ""}${delta} pts</h2>
+    <p>${esc(reason)} · ${esc(S.client.name)}</p><div class="nb">Nouveau solde : <b>${nb} pts</b></div></div>
+    <button class="btn wh" id="nx">Scanner le client suivant</button>
+    ${delta > 0 ? `<button class="btn lt" id="more" style="margin-top:10px">Même client : offrir une récompense</button>` : ""}`;
+  bindTop();
+  S.client.points = nb;
+  $("#nx").onclick = viewScan; const m = $("#more"); if (m) m.onclick = viewClient;
+}
+
+/* ---------------- routeur ---------------- */
+function render() {
+  if (!S.user) return viewLogin();
+  if (!S.team) return viewNotTeam();
+  return viewScan();
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden) stopCam(); else if (S.team && $("#cam") && !stream) viewScan() });
+const { data } = await sb.auth.getSession();
+await setUser(data?.session?.user || null);
+</script>
+</body>
+</html>

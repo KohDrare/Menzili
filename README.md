@@ -50,6 +50,30 @@ Pour activer les vrais comptes (historique sur tous les appareils), il faut un p
 La clé `anon` est publique par conception : la sécurité est assurée par les règles RLS du fichier SQL (chaque client ne voit que ses propres données).
 Pour des envois d'e-mails fiables en production, configure un SMTP personnalisé dans Supabase (l'envoi intégré est limité).
 
+## Points clients (QR scanné au comptoir)
+
+Remplace la carte fidélité à tampons (toujours dans le code, réactivable avec `CONFIG.points.enabled = false`).
+
+- **Client** : « Mon profil » → « Mes points » → « Montrer mon QR ». Le QR change toutes les 10 minutes (une capture d'écran ne sert pas longtemps) ; un code de 9 caractères est affiché dessous si la caméra ne lit pas.
+- **Personnel** : page `/staff/` (ex. `https://kohdrare.github.io/Menzili/staff/`), à ajouter sur l'écran d'accueil du téléphone. Connexion par e-mail, scan du QR, saisie du montant payé → points ajoutés. Boutons pour offrir une récompense (les points sont retirés). Les mouvements de moins de 15 minutes peuvent être annulés.
+- **Règles** : `CONFIG.points` dans `index.html` (`perEuro`, `rewards`). Recopier les mêmes valeurs dans `CFG` en haut de `staff/index.html`.
+
+### Mise en place (une fois)
+
+1. Supabase → **SQL Editor** → colle et exécute `supabase/points.sql`.
+2. Chaque employé se connecte une fois sur le site (Mon profil) avec son e-mail.
+3. Pour l'ajouter au personnel, exécute dans le SQL Editor (en remplaçant prénom et e-mail) :
+   ```sql
+   insert into public.team (user_id, name)
+   select id, 'Prénom' from auth.users where email = 'adresse@exemple.be'
+   on conflict (user_id) do update set name = excluded.name;
+   ```
+   Retirer quelqu'un : `delete from public.team where user_id = (select id from auth.users where email = 'adresse@exemple.be');`
+
+Sécurité : seuls les comptes de la table `team` peuvent ajouter ou retirer des points (vérifié côté serveur par les fonctions SQL). Un client ne peut ni se donner de points, ni descendre sous zéro, ni lire la liste du personnel.
+
+Bibliothèques incluses dans `assets/vendor/` : qrcode-generator (MIT) pour afficher le QR, jsQR (Apache-2.0) pour le scanner.
+
 ## Carte fidélité
 
 `assets/fidelite.jpg` est affichée dans « Mon profil ». Les tampons (positions calées sur les 9 cercles de la carte) se remplissent avec les sandwichs commandés sur le site : sandwichs chauds et froids, créations de l'Atelier, Menu Pause. Au 9e tampon, le 10e sandwich est offert. Le message WhatsApp le signale au snack, qui le déduit au retrait ou à la livraison.

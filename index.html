@@ -266,6 +266,12 @@ img{display:block}
 .pts-rw span.on{background:var(--or);color:#fff}
 .pts-big{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:var(--ink);font-weight:750;font-size:15px;padding:13px;border-radius:16px;position:relative}
 .pts-big svg{width:20px;height:20px}
+.staff-go{display:flex;align-items:center;gap:12px;margin-top:16px;background:var(--or);color:#fff;border-radius:20px;padding:14px 16px}
+.staff-go .ic{width:42px;height:42px;border-radius:13px;background:#ffffff2e;display:grid;place-items:center;flex:none}
+.staff-go .ic svg{width:22px;height:22px}
+.staff-go b{display:block;font-size:16px;font-weight:750}
+.staff-go span span{font-size:13px;line-height:1.35;color:#ffe3d3;display:block}
+.staff-go .ar{margin-left:auto;width:32px;height:32px;border-radius:50%;background:#fff;color:var(--or);display:grid;place-items:center;flex:none}
 .pcard2{container-type:inline-size}
 .pcard2 .pc-rule{position:absolute;right:2.2%;top:2.6%;font-size:2.15cqw;font-weight:700;letter-spacing:.14em;color:#2a2018}
 .pcard2 .pc-title{position:absolute;left:50%;top:36.6%;transform:translateX(-50%);display:flex;align-items:center;gap:1.1cqw;font-size:3.05cqw;font-weight:600;letter-spacing:.2em;color:#2a2018;white-space:nowrap}
@@ -1564,7 +1570,7 @@ function openLegal(k){const [t,body]=legalHTML(k);view="legal";
 /* =====================================================================
    COMPTES (Supabase) — connexion par code reçu par e-mail
    ===================================================================== */
-const ACC={sb:null,user:null,profile:null,points:null,ledger:[],step:"choose",channel:"email",ident:"",busy:false,orders:null,prov:{email:true,phone:false,google:false,apple:false}};
+const ACC={sb:null,user:null,profile:null,points:null,ledger:[],team:false,step:"choose",channel:"email",ident:"",busy:false,orders:null,prov:{email:true,phone:false,google:false,apple:false}};
 const accOn=()=>!!ACC.sb;
 async function accInit(){
   const c=CONFIG.account;
@@ -1590,6 +1596,7 @@ async function accSetUser(u){
     if(ACC.profile){const p=ACC.profile;try{localStorage.setItem("menzili-client",JSON.stringify({name:p.name||c.name||"",tel:p.phone||c.tel||"",svc:p.service||c.svc||"",loc:p.location||c.loc||""}))}catch(e){}if(typeof p.staff==="boolean"){S.staff=p.staff}}
     else if(c.name||c.tel){accSaveProfile()}
     await accSyncLocal();await accLoadOrders();await accLoadPoints();
+    try{const {data}=await ACC.sb.rpc("is_team");ACC.team=!!data}catch(e){ACC.team=false}
   }
   update();if(view==="profile")drawProfile();
 }
@@ -1634,7 +1641,7 @@ async function accOAuth(provider){
   const {error}=await ACC.sb.auth.signInWithOAuth({provider,options:{redirectTo:location.href.split("#")[0]}});
   if(error){try{sessionStorage.removeItem("menzili-oauth")}catch(e){}toast("Connexion impossible pour le moment",false)}
 }
-async function accLogout(){try{await ACC.sb.auth.signOut()}catch(e){}ACC.user=null;ACC.orders=null;ACC.profile=null;ACC.points=null;ACC.ledger=[];update();drawProfile();toast("Déconnecté")}
+async function accLogout(){try{await ACC.sb.auth.signOut()}catch(e){}ACC.user=null;ACC.orders=null;ACC.profile=null;ACC.points=null;ACC.ledger=[];ACC.team=false;update();drawProfile();toast("Déconnecté")}
 async function accDeleteData(){
   if(ACC.user){try{await ACC.sb.from("orders").delete().eq("user_id",ACC.user.id);await ACC.sb.from("profiles").delete().eq("id",ACC.user.id)}catch(e){}}
   try{localStorage.removeItem("menzili-orders");localStorage.removeItem("menzili-client")}catch(e){}
@@ -1775,6 +1782,7 @@ function drawProfile(){
   sheet.innerHTML=head("Mon profil","")+`<div class="sb">
     <div class="pfh"><span class="av">${ini?esc(ini):`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg>`}</span>
       <span><b>${c.name?`Salut ${esc(c.name)} 👋`:"Bienvenue"}</b><span>${H.length?`${H.length} commande${H.length>1?"s":""}`:"Pas encore de commande"}</span></span></div>
+    ${ACC.user&&ACC.team?`<a class="staff-go" href="staff/"><span class="ic">${QR_ICON}</span><span><b>Espace personnel</b><span>Scanner le QR d'un client et ajouter des points</span></span><span class="ar">${I.arrow}</span></a>`:""}
     ${ACC.user?"":accCardHTML()}
     ${PTS.enabled?pointsHTML():loyaltyHTML()}
     <div class="pcard" style="margin-top:22px"><h4><span style="color:var(--or)">${I.hosp}</span>Avantage Saint-Pierre</h4>

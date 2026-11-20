@@ -127,7 +127,7 @@ const sb = window.__SUPA_MOCK || (await import("https://cdn.jsdelivr.net/npm/@su
 const S = { user: null, team: false, login: { step: "email", email: "" }, token: null, client: null, busy: false };
 
 /* ---------------- en-tête ---------------- */
-const top = () => `<div class="top"><img src="../assets/logo-white.png" alt="Menzïli">${S.user ? `<div class="who"><b>${esc(S.user.email || "")}</b><button id="out">Se déconnecter</button></div>` : `<div class="who"><b>Espace personnel</b>Points clients</div>`}</div>`;
+const top = () => `<div class="top"><a href="../" aria-label="Retour au site"><img src="../assets/logo-white.png" alt="Menzïli"></a>${S.user ? `<div class="who"><b>${esc(S.user.email || "")}</b><button id="out">Se déconnecter</button></div>` : `<div class="who"><b>Espace personnel</b>Points clients</div>`}</div>`;
 function bindTop() { const o = $("#out"); if (o) o.onclick = async () => { stopCam(); await sb.auth.signOut(); S.user = null; S.team = false; render() } }
 
 /* ---------------- connexion ---------------- */

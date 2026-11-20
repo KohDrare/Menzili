@@ -266,6 +266,24 @@ img{display:block}
 .pts-rw span.on{background:var(--or);color:#fff}
 .pts-big{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:var(--ink);font-weight:750;font-size:15px;padding:13px;border-radius:16px;position:relative}
 .pts-big svg{width:20px;height:20px}
+.pcard2{container-type:inline-size}
+.pcard2 .pc-rule{position:absolute;right:2.2%;top:2.6%;font-size:2.15cqw;font-weight:700;letter-spacing:.14em;color:#2a2018}
+.pcard2 .pc-title{position:absolute;left:50%;top:36.6%;transform:translateX(-50%);display:flex;align-items:center;gap:1.1cqw;font-size:3.05cqw;font-weight:600;letter-spacing:.2em;color:#2a2018;white-space:nowrap}
+.pcard2 .pc-title i{width:1.5cqw;height:1.5cqw;border-radius:50%;background:var(--or)}
+.pcard2 .pc-title i+i{margin-right:1.4cqw}
+.pc-band{position:absolute;left:12.4%;top:58.6%;width:66.5%;height:14.6%;border-radius:0 4cqw 4cqw 0;background:linear-gradient(#f8ecd4,#fbeed5);display:flex;align-items:center;gap:3cqw;padding:0 4cqw 0 3.4cqw;box-shadow:inset 0 .4cqw .6cqw #c9a06a33}
+.pc-n{font-size:7.4cqw;font-weight:850;letter-spacing:-.04em;line-height:1;color:#1c1612;white-space:nowrap}
+.pc-n small{font-size:2.6cqw;font-weight:750;color:var(--or-d);margin-left:.6cqw;letter-spacing:0}
+.pc-track{flex:1;height:2.3cqw;border-radius:2cqw;background:#e9d6b4;position:relative;border:.3cqw dashed #2a201855}
+.pc-track>i{position:absolute;left:0;top:0;bottom:0;border-radius:2cqw;background:linear-gradient(90deg,#f8a36a,var(--or));transition:width .8s var(--ease)}
+.pc-mk{position:absolute;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:#fff;border:.35cqw dashed #2a2018;display:grid;place-items:center}
+.pc-mk em{font-style:normal;font-size:2.8cqw;line-height:1}
+.pc-mk b{position:absolute;top:105%;font-size:1.9cqw;font-weight:800;color:#2a2018}
+.pc-mk.on{background:var(--or);border-style:solid;border-color:#fff;box-shadow:0 .4cqw 1cqw #f2652266}
+.pc-ready{left:82.6%;top:66.3%}
+.pc-info{margin-top:12px;font-size:14px;color:var(--ink2);text-align:center;line-height:1.45}
+.pc-info .pc-ok{margin-top:6px;background:var(--green-soft);color:var(--green);border-radius:14px;padding:9px 12px;font-size:13.5px}
+.pc-btn{background:var(--dark);color:#fff;margin-top:14px}
 .pts-cta{margin-top:12px;font-size:13px;color:#f8b48e;font-weight:650}
 .pts-h{margin-top:10px;background:#fff;border-radius:18px;padding:4px 14px;border:1px solid var(--line)}
 .pts-h div{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -1639,21 +1657,32 @@ async function accLoadPoints(){
   try{const {data}=await ACC.sb.from("points_ledger").select("delta,reason,created_at").order("created_at",{ascending:false}).limit(6);ACC.ledger=data||[]}catch(e){ACC.ledger=[]}
 }
 function nextReward(n){const R=PTS.rewards;return R.find(r=>r.pts>n)||null}
+function pointsCardHTML(n,on){
+  const R=PTS.rewards,max=R[R.length-1].pts,pct=Math.min(100,n/max*100);
+  return `<div class="fwrap"><div class="fcard pcard2" id="fcard"><img src="assets/carte-points.jpg" alt="Carte de points Menzïli : ${n} points">
+    <span class="pc-rule">1 € = ${PTS.perEuro} POINT${PTS.perEuro>1?"S":""}</span>
+    <span class="pc-title"><i></i><i></i>CARTE DE POINTS</span>
+    <div class="pc-band">
+      <span class="pc-n">${on&&ACC.points===null?"–":n}<small>pts</small></span>
+      <span class="pc-track"><i style="width:${pct}%"></i>
+        ${R.slice(0,-1).map(r=>`<span class="pc-mk ${n>=r.pts?"on":""}" style="left:${r.pts/max*100}%"><em>${r.icon}</em><b>${r.pts}</b></span>`).join("")}
+      </span>
+    </div>
+    ${n>=max?`<span class="fready pc-ready"></span>`:""}
+    <span class="fglare"></span></div></div>`;
+}
 function pointsHTML(){
-  const R=PTS.rewards,how=`1 point par euro dépensé. Montre ton QR au comptoir ou au livreur.`;
-  if(!ACC.user)return `<div class="mc-title" style="margin-top:22px">Mes points</div>
-    <div class="pts pts-off"><div class="pts-top"><span class="pts-n">0<small>pts</small></span><span class="pts-qr dim">${QR_ICON}</span></div>
-    <p>${how}</p><div class="pts-rw">${R.map(r=>`<span><i>${r.icon}</i><b>${r.pts}</b> ${esc(r.label)}</span>`).join("")}</div>
-    <div class="pts-cta">${accOn()?"Connecte-toi ci-dessus pour avoir ta carte QR et cumuler des points.":"Bientôt disponible."}</div></div>`;
-  const n=ACC.points??0,nx=nextReward(n),prev=[...R].reverse().find(r=>r.pts<=n),base=0,pct=nx?Math.min(100,Math.round((n-base)/nx.pts*100)):100;
+  const R=PTS.rewards;
+  if(!ACC.user)return `<div class="mc-title" style="margin-top:22px">Mes points</div>${pointsCardHTML(0,false)}
+    <div class="pc-info"><p>1 point par euro dépensé. Montre ton QR au comptoir ou au livreur.</p>
+    <b style="color:var(--or-d)">${accOn()?"Connecte-toi ci-dessus pour avoir ta carte et cumuler des points.":"Bientôt disponible."}</b></div>`;
+  const n=ACC.points??0,nx=nextReward(n),prev=[...R].reverse().find(r=>r.pts<=n);
   const dt=ts=>new Date(ts).toLocaleDateString("fr-BE",{day:"numeric",month:"short"});
-  return `<div class="mc-title" style="margin-top:22px">Mes points</div>
-  <div class="pts"><div class="pts-top"><span class="pts-n">${ACC.points===null?"–":n}<small>pts</small></span>
-      <button class="pts-qr" id="ptsQr" aria-label="Montrer mon QR">${QR_ICON}<span>Mon QR</span></button></div>
-    <div class="pts-bar"><i style="width:${pct}%"></i></div>
-    <p>${nx?`Encore <b>${nx.pts-n} pts</b> pour : ${nx.icon} ${esc(nx.label.toLowerCase())}`:`Bravo, tu peux tout débloquer !`}${prev?` · <b style="color:#fff">${prev.icon} ${esc(prev.label)}</b> dispo`:""}</p>
-    <div class="pts-rw">${R.map(r=>`<span class="${n>=r.pts?"on":""}"><i>${r.icon}</i><b>${r.pts}</b> ${esc(r.label)}</span>`).join("")}</div>
-    <button class="pts-big" id="ptsQr2">${QR_ICON}Montrer mon QR au comptoir</button></div>
+  return `<div class="mc-title" style="margin-top:22px">Mes points</div>${pointsCardHTML(n,true)}
+  <div class="fhint">Touche la carte et fais-la bouger du doigt</div>
+  <div class="pc-info"><p>${nx?`Encore <b>${nx.pts-n} pts</b> pour : ${nx.icon} ${esc(nx.label.toLowerCase())}`:`Bravo, tu peux tout débloquer !`}</p>
+    ${prev?`<p class="pc-ok">${prev.icon} <b>${esc(prev.label)}</b> disponible : demande-le au comptoir</p>`:""}</div>
+  <button class="pts-big pc-btn" id="ptsQr">${QR_ICON}Montrer mon QR au comptoir</button>
   ${ACC.ledger.length?`<div class="pts-h">${ACC.ledger.map(l=>`<div><span>${esc(l.reason||(l.delta>0?"Points gagnés":"Récompense"))}<small>${dt(l.created_at)}</small></span><b class="${l.delta>0?"p":"m"}">${l.delta>0?"+":""}${l.delta}</b></div>`).join("")}</div>`:""}`;
 }
 const QR_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>';

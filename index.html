@@ -248,6 +248,44 @@ img{display:block}
 .fbar i{display:block;height:100%;background:var(--or);border-radius:6px;transition:width .6s var(--ease)}
 .fgift{margin-top:12px;background:var(--or);color:#fff;border-radius:16px;padding:13px 15px;font-size:14px;font-weight:650;line-height:1.35}
 .fgift b{display:block;font-size:16px;font-weight:800}
+.pts{background:var(--dark);color:#fff;border-radius:24px;padding:18px 18px 16px;position:relative;overflow:hidden}
+.pts::before{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(#f2652255,transparent 70%)}
+.pts-top{display:flex;align-items:center;justify-content:space-between;position:relative}
+.pts-n{font-size:44px;font-weight:850;letter-spacing:-.04em;line-height:1}
+.pts-n small{font-size:15px;font-weight:700;color:#a8a19a;margin-left:5px;letter-spacing:0}
+.pts-qr{display:flex;flex-direction:column;align-items:center;gap:3px;background:#fff;color:var(--ink);border-radius:16px;padding:9px 11px 7px;font-size:11px;font-weight:750}
+.pts-qr svg{width:28px;height:28px}
+.pts-qr.dim{opacity:.35;background:#2a2724;color:#fff;padding:10px}
+.pts-bar{height:8px;border-radius:8px;background:#2f2b27;margin:14px 0 10px;overflow:hidden;position:relative}
+.pts-bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#f8b48e,var(--or));transition:width .6s var(--ease)}
+.pts p{font-size:13.5px;color:#c9c2ba;line-height:1.4;position:relative}
+.pts p b{color:#fff}
+.pts-rw{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;position:relative}
+.pts-rw span{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:650;background:#2a2724;color:#c9c2ba;padding:6px 10px;border-radius:20px}
+.pts-rw span b{color:#fff}
+.pts-rw span.on{background:var(--or);color:#fff}
+.pts-big{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:var(--ink);font-weight:750;font-size:15px;padding:13px;border-radius:16px;position:relative}
+.pts-big svg{width:20px;height:20px}
+.pts-cta{margin-top:12px;font-size:13px;color:#f8b48e;font-weight:650}
+.pts-h{margin-top:10px;background:#fff;border-radius:18px;padding:4px 14px;border:1px solid var(--line)}
+.pts-h div{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.pts-h div:last-child{border-bottom:0}
+.pts-h small{display:block;font-size:12px;color:var(--mute)}
+.pts-h b.p{color:var(--green)}.pts-h b.m{color:var(--or-d)}
+.qrw{display:flex;flex-direction:column;align-items:center;text-align:center;padding:4px 0 10px}
+.qrbox{width:min(76vw,290px);aspect-ratio:1;background:#fff;border-radius:24px;padding:14px;box-shadow:0 0 0 1px var(--line),0 14px 40px #3b24101f;display:grid;place-items:center}
+.qrbox svg{width:100%;height:100%}
+.qrload{font-size:14px;color:var(--mute);padding:20px}
+.qrtok{font:800 22px/1 ui-monospace,"SF Mono",Menlo,monospace;letter-spacing:.12em;margin-top:16px}
+.qrexp{font-size:12.5px;color:var(--mute);margin-top:6px;min-height:16px}
+.qrbal{margin-top:16px;display:flex;align-items:center;gap:10px;background:var(--dark);color:#fff;border-radius:30px;padding:9px 16px}
+.qrbal span{font-size:13px;color:#a8a19a}.qrbal b{font-size:18px;font-weight:800}
+.qrhint{font-size:12.5px;color:var(--mute);max-width:300px;margin:14px 0}
+.ptsfx{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);z-index:5;background:var(--green);color:#fff;border-radius:26px;padding:20px 30px;text-align:center;box-shadow:0 20px 50px #0004;animation:ptsfx 2.6s var(--ease) both}
+.ptsfx.m{background:var(--or)}
+.ptsfx b{display:block;font-size:48px;font-weight:850;letter-spacing:-.04em;line-height:1}
+.ptsfx span{font-size:14px;font-weight:650}
+@keyframes ptsfx{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}12%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}20%{transform:translate(-50%,-50%) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-60%)}}
 .stamps-line{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--or-d);font-weight:650;margin-top:10px}
 .stamps-line i{width:18px;height:18px;border-radius:50%;background:var(--or);display:inline-grid;place-items:center;color:#fff;font-style:normal;font-size:10px}
 .sync{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:6px;margin-top:6px}
@@ -595,7 +633,7 @@ img{display:block}
   <div class="sec-h"><h2>Infos pratiques</h2></div>
   <div class="ilist">
     <a class="irow" id="mapsLink" href="#" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><b>Adresse</b><span id="infoAddr"></span></span><span class="go">Itinéraire</span></a>
-    <div class="irow"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span style="flex:1"><b>Horaires</b><ul id="hours"></ul></span></div>
+    <div class="irow" id="hoursRow"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span style="flex:1"><b>Horaires</b><ul id="hours"></ul></span></div>
     <a class="irow" id="waLink" href="#" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span><b>Contact</b><span id="infoPhone"></span></span><span class="go">WhatsApp</span></a>
     <div class="irow"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19"/></svg></span><span><b>Paiement</b><span id="infoPay"></span></span></div>
   </div>
@@ -813,7 +851,17 @@ const CONFIG = {
   staffDiscount: 0.10,
   delivery: { cutoff:"10:30", slots:["11:30","12:00","12:30","13:00","13:30","14:00"], minOrder: 15, fee: 0 },
   payment: "Bancontact, carte ou espèces, au retrait ou à la livraison",
-  loyalty: { every: 10 },     // carte fidélité : le 10e sandwich est offert (9 tampons)
+  loyalty: { every: 10 },     // carte fidélité (désactivée tant que points.enabled = true)
+  /* Points : le client montre son QR, le personnel scanne et ajoute des points (page /staff/).
+     Mêmes valeurs à recopier en haut de staff/index.html. */
+  points: {
+    enabled: true,
+    perEuro: 1,                 // 1 point par euro dépensé (arrondi en dessous)
+    rewards: [
+      { pts: 50,  label: "Un soft offert",     icon: "🥤" },
+      { pts: 100, label: "Un sandwich offert", icon: "🥪" },
+    ],
+  },
   /* Réseaux & liens — laisser "" tant que le compte n'existe pas (l'icône s'affiche grisée « bientôt ») */
   links: {
     instagram: "",            // ex. "https://instagram.com/menzili.bxl"
@@ -1131,7 +1179,7 @@ function addCreation(){
    ===================================================================== */
 let view=null;const sheet=$("#sheet");
 function openSheet(){$("#scrim").classList.add("open");sheet.classList.add("open");document.documentElement.style.overflow="hidden"}
-function closeSheet(){$("#scrim").classList.remove("open");sheet.classList.remove("open");if(!$("#atl").classList.contains("on"))document.documentElement.style.overflow="";view=null}
+function closeSheet(){if(typeof stopQR==="function")stopQR();$("#scrim").classList.remove("open");sheet.classList.remove("open");if(!$("#atl").classList.contains("on"))document.documentElement.style.overflow="";view=null}
 $("#scrim").onclick=closeSheet;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
 const head=(title,sub)=>`<div class="grab"></div><div class="sh"><div class="tt"><h3>${title}</h3>${sub?`<p>${sub}</p>`:""}</div><button class="x" data-close aria-label="Fermer">${I.x}</button></div>`;
 const bindClose=()=>sheet.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeSheet);
@@ -1199,7 +1247,8 @@ function drawCart(){
       ${t.disc?`<div class="g"><span>Réduction Saint-Pierre −${Math.round(CONFIG.staffDiscount*100)} %</span><span>−${fmt(t.disc)}</span></div>`:""}
       ${liv?`<div><span>Livraison</span><span>${t.fee?fmt(t.fee):"Offerte"}</span></div>`:""}
       <div class="t"><span>Total</span><span>${fmt(t.total)}</span></div></div>`:""}
-    ${S.cart.length&&countSandwiches(S.cart)?`<div class="stamps-line"><i>${I.check}</i>+${countSandwiches(S.cart)} tampon${countSandwiches(S.cart)>1?"s":""} sur ta carte fidélité${loyalty().ready?" · ton sandwich offert sera déduit par le snack":""}</div>`:""}
+    ${S.cart.length&&PTS.enabled?`<div class="stamps-line"><i>${I.check}</i>${ACC.user?`+${Math.floor(t.total*PTS.perEuro)} points avec ton QR au comptoir`:`Connecte-toi pour gagner ${Math.floor(t.total*PTS.perEuro)} points`}</div>`:""}
+    ${S.cart.length&&!PTS.enabled&&countSandwiches(S.cart)?`<div class="stamps-line"><i>${I.check}</i>+${countSandwiches(S.cart)} tampon${countSandwiches(S.cart)>1?"s":""} sur ta carte fidélité${loyalty().ready?" · ton sandwich offert sera déduit par le snack":""}</div>`:""}
     ${min?`<div class="alert">Livraison dès ${fmt(CONFIG.delivery.minOrder)} — encore ${fmt(CONFIG.delivery.minOrder-t.sub)}. Astuce : commande avec tes collègues.</div>`:""}
   </div><div class="sf">${S.cart.length?`<button class="btn btn-or ${canCheckout()?"":"dis"}" id="goCo">Continuer · ${fmt(t.total)}</button>`:`<button class="btn btn-dark" id="goMenu">Voir la carte</button>`}</div>`;
   bindClose();
@@ -1273,7 +1322,7 @@ function send(e,D){
   if(!ok||!co.s){e.preventDefault();toast("Complète les champs en rouge",false);return}
   try{localStorage.setItem("menzili-client",JSON.stringify({name,tel,svc,loc}))}catch(err){}
   const t=totals(),day=D[co.d],num="M"+(100+Math.floor(Math.random()*900)),when=`${day.label} · ${co.s==="ASAP"?"dès que possible":co.s}`;
-  const msg=[`🧾 *Commande ${CONFIG.name} #${num}*`,`${liv?"🏥 Livraison Saint-Pierre":"🛍 À emporter"} — ${when}`,liv?`📍 ${svc}${loc?" · "+loc:""}`:null,`👤 ${name} · ${tel}`,S.staff?`🎫 Personnel Saint-Pierre (−${Math.round(CONFIG.staffDiscount*100)} %)`:null,loyalty().ready&&countSandwiches(S.cart)?`🎁 Carte fidélité complète : 1 sandwich offert à déduire`:null,``,
+  const msg=[`🧾 *Commande ${CONFIG.name} #${num}*`,`${liv?"🏥 Livraison Saint-Pierre":"🛍 À emporter"} — ${when}`,liv?`📍 ${svc}${loc?" · "+loc:""}`:null,`👤 ${name} · ${tel}`,PTS.enabled&&ACC.user?`⭐ Client points : scanner son QR au retrait`:null,S.staff?`🎫 Personnel Saint-Pierre (−${Math.round(CONFIG.staffDiscount*100)} %)`:null,!PTS.enabled&&loyalty().ready&&countSandwiches(S.cart)?`🎁 Carte fidélité complète : 1 sandwich offert à déduire`:null,``,
     ...S.cart.map(l=>`• ${l.qty}× ${l.name}${l.opts?` (${l.opts})`:""}${l.note?` — « ${l.note} »`:""} : ${fmt(l.unit*l.qty)}`),``,
     t.disc?`Sous-total : ${fmt(t.sub)}\nRéduction : −${fmt(t.disc)}`:null,`*Total : ${fmt(t.total)}*`,`Paiement ${liv?"à la livraison":"au retrait"}`,note?`📝 ${note}`:null].filter(x=>x!==null).join("\n");
   const url=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;e.currentTarget.href=url;
@@ -1321,11 +1370,13 @@ function renderFooter(){
     <p class="tg">Le snack des Marolles, à deux pas de l'hôpital Saint-Pierre. Sandwichs bien garnis, préparés minute.</p>
     <div class="soc">${soc}</div>${missing?`<div class="soon">Nos réseaux arrivent bientôt.</div>`:""}
     <div class="cols">
-      <div><h5>Nous trouver</h5><a href="${CONFIG.mapsUrl}" target="_blank" rel="noopener">${CONFIG.address.replace(", ","<br>")}</a><a href="tel:+${CONFIG.whatsapp}">${CONFIG.phoneDisplay}</a><a href="#infos">Horaires & Saint-Pierre</a></div>
-      <div><h5>Infos</h5><button data-lg="mentions">Mentions légales</button><button data-lg="privacy">Confidentialité</button><button data-lg="cgv">Conditions de vente</button><button data-lg="allergenes">Allergènes</button></div>
+      <div><h5>Nous trouver</h5><a href="${CONFIG.mapsUrl}" target="_blank" rel="noopener">${CONFIG.address.replace(", ","<br>")}</a><a href="tel:+${CONFIG.whatsapp}">${CONFIG.phoneDisplay}</a></div>
+      <div><h5>Infos</h5><a href="#infos" id="ftHours">Horaires</a><a href="#infos" id="ftSP">Hôpital Saint-Pierre</a><button data-lg="mentions">Mentions légales</button><button data-lg="privacy">Confidentialité</button><button data-lg="cgv">Conditions de vente</button><button data-lg="allergenes">Allergènes</button></div>
     </div>
     <div class="bt">© ${yr} ${CONFIG.name} · ${esc(L.bce)}<br>Photos d'illustration : Pexels</div>`;
   $("#footer").querySelectorAll("[data-lg]").forEach(b=>b.onclick=()=>openLegal(b.dataset.lg));
+  $("#ftHours").addEventListener("click",()=>setTimeout(()=>{const r=$("#hoursRow");if(r)r.scrollIntoView({behavior:"smooth",block:"center"})},350));
+  $("#ftSP").addEventListener("click",()=>setTimeout(()=>window.scrollTo({top:0,behavior:"smooth"}),350));
 }
 const mk=v=>/^\[.*\]$/.test(v)?`<mark>${esc(v)}</mark>`:esc(v);
 function legalHTML(k){
@@ -1362,7 +1413,7 @@ function openLegal(k){const [t,body]=legalHTML(k);view="legal";
 /* =====================================================================
    COMPTES (Supabase) — connexion par code reçu par e-mail
    ===================================================================== */
-const ACC={sb:null,user:null,profile:null,step:"choose",channel:"email",ident:"",busy:false,orders:null,prov:{email:true,phone:false,google:false,apple:false}};
+const ACC={sb:null,user:null,profile:null,points:null,ledger:[],step:"choose",channel:"email",ident:"",busy:false,orders:null,prov:{email:true,phone:false,google:false,apple:false}};
 const accOn=()=>!!ACC.sb;
 async function accInit(){
   const c=CONFIG.account;
@@ -1387,7 +1438,7 @@ async function accSetUser(u){
     if(!c.tel&&u.phone){c.tel="+"+u.phone.replace(/^\+/,"");try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
     if(ACC.profile){const p=ACC.profile;try{localStorage.setItem("menzili-client",JSON.stringify({name:p.name||c.name||"",tel:p.phone||c.tel||"",svc:p.service||c.svc||"",loc:p.location||c.loc||""}))}catch(e){}if(typeof p.staff==="boolean"){S.staff=p.staff}}
     else if(c.name||c.tel){accSaveProfile()}
-    await accSyncLocal();await accLoadOrders();
+    await accSyncLocal();await accLoadOrders();await accLoadPoints();
   }
   update();if(view==="profile")drawProfile();
 }
@@ -1432,7 +1483,7 @@ async function accOAuth(provider){
   const {error}=await ACC.sb.auth.signInWithOAuth({provider,options:{redirectTo:location.href.split("#")[0]}});
   if(error){try{sessionStorage.removeItem("menzili-oauth")}catch(e){}toast("Connexion impossible pour le moment",false)}
 }
-async function accLogout(){try{await ACC.sb.auth.signOut()}catch(e){}ACC.user=null;ACC.orders=null;ACC.profile=null;update();drawProfile();toast("Déconnecté")}
+async function accLogout(){try{await ACC.sb.auth.signOut()}catch(e){}ACC.user=null;ACC.orders=null;ACC.profile=null;ACC.points=null;ACC.ledger=[];update();drawProfile();toast("Déconnecté")}
 async function accDeleteData(){
   if(ACC.user){try{await ACC.sb.from("orders").delete().eq("user_id",ACC.user.id);await ACC.sb.from("profiles").delete().eq("id",ACC.user.id)}catch(e){}}
   try{localStorage.removeItem("menzili-orders");localStorage.removeItem("menzili-client")}catch(e){}
@@ -1445,7 +1496,67 @@ async function accDeleteData(){
 const getClient=()=>{try{return JSON.parse(localStorage.getItem("menzili-client")||"{}")}catch(e){return{}}};
 const getOrders=()=>{try{return JSON.parse(localStorage.getItem("menzili-orders")||"[]")}catch(e){return[]}};
 const histList=()=>ACC.user&&ACC.orders?ACC.orders:getOrders();
-/* ---- Carte fidélité ---- */
+/* ---- Points (QR scanné au comptoir) ---- */
+const PTS=CONFIG.points;
+const loadScript=src=>new Promise((ok,ko)=>{if(document.querySelector(`script[src="${src}"]`))return ok();const sc=document.createElement("script");sc.src=src;sc.onload=ok;sc.onerror=ko;document.head.appendChild(sc)});
+const fmtTok=t=>String(t||"").replace(/(.{3})(?=.)/g,"$1-");
+async function accLoadPoints(){
+  if(!ACC.user||!PTS.enabled)return;
+  try{const {data,error}=await ACC.sb.rpc("my_points");if(error)throw error;ACC.points=+data||0}catch(e){ACC.points=null;console.warn(e)}
+  try{const {data}=await ACC.sb.from("points_ledger").select("delta,reason,created_at").order("created_at",{ascending:false}).limit(6);ACC.ledger=data||[]}catch(e){ACC.ledger=[]}
+}
+function nextReward(n){const R=PTS.rewards;return R.find(r=>r.pts>n)||null}
+function pointsHTML(){
+  const R=PTS.rewards,how=`1 point par euro dépensé. Montre ton QR au comptoir ou au livreur.`;
+  if(!ACC.user)return `<div class="mc-title" style="margin-top:22px">Mes points</div>
+    <div class="pts pts-off"><div class="pts-top"><span class="pts-n">0<small>pts</small></span><span class="pts-qr dim">${QR_ICON}</span></div>
+    <p>${how}</p><div class="pts-rw">${R.map(r=>`<span><i>${r.icon}</i><b>${r.pts}</b> ${esc(r.label)}</span>`).join("")}</div>
+    <div class="pts-cta">${accOn()?"Connecte-toi ci-dessus pour avoir ta carte QR et cumuler des points.":"Bientôt disponible."}</div></div>`;
+  const n=ACC.points??0,nx=nextReward(n),prev=[...R].reverse().find(r=>r.pts<=n),base=0,pct=nx?Math.min(100,Math.round((n-base)/nx.pts*100)):100;
+  const dt=ts=>new Date(ts).toLocaleDateString("fr-BE",{day:"numeric",month:"short"});
+  return `<div class="mc-title" style="margin-top:22px">Mes points</div>
+  <div class="pts"><div class="pts-top"><span class="pts-n">${ACC.points===null?"–":n}<small>pts</small></span>
+      <button class="pts-qr" id="ptsQr" aria-label="Montrer mon QR">${QR_ICON}<span>Mon QR</span></button></div>
+    <div class="pts-bar"><i style="width:${pct}%"></i></div>
+    <p>${nx?`Encore <b>${nx.pts-n} pts</b> pour : ${nx.icon} ${esc(nx.label.toLowerCase())}`:`Bravo, tu peux tout débloquer !`}${prev?` · <b style="color:#fff">${prev.icon} ${esc(prev.label)}</b> dispo`:""}</p>
+    <div class="pts-rw">${R.map(r=>`<span class="${n>=r.pts?"on":""}"><i>${r.icon}</i><b>${r.pts}</b> ${esc(r.label)}</span>`).join("")}</div>
+    <button class="pts-big" id="ptsQr2">${QR_ICON}Montrer mon QR au comptoir</button></div>
+  ${ACC.ledger.length?`<div class="pts-h">${ACC.ledger.map(l=>`<div><span>${esc(l.reason||(l.delta>0?"Points gagnés":"Récompense"))}<small>${dt(l.created_at)}</small></span><b class="${l.delta>0?"p":"m"}">${l.delta>0?"+":""}${l.delta}</b></div>`).join("")}</div>`:""}`;
+}
+const QR_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>';
+let qrT=null,qrPoll=null,qrExp=0,qrTok=null;
+function stopQR(){clearInterval(qrT);clearInterval(qrPoll);qrT=qrPoll=null}
+async function openQR(){
+  view="qr";stopQR();
+  sheet.innerHTML=head("Ma carte "+CONFIG.name,"À montrer au comptoir ou au livreur")+`<div class="sb"><div class="qrw">
+    <div class="qrbox" id="qrBox"><div class="qrload">Création de ton QR…</div></div>
+    <div class="qrtok" id="qrTok"></div><div class="qrexp" id="qrExp"></div>
+    <div class="qrbal"><span>Ton solde</span><b id="qrBal">${ACC.points??"–"} pts</b></div>
+    <p class="qrhint">Le QR change toutes les 10 minutes : une capture d'écran ne marche pas longtemps. Augmente la luminosité si le scan a du mal.</p>
+    <button class="btn btn-light" id="qrBack">Retour au profil</button></div></div>`;
+  bindClose();$("#qrBack").onclick=()=>{stopQR();drawProfile()};
+  if(!sheet.classList.contains("open"))openSheet();
+  try{await loadScript("assets/vendor/qrcode.min.js")}catch(e){$("#qrBox").innerHTML='<div class="qrload">QR indisponible, réessaie.</div>';return}
+  const make=async()=>{
+    const {data,error}=await ACC.sb.rpc("my_qr_token");
+    if(view!=="qr")return;
+    if(error||!data){$("#qrBox").innerHTML='<div class="qrload">Impossible de créer le QR. Vérifie ta connexion.</div>';return}
+    qrTok=data;qrExp=Date.now()+9.5*60e3;
+    const q=qrcode(0,"M");q.addData("MENZILI:"+data);q.make();
+    $("#qrBox").innerHTML=q.createSvgTag({cellSize:8,margin:2,scalable:true});$("#qrTok").textContent=fmtTok(data);
+  };
+  await make();
+  qrT=setInterval(()=>{if(view!=="qr"){stopQR();return}const r=Math.max(0,qrExp-Date.now());
+    const el=$("#qrExp");if(el)el.textContent=`Se renouvelle dans ${Math.floor(r/60e3)}:${String(Math.floor(r/1e3)%60).padStart(2,"0")}`;if(r<=0)make()},1000);
+  qrPoll=setInterval(async()=>{if(view!=="qr"||document.hidden)return;const before=ACC.points;
+    try{const {data}=await ACC.sb.rpc("my_points");const n=+data||0;if(before!==null&&n!==before){ACC.points=n;celebrate(n-before);accLoadPoints()}else ACC.points=n;const b=$("#qrBal");if(b)b.textContent=n+" pts"}catch(e){}},4000);
+}
+function celebrate(d){
+  const el=document.createElement("div");el.className="ptsfx "+(d>0?"p":"m");el.innerHTML=`<b>${d>0?"+":""}${d}</b><span>${d>0?"points ajoutés !":"points utilisés"}</span>`;
+  sheet.appendChild(el);setTimeout(()=>el.remove(),2600);if(navigator.vibrate)try{navigator.vibrate([20,60,30])}catch(e){}
+}
+
+/* ---- Carte fidélité (ancienne version, masquée quand les points sont actifs) ---- */
 const SANDWICH_IDS=new Set(["atelier","m1",...MENU.filter(c=>c.id==="chauds"||c.id==="froids").flatMap(c=>c.items.map(i=>i.id))]);
 const countSandwiches=items=>(items||[]).reduce((n,l)=>n+(SANDWICH_IDS.has(l.id)?l.qty:0),0);
 function loyalty(){const n=histList().reduce((t,h)=>t+countSandwiches(h.items),0),per=CONFIG.loyalty.every;const filled=n%per;return{n,filled,need:per-1,ready:filled===per-1}}
@@ -1470,7 +1581,7 @@ function accCardHTML(){
   if(!accOn())return `<div class="acc"><h4>Compte ${CONFIG.name}</h4><p>Bientôt : connecte-toi pour retrouver ton historique sur tous tes appareils. En attendant, tes commandes sont gardées sur ce téléphone.</p></div>`;
   if(ACC.user){const u=ACC.user,via=(u.app_metadata&&u.app_metadata.provider)||"email";
     const viaL={google:"Google",apple:"Apple",phone:"numéro",email:"e-mail"}[via]||via;
-    return `<div class="acc in"><span><h4 style="font-size:15px">Connecté${viaL?` via ${viaL}`:""}</h4><p style="margin-top:2px">${esc(u.email||prettyPhone(u.phone)||"")}</p><span class="sync"><i></i>Historique et carte fidélité synchronisés</span></span></div>`}
+    return `<div class="acc in"><span><h4 style="font-size:15px">Connecté${viaL?` via ${viaL}`:""}</h4><p style="margin-top:2px">${esc(u.email||prettyPhone(u.phone)||"")}</p><span class="sync"><i></i>Historique et ${CONFIG.points.enabled?"points":"carte fidélité"} synchronisés</span></span></div>`}
   const back=`<button class="lk" id="accBack">← Autres options</button>`;
   if(ACC.step==="code")return `<div class="acc"><h4>Entre ton code</h4><p>On vient d'envoyer un code ${ACC.channel==="phone"?"par SMS au":"à"} <b style="color:#fff">${esc(ACC.channel==="phone"?prettyPhone(ACC.ident):ACC.ident)}</b>. Il peut mettre une minute à arriver.</p>
     <div class="af"><input class="code" id="accCode" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="••••••"><button class="ab ${ACC.busy?"dis":""}" id="accVerify">${ACC.busy?"…":"Valider"}</button></div>
@@ -1498,7 +1609,7 @@ function drawProfile(){
     <div class="pfh"><span class="av">${ini?esc(ini):`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg>`}</span>
       <span><b>${c.name?`Salut ${esc(c.name)} 👋`:"Bienvenue"}</b><span>${H.length?`${H.length} commande${H.length>1?"s":""}`:"Pas encore de commande"}</span></span></div>
     ${accCardHTML()}
-    ${loyaltyHTML()}
+    ${PTS.enabled?pointsHTML():loyaltyHTML()}
     <div class="pcard" style="margin-top:22px"><h4><span style="color:var(--or)">${I.hosp}</span>Avantage Saint-Pierre</h4>
       <p>Pour le personnel de l'hôpital, sur présentation du badge.</p>
       <div class="perks"><div class="perk"><i>%</i><span><b>−${pct} %</b> sur toute la commande</span></div>
@@ -1523,6 +1634,7 @@ function drawProfile(){
     </div>
   <div style="height:calc(20px + var(--sb))"></div></div>`;
   sheet.querySelector(".sb").scrollTop=sc;bindClose();bindTilt($("#fcard"));
+  ["#ptsQr","#ptsQr2"].forEach(id=>{const b=$(id);if(b)b.onclick=openQR});
   $("#pfStaff").onchange=e=>{S.staff=e.target.checked;update();accSaveProfile()};
   sheet.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>{const h=histList()[+b.dataset.re];if(!h)return;h.items.forEach(l=>{const same=S.cart.find(x=>x.id===l.id&&x.opts===l.opts&&x.note===l.note&&x.name===l.name);if(same)same.qty+=l.qty;else S.cart.push({...l})});update();toast("Ajouté au panier");view="cart";drawCart()});
   $("#pfInfos").onclick=()=>closeSheet();

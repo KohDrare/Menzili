@@ -1660,7 +1660,7 @@ const QR_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 let qrT=null,qrPoll=null,qrExp=0,qrTok=null;
 function stopQR(){clearInterval(qrT);clearInterval(qrPoll);qrT=qrPoll=null}
 async function openQR(){
-  view="qr";stopQR();
+  view="qr";stopQR();qrTok=null;
   sheet.innerHTML=head("Ma carte "+CONFIG.name,"À montrer au comptoir ou au livreur")+`<div class="sb"><div class="qrw">
     <div class="qrbox" id="qrBox"><div class="qrload">Création de ton QR…</div></div>
     <div class="qrtok" id="qrTok"></div><div class="qrexp" id="qrExp"></div>
@@ -1671,16 +1671,21 @@ async function openQR(){
   if(!sheet.classList.contains("open"))openSheet();
   try{await loadScript("assets/vendor/qrcode.min.js")}catch(e){$("#qrBox").innerHTML='<div class="qrload">QR indisponible, réessaie.</div>';return}
   const make=async()=>{
-    const {data,error}=await ACC.sb.rpc("my_qr_token");
+    let data=null,error=null;try{({data,error}=await ACC.sb.rpc("my_qr_token"))}catch(e){error=e}
     if(view!=="qr")return;
-    if(error||!data){$("#qrBox").innerHTML='<div class="qrload">Impossible de créer le QR. Vérifie ta connexion.</div>';return}
+    if(error||!data){
+      const m=String((error&&error.message)||"");console.warn("QR",error);
+      qrExp=Date.now()+15e3;   // réessai dans 15 s, pas en boucle
+      $("#qrBox").innerHTML=`<div class="qrload">${/function|schema cache|does not exist/i.test(m)?"Le système de points n'est pas encore activé sur le serveur.":/JWT|auth|non connect/i.test(m)?"Ta session a expiré : reconnecte-toi dans Mon profil.":"Impossible de créer le QR pour le moment."}<br><button class="lk" id="qrRetry" style="margin-top:10px;color:var(--or-d);font-weight:700">Réessayer</button></div>`;
+      $("#qrTok").textContent="";const rb=$("#qrRetry");if(rb)rb.onclick=()=>{$("#qrBox").innerHTML='<div class="qrload">Création de ton QR…</div>';make()};
+      return}
     qrTok=data;qrExp=Date.now()+9.5*60e3;
     const q=qrcode(0,"M");q.addData("MENZILI:"+data);q.make();
     $("#qrBox").innerHTML=q.createSvgTag({cellSize:8,margin:2,scalable:true});$("#qrTok").textContent=fmtTok(data);
   };
   await make();
   qrT=setInterval(()=>{if(view!=="qr"){stopQR();return}const r=Math.max(0,qrExp-Date.now());
-    const el=$("#qrExp");if(el)el.textContent=`Se renouvelle dans ${Math.floor(r/60e3)}:${String(Math.floor(r/1e3)%60).padStart(2,"0")}`;if(r<=0)make()},1000);
+    const el=$("#qrExp");if(el)el.textContent=!qrTok?"":`Se renouvelle dans ${Math.floor(r/60e3)}:${String(Math.floor(r/1e3)%60).padStart(2,"0")}`;if(r<=0)make()},1000);
   qrPoll=setInterval(async()=>{if(view!=="qr"||document.hidden)return;const before=ACC.points;
     try{const {data}=await ACC.sb.rpc("my_points");const n=+data||0;if(before!==null&&n!==before){ACC.points=n;celebrate(n-before);accLoadPoints()}else ACC.points=n;const b=$("#qrBal");if(b)b.textContent=n+" pts"}catch(e){}},4000);
 }
@@ -1741,7 +1746,7 @@ function drawProfile(){
   sheet.innerHTML=head("Mon profil","")+`<div class="sb">
     <div class="pfh"><span class="av">${ini?esc(ini):`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg>`}</span>
       <span><b>${c.name?`Salut ${esc(c.name)} 👋`:"Bienvenue"}</b><span>${H.length?`${H.length} commande${H.length>1?"s":""}`:"Pas encore de commande"}</span></span></div>
-    ${accCardHTML()}
+    ${ACC.user?"":accCardHTML()}
     ${PTS.enabled?pointsHTML():loyaltyHTML()}
     <div class="pcard" style="margin-top:22px"><h4><span style="color:var(--or)">${I.hosp}</span>Avantage Saint-Pierre</h4>
       <p>Pour le personnel de l'hôpital, sur présentation du badge.</p>
@@ -1759,6 +1764,7 @@ function drawProfile(){
       <div class="oi">${(h.items||[]).map(l=>`${l.qty}× ${esc(l.name)}`).join(" · ")}</div>
       <div class="of"><b>${fmt(h.total)}</b><button data-re="${i}">Recommander</button></div></div>`).join("")
       :`<div class="pempty">Tes commandes apparaîtront ici. Tu pourras les recommander en un tap.</div>`}
+    ${ACC.user?`<div class="mc-title" style="margin-top:22px">Mon compte</div>${accCardHTML()}`:""}
     <div style="margin-top:14px">
       <a class="plink" href="#infos" id="pfInfos">Horaires, adresse & contact <span>›</span></a>
       <button class="plink" data-lg="privacy">Confidentialité <span>›</span></button>

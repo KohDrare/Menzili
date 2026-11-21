@@ -101,5 +101,5 @@ Pour toutes les méthodes, ajoute l'adresse du site dans **Authentication → UR
 
 - **E-mail** : déjà actif (code à 6 chiffres, voir plus haut pour le modèle d'e-mail).
 - **Numéro de téléphone (SMS)** : Providers → Phone → activer, puis brancher un fournisseur SMS (Twilio, MessageBird, Vonage ou Textlocal). Les SMS sont payants (quelques centimes par code).
-- **Google** (gratuit) : dans Google Cloud Console → APIs & Services → Credentials → *Create OAuth client ID* (type « Web application »). Dans *Authorized redirect URIs*, colle l'URL de callback affichée par Supabase (`https://awrvyfeagqicwjcswutw.supabase.co/auth/v1/callback`). Copie ensuite le Client ID et le Client Secret dans Supabase → Providers → Google.
+- **Google** (gratuit) : dans Google Cloud Console → APIs & Services → Credentials → *Create OAuth client ID* (type « Web application »). Dans *Authorized redirect URIs*, colle l'URL de callback affichée par Supabase (`https://uhydikiumxveesktvfps.supabase.co/auth/v1/callback`). Copie ensuite le Client ID et le Client Secret dans Supabase → Providers → Google.
 - **Apple** : nécessite un compte Apple Developer (payant, abonnement annuel). Crée un *Services ID* et une clé *Sign in with Apple*, puis renseigne-les dans Supabase → Providers → Apple (même URL de callback).

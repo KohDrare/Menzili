@@ -776,7 +776,7 @@ img{display:block}
   <div id="liveOrder"></div>
   <div class="hello">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><div class="eyebrow"><span class="dots"><i></i><i></i></span>Les Marolles</div><span class="status" id="status"><i></i><span>…</span></span></div>
-    <h1>Faim<em>?</em><br>On s'en occupe.</h1>
+    <h1>On rouvre<em>!</em><br>Et ça se fête.</h1>
     <p>Commande en deux minutes, prêt en quinze. Ou livré à ton service à Saint-Pierre.</p>
   </div>
   <div class="offers" id="offers"></div>
@@ -1090,7 +1090,7 @@ const HOT=[FORMAT,SAUCES,CRUD,SUPPL];
 
 const MENU=[
   {id:"offres",title:"Offres",hint:"Uniquement sur le site.",items:[
-    {id:"m1",img:"s2",name:"Menu Pause",desc:"Un sandwich au choix + portion de patates + soft.",price:11,was:12,tag:"Exclusif site",x:true,
+    {id:"m1",img:"s2",name:"Offre de réouverture",desc:"Un sandwich au choix + portion de patates + soft.",price:11,was:12,tag:"Exclusif site",x:true,
      groups:[{id:"sand",label:"Ton sandwich",type:"single",required:true,options:[o("Poulet mariné"),o("Poulet pané"),o("Merguez",.5),o("Viande",1),o("Poisson pané",1),o("Mixte",1)]},FORMAT,SAUCES,SOFT]},
   ]},
   {id:"chauds",title:"Sandwichs",hint:"Préparés minute, bien garnis.",items:[
@@ -1137,7 +1137,7 @@ const MENU=[
 
 /* OFFRES en grand sur l'accueil — À VALIDER avec le patron */
 const OFFERS=[
-  {kick:"Exclusif site",title:"Menu Pause",sub:"Sandwich au choix + patates + soft.",price:11,was:12,img:"s2",go:{item:"m1"}},
+  {kick:"Exclusif site",title:"Offre de réouverture",sub:"Sandwich au choix + patates + soft.",price:11,was:12,img:"s2",go:{item:"m1"}},
   {kick:"Nouveau",title:"L'Atelier",sub:"Compose ton sandwich, ingrédient par ingrédient.",atelier:true,go:{view:"atelier"}},
   {kick:"Saint-Pierre",title:"Livré à ton service",sub:"Commande avant 10:30 · −10 % personnel · livraison offerte.",img:"a1",light:true,go:{view:"infos"}},
 ];

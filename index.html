@@ -266,6 +266,12 @@ img{display:block}
 .pts-rw span.on{background:var(--or);color:#fff}
 .pts-big{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:var(--ink);font-weight:750;font-size:15px;padding:13px;border-radius:16px;position:relative}
 .pts-big svg{width:20px;height:20px}
+.pfh{position:relative}
+.pf-ed{margin-left:auto;align-self:center;width:36px;height:36px;border-radius:50%;background:#f4efe8;color:var(--ink2);display:grid;place-items:center;flex:none}
+.pf-ed svg{width:17px;height:17px}
+.pf-in{display:flex;gap:6px;align-items:center}
+.pf-in input{width:150px;font:700 18px var(--font);border:0;border-bottom:2px solid var(--or);background:none;outline:none;padding:4px 2px}
+.pf-in button{background:var(--or);color:#fff;font-weight:750;border-radius:10px;padding:7px 12px;font-size:14px}
 .staff-go{display:flex;align-items:center;gap:12px;margin-top:16px;background:var(--or);color:#fff;border-radius:20px;padding:14px 16px}
 .staff-go .ic{width:42px;height:42px;border-radius:13px;background:#ffffff2e;display:grid;place-items:center;flex:none}
 .staff-go .ic svg{width:22px;height:22px}
@@ -1678,8 +1684,16 @@ async function accSetUser(u){
   ACC.user=u;ACC.orders=null;ACC.profile=null;
   if(u){
     try{const {data}=await ACC.sb.from("profiles").select("*").eq("id",u.id).maybeSingle();ACC.profile=data||null}catch(e){}
+    let owner=null;try{owner=localStorage.getItem("menzili-owner")}catch(e){}
+    if(owner!==u.id){
+      // données laissées sur ce téléphone par un autre compte (ou par une ancienne session) : on ne les reprend pas
+      if(owner||ACC.profile){try{["menzili-client","menzili-orders","menzili-track"].forEach(k=>localStorage.removeItem(k))}catch(e){}}
+      try{localStorage.setItem("menzili-owner",u.id)}catch(e){}
+    }
     const c=getClient(),md=u.user_metadata||{};
-    if(!c.name&&(md.full_name||md.name||md.given_name)){c.name=(md.given_name||md.full_name||md.name).split(" ")[0];try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
+    const gName=(md.given_name||md.full_name||md.name||"").trim().split(" ")[0];
+    if(!ACC.profile&&gName&&owner!==u.id){c.name=gName;try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
+    else if(!c.name&&gName){c.name=gName;try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
     if(!c.tel&&u.phone){c.tel="+"+u.phone.replace(/^\+/,"");try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}}
     if(ACC.profile){const p=ACC.profile;try{localStorage.setItem("menzili-client",JSON.stringify({name:p.name||c.name||"",tel:p.phone||c.tel||"",svc:p.service||c.svc||"",loc:p.location||c.loc||""}))}catch(e){}if(typeof p.staff==="boolean"){S.staff=p.staff}}
     else if(c.name||c.tel){accSaveProfile()}
@@ -1732,7 +1746,7 @@ async function accOAuth(provider){
 async function accLogout(){try{await ACC.sb.auth.signOut()}catch(e){}ACC.user=null;ACC.orders=null;ACC.profile=null;ACC.points=null;ACC.ledger=[];ACC.team=false;update();drawProfile();toast("Déconnecté")}
 async function accDeleteData(){
   if(ACC.user){try{await ACC.sb.from("orders").delete().eq("user_id",ACC.user.id);await ACC.sb.from("profiles").delete().eq("id",ACC.user.id)}catch(e){}}
-  try{localStorage.removeItem("menzili-orders");localStorage.removeItem("menzili-client")}catch(e){}
+  try{["menzili-orders","menzili-client","menzili-track","menzili-owner"].forEach(k=>localStorage.removeItem(k))}catch(e){}
   if(ACC.user)await accLogout();
 }
 
@@ -1869,7 +1883,8 @@ function drawProfile(){
   const sc=sheet.querySelector(".sb")?.scrollTop||0;
   sheet.innerHTML=head("Mon profil","")+`<div class="sb">
     <div class="pfh"><span class="av">${ini?esc(ini):`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg>`}</span>
-      <span><b>${c.name?`Salut ${esc(c.name)} 👋`:"Bienvenue"}</b><span>${H.length?`${H.length} commande${H.length>1?"s":""}`:"Pas encore de commande"}</span></span></div>
+      <span id="pfNameBox"><b>${c.name?`Salut ${esc(c.name)} 👋`:"Bienvenue"}</b><span>${H.length?`${H.length} commande${H.length>1?"s":""}`:"Pas encore de commande"}</span></span>
+      <button class="pf-ed" id="pfEdit" aria-label="Modifier mon prénom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg></button></div>
     ${ACC.user&&ACC.team?`<a class="staff-go" href="staff/"><span class="ic">${QR_ICON}</span><span><b>Espace personnel</b><span>Scanner le QR d'un client et ajouter des points</span></span><span class="ar">${I.arrow}</span></a>`:""}
     ${ACC.user?"":accCardHTML()}
     ${PTS.enabled?pointsHTML():loyaltyHTML()}
@@ -1899,6 +1914,14 @@ function drawProfile(){
   <div style="height:calc(20px + var(--sb))"></div></div>`;
   sheet.querySelector(".sb").scrollTop=sc;bindClose();bindTilt($("#fcard"));
   ["#ptsQr","#ptsQr2"].forEach(id=>{const b=$(id);if(b)b.onclick=openQR});
+  $("#pfEdit").onclick=()=>{
+    const box=$("#pfNameBox"),cur=getClient().name||"";
+    box.innerHTML=`<span class="pf-in"><input id="pfNameIn" maxlength="30" autocomplete="given-name" placeholder="Ton prénom" value="${esc(cur)}"><button id="pfNameOk">OK</button></span>`;
+    $("#pfEdit").style.display="none";const i=$("#pfNameIn");i.focus();i.select();
+    const save=async()=>{const v=i.value.trim();const c=getClient();c.name=v;try{localStorage.setItem("menzili-client",JSON.stringify(c))}catch(e){}
+      if(ACC.user)await accSaveProfile();drawProfile();toast(v?"Prénom enregistré":"Prénom effacé")};
+    $("#pfNameOk").onclick=save;i.onkeydown=e=>{if(e.key==="Enter")save()};
+  };
   $("#pfStaff").onchange=e=>{S.staff=e.target.checked;update();accSaveProfile()};
   sheet.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>openTrack(b.dataset.trk,false));
   sheet.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>{const h=histList()[+b.dataset.re];if(!h)return;h.items.forEach(l=>{const same=S.cart.find(x=>x.id===l.id&&x.opts===l.opts&&x.note===l.note&&x.name===l.name);if(same)same.qty+=l.qty;else S.cart.push({...l})});update();toast("Ajouté au panier");view="cart";drawCart()});

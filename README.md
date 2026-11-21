@@ -37,6 +37,8 @@ Dans `CONFIG` (début du script de `index.html`) :
 ## Comptes clients (connexion + historique)
 
 Sans configuration, le site fonctionne déjà : le profil et l'historique restent sur le téléphone du client.
+> **Nouveau projet Supabase ?** Suis [SUPABASE-GUIDE.md](SUPABASE-GUIDE.md) : un seul script à lancer (`supabase/installation-complete.sql`) et toutes les étapes de configuration.
+
 Pour activer les vrais comptes (historique sur tous les appareils), il faut un projet Supabase (gratuit) :
 
 1. Crée un projet sur supabase.com — choisis une région **Europe** (RGPD).
